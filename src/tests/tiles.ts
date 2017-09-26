@@ -13,4 +13,9 @@ describe('tiles', () => {
 
 
     });
+
+    it('blank tile can be any tile', () => {
+
+
+    });
 });
