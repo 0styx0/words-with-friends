@@ -48,6 +48,11 @@ describe('word checker', () => {
 
 
         });
+
+        it('user is not logged in', () => {
+
+
+        });
     });
 
 });
