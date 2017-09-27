@@ -7,21 +7,21 @@ class TileBag {
     /**
      * Fills tilebag with Tiles
      */
-    public function init() {
+    public init() {
 
     }
 
     /**
      * @return Tiles for a user's hand
      */
-    public function getHand(): Tile[] {
+    public getHand(): Tile[] {
 
     }
 
     /**
      * @return Tiles to populate board
      */
-    public function getBoard() {
+    public getBoard() {
 
     }
 
@@ -32,17 +32,17 @@ class TileBag {
      *
      * @return tiles
      */
-    private function getTiles(amount: number) {
+    private getTiles(amount: number) {
 
     }
 
     /**
      * Sets this.tiles
      */
-    private function generateTiles() {
+    public generateTiles() {
 
         // http://www.thewordfinder.com/wwf-point-values.php
-        const alphabet: Tile[] = [
+        const alphabet: (Tile & { amount: number })[] = [
             {
                 letter: '',
                 points: 0,
@@ -180,5 +180,12 @@ class TileBag {
             }
         ];
 
+
+        alphabet.reduce((tiles: Tile[], letter) => {
+
+            for (let i = 0; i < letter.amount - 1; i++) {
+
+            }
+        }, []);
     }
 }
