@@ -1,9 +1,13 @@
-import Player from '../interfaces/Player';
+import Tile from '../interfaces/Tile';
 
-class Player: Player {
+class Player {
 
     name = '';
     turn = false;
     score = 0;
-    hand = []
+    hand: Tile[] = []
+
+    init() {
+
+    }
 }
