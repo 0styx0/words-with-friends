@@ -1,0 +1,16 @@
+.tile {
+    background-color: #F3D32C;
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+}
+
+.tile .points {
+    float: right;
+}
+
+.tile .letter {
+    font-size: 2rem;
+    position: relative;
+    top: 30%;
+}
