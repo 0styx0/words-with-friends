@@ -17,7 +17,7 @@ class App extends React.Component {
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
         <table>
-        <tr><td style={{width: '100px', height: '100px'}}><Tile letter="A" points={12} /></td></tr>
+        <tr><td style={{width: '100px', height: '100px', position: 'relative'}}><Tile letter="A" points={12} /></td></tr>
         </table>
       </div>
     );

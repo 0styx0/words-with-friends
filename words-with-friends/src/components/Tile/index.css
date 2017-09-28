@@ -3,10 +3,17 @@
     height: 100%;
     width: 100%;
     padding: 5px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 0px 2px 1px #D99536;
+    -webkit-box-shadow: 1px 0px 2px 1px #D99536;;
+    box-shadow: 1px 0px 2px 1px #D99536;;
+
 }
 
 .tile .points {
     float: right;
+    font-size: 1.2vw;
+    font-size: calc(7pt + 1.2vw);
 }
 
 .tile .letter {
