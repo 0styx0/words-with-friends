@@ -1,0 +1,13 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(15, 0.5fr);
+  grid-gap: 7px;
+  grid-auto-rows: minmax(calc(6vh - (15px)), auto);
+  max-height: 90vh;
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+.wrapper div {
+    border: 1px solid black;
+}
