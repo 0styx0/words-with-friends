@@ -141,5 +141,27 @@ export default {
         }
     ]),
 
+    tiles: [] as Tile[],
+
+    /**
+     * Generates all tiles needed in tilebag
+     */
+    init() {
+
+        this.tiles = [...this.alphabet].reduce((tiles, letter) => {
+
+            for (let i = 0; i < letter.amount - 1; i++) {
+                tiles.concat(letter);
+            }
+
+            return tiles;
+
+        }, [] as Tile[]);
+    },
+
+    getRandomTile() {
+
+        return this.tiles[Math.floor(Math.random() * this.tiles.length)];
+    }
 
 };
