@@ -1,12 +1,12 @@
 import * as React from 'react';
 import './index.css';
-// import Tile from '../Tile';
+import TileHolder from '../TileHolder';
 
 export default function Board() {
 
     return (
         <div className="wrapper">
-            {new Array(225).fill(null).map((elt, i) => <div />)}
+            {new Array(225).fill(null).map((elt, i) => <TileHolder key={i} />)}
         </div>
     );
 }
