@@ -1,0 +1,14 @@
+.tileHand { /* wrapper */
+    width: 10vw;
+    position: absolute;
+    bottom: 61vh;
+    top: 8vh;
+}
+
+.rightHand {
+    right: 0;
+}
+
+.tileHand div {
+    height: 6vh; /* all tile holders */
+}
