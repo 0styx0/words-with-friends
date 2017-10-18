@@ -151,7 +151,8 @@ export default {
         this.tiles = [...this.alphabet].reduce((tiles, letter) => {
 
             for (let i = 0; i < letter.amount - 1; i++) {
-                tiles.concat(letter);
+
+                tiles = tiles.concat(letter);
             }
 
             return tiles;
@@ -172,6 +173,8 @@ export default {
      * Gets a tile and removes it from the tilebag
      */
     getRandomTile() {
+
+        this.init();
 
         const tileToGet = this.tiles[Math.floor(Math.random() * this.tiles.length)];
         this.removeTile(tileToGet);
