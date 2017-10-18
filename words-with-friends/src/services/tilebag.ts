@@ -159,9 +159,24 @@ export default {
         }, [] as Tile[]);
     },
 
+    /**
+     * Removes tile from bag
+     */
+    removeTile(tile: Tile) {
+
+        const positionOfTile = this.tiles.indexOf(tile);
+        this.tiles.splice(positionOfTile - 1, 1);
+    },
+
+    /**
+     * Gets a tile and removes it from the tilebag
+     */
     getRandomTile() {
 
-        return this.tiles[Math.floor(Math.random() * this.tiles.length)];
+        const tileToGet = this.tiles[Math.floor(Math.random() * this.tiles.length)];
+        this.removeTile(tileToGet);
+
+        return tileToGet;
     }
 
 };
