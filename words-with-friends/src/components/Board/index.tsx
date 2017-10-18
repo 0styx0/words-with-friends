@@ -1,8 +1,11 @@
 import * as React from 'react';
 import './index.css';
 import TileHolder from '../TileHolder';
+import tilebag from '../../services/tilebag';
 
 export default function Board() {
+
+    tilebag.init(); // move to somewhere else once get game mechanic workings
 
     return (
         <div className="wrapper">
