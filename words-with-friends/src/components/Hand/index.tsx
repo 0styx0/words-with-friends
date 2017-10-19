@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TileHolder from '../TileHolder';
+import TileHolder from '../TileHolder/TileHolder';
 import './index.css';
 import tilebag from '../../services/tilebag';
 

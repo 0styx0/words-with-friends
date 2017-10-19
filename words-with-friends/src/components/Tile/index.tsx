@@ -9,9 +9,9 @@ interface Props {
 export default function Tile(props: Props) {
 
     return (
-        <div className="tile">
-            <span className="points">{props.points}</span>
-            <span className="letter">{props.letter}</span>
-        </div>
+            <div className="tile">
+                <span className="points">{props.points}</span>
+                <span className="letter">{props.letter}</span>
+            </div>
     );
 }

@@ -4,6 +4,7 @@
     "module": "esnext",
     "target": "es6",
     "lib": ["es6", "dom"],
+    "experimentalDecorators": true,
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",

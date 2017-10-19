@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './index.css';
 import TileType from '../../interfaces/Tile';
-import Tile from '../Tile';
+import TileContainer from '../Tile/Tile';
 
 interface Props {
     tile?: TileType;
@@ -10,8 +10,6 @@ interface Props {
 export default function TileHolder(props: Props) {
 
     return (
-        <div className="tileHolder">
-            {props.tile ? <Tile letter={props.tile.letter} points={props.tile.points} /> : <span />}
-        </div>
+        props.tile ? <TileContainer letter={props.tile.letter} points={props.tile.points} /> : <span />
     );
 }
