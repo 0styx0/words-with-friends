@@ -1,17 +1,26 @@
 import * as React from 'react';
 import './index.css';
-import TileHolder from '../TileHolder/TileHolder';
 import tilebag from '../../services/tilebag';
+import TileHolder from '../TileHolder/TileHolder';
 
-export default function Board() {
+interface Props {
+    tiles: TileHolder[];
+}
+
+export default function Board(props: Props) {
 
     tilebag.init(); // move to somewhere else once get game mechanic workings
 
-    // const board = [];
+    let board: TileHolder[] = [];
+
+    props.tiles.forEach(column => {
+
+        board = board.concat(column);
+    });
 
     return (
         <div className="wrapper">
-            {new Array(225).fill(null).map((elt, i) => <TileHolder key={i} />)}
+            {board}
         </div>
     );
 }
