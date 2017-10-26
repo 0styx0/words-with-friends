@@ -5,11 +5,12 @@ import TileContainer from '../Tile/Tile';
 
 interface Props {
     tile?: TileType;
+    removeTile: Function;
 }
 
 export default function TileHolder(props: Props) {
 
     return (
-        props.tile ? <TileContainer letter={props.tile.letter} points={props.tile.points} /> : <span />
+        props.tile ? <TileContainer removeTile={props.removeTile} letter={props.tile.letter} points={props.tile.points} /> : <span />
     );
 }

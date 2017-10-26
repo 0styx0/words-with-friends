@@ -7,6 +7,7 @@ interface Props {
     points: number;
     connectDragSource?: Function;
     isDragging?: Function;
+    removeTile: Function;
 }
 
 interface State {
@@ -23,6 +24,9 @@ function collect(connect: {dragSource: Function}, monitor: {isDragging: Function
 const source = {
   beginDrag(props: Props) {
     return props;
+  },
+  endDrag(props: Props, monitor: any, component: any) {
+      console.log(component.props.removeTile());
   }
 };
 
