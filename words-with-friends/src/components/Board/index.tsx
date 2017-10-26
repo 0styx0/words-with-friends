@@ -4,14 +4,14 @@ import tilebag from '../../services/tilebag';
 import TileHolder from '../TileHolder/TileHolder';
 
 interface Props {
-    tiles: TileHolder[];
+    tiles: typeof TileHolder[];
 }
 
 export default function Board(props: Props) {
 
     tilebag.init(); // move to somewhere else once get game mechanic workings
 
-    let board: TileHolder[] = [];
+    let board: typeof TileHolder[] = [];
 
     props.tiles.forEach(column => {
 

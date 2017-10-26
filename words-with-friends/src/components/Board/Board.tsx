@@ -3,7 +3,7 @@ import Board from './';
 import TileHolder from '../TileHolder/TileHolder';
 
 interface State {
-    board: TileHolder[];
+    board: typeof TileHolder[];
 }
 
 export default class BoardContainer extends React.Component<{}, State> {
@@ -18,7 +18,7 @@ export default class BoardContainer extends React.Component<{}, State> {
 
     componentDidMount() {
 
-        let board: TileHolder[] = [];
+        let board: typeof TileHolder[] = [];
 
         for (let i = 0; i < 15; i++) {
 
