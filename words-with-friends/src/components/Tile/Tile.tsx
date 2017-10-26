@@ -13,7 +13,7 @@ interface State {
     stop: boolean;
 }
 
-function collect(connect: any, monitor: any) {
+function collect(connect: {dragSource: Function}, monitor: {isDragging: Function}) {
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
@@ -21,8 +21,8 @@ function collect(connect: any, monitor: any) {
 }
 
 const source = {
-  beginDrag(props: any) {
-    return {};
+  beginDrag(props: Props) {
+    return props;
   }
 };
 

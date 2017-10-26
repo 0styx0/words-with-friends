@@ -9,22 +9,43 @@ interface Props {
     isOver?: Function;
 }
 
+interface State {
+    tile: TileType;
+}
 
 const tileTarget = {
-  drop(props: any, monitor: any) {
-      console.log(monitor.getItem());
+  drop(props: any, monitor: any, component: any) {
+      console.log(monitor.getItem(), component.putTile(monitor.getItem()));
   }
 };
 
 function collect(connect: any, monitor: any) {
+
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver()
   };
 }
 
-@DropTarget('tile', tileTarget, collect)
-export default class TileHolderContainer extends React.Component<Props, {}> {
+export class TileHolderContainer extends React.Component<Props, State> {
+
+    constructor(props: Props) {
+        super();
+
+        if (props.tile) { // there will always be props.tile, but need to satisfy typescript
+            this.state = {
+                tile: props.tile
+            };
+        }
+
+    }
+
+    putTile(tile: TileType) {
+
+        this.setState({
+           tile: tile
+        });
+    }
 
     render() {
 
@@ -37,7 +58,7 @@ export default class TileHolderContainer extends React.Component<Props, {}> {
                   position: 'relative',
               }}
             >
-                <TileHolder {...this.props} />
+                <TileHolder {...this.state} />
                 {isOver &&
                     <div
                       style={{
@@ -56,3 +77,5 @@ export default class TileHolderContainer extends React.Component<Props, {}> {
         );
     }
 }
+
+export default DropTarget('tile', tileTarget, collect)(TileHolderContainer);
