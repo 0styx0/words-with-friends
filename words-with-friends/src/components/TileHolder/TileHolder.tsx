@@ -14,7 +14,7 @@ interface State {
 }
 
 const tileTarget = {
-  drop(props: any, monitor: any, component: any) {
+  drop(props: any, monitor: any, component: TileHolderContainer) {
 
       const tile = monitor.getItem();
 
@@ -45,6 +45,9 @@ export class TileHolderContainer extends React.Component<Props, State> {
 
     }
 
+    /**
+     * Puts tile down (@see tileTarget.drop)
+     */
     putTile(tile: TileType) {
 
         this.setState({
@@ -52,6 +55,9 @@ export class TileHolderContainer extends React.Component<Props, State> {
         });
     }
 
+    /**
+     * Removes tile from TileHolder (@see Tile.tsx#source.endDrag)
+     */
     removeTile() {
 
         this.setState({

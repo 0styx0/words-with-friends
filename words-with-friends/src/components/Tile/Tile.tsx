@@ -26,7 +26,7 @@ const source = {
     return props;
   },
   endDrag(props: Props, monitor: any, component: any) {
-      console.log(component.props.removeTile());
+      component.props.removeTile();
   }
 };
 
