@@ -25,8 +25,11 @@ const source = {
   beginDrag(props: Props) {
     return props;
   },
-  endDrag(props: Props, monitor: any, component: any) {
-      component.props.removeTile();
+  endDrag(props: Props, monitor: any, senderComponent: any) {
+
+      if (monitor.didDrop()) {
+          senderComponent.props.removeTile();
+      }
   }
 };
 

@@ -14,12 +14,22 @@ interface State {
 }
 
 const tileTarget = {
-  drop(props: any, monitor: any, component: TileHolderContainer) {
 
-      const tile = monitor.getItem();
+    drop(props: any, monitor: any, component: TileHolderContainer) {
 
-      component.putTile(tile);
-  }
+        const tile = monitor.getItem();
+
+        component.putTile(tile);
+    },
+
+    hover(props: any, monitor: any, component: TileHolderContainer) {
+        // making this.canDrop.tile as the indicator since if create separate property, typescript error
+        (this.canDrop as any).tile = !component.state.tile;
+    },
+
+    canDrop(props: any, monitor: any) {
+        return (this.canDrop as any).tile;
+    }
 };
 
 function collect(connect: any, monitor: any) {
@@ -37,7 +47,10 @@ export class TileHolderContainer extends React.Component<Props, State> {
 
         this.removeTile = this.removeTile.bind(this);
 
+        this.state = {};
+
         if (props.tile) { // there will always be props.tile, but need to satisfy typescript
+
             this.state = {
                 tile: props.tile
             };
