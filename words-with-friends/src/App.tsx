@@ -1,8 +1,7 @@
 import * as React from 'react';
 import './App.css';
-import Hand from './components/Hand';
+import HandContainer from './components/Hand/Hand';
 
-// import Tile from './components/Tile/';
 import Board from './components/Board/Board';
 
 import { DragDropContext } from 'react-dnd';
@@ -14,9 +13,9 @@ class App extends React.Component {
   render(): any {
     return (
         <div>
-          <Hand />
+          <HandContainer />
           <Board />
-          <Hand className="rightHand" />
+          <HandContainer className="rightHand" />
         </div>
     );
   }
