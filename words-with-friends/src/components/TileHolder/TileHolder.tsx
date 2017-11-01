@@ -7,6 +7,7 @@ interface Props {
     tile?: TileType;
     connectDropTarget?: Function;
     isOver?: Function;
+    canDrag: boolean;
 }
 
 interface State {
@@ -23,6 +24,7 @@ const tileTarget = {
     },
 
     hover(props: any, monitor: any, component: TileHolderContainer) {
+
         // making this.canDrop.tile as the indicator since if create separate property, typescript error
         (this.canDrop as any).tile = !component.state.tile;
     },
@@ -89,7 +91,7 @@ export class TileHolderContainer extends React.Component<Props, State> {
                   position: 'relative',
               }}
             >
-                <TileHolder {...this.state} removeTile={this.removeTile} />
+                <TileHolder canDrag={this.props.canDrag} {...this.state} removeTile={this.removeTile} />
                 {isOver &&
                     <div
                       style={{

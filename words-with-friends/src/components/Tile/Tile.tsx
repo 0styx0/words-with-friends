@@ -8,6 +8,7 @@ interface Props {
     connectDragSource?: Function;
     isDragging?: Function;
     removeTile: Function;
+    canDrag: boolean;
 }
 
 interface State {
@@ -22,6 +23,11 @@ function collect(connect: {dragSource: Function}, monitor: {isDragging: Function
 }
 
 const source = {
+
+  canDrag(props: Props) {
+      return props.canDrag;
+  },
+
   beginDrag(props: Props) {
     return props;
   },

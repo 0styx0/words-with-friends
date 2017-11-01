@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-import HandContainer from './components/Hand/Hand';
+import Game from './classes/Game';
 
 import Board from './components/Board/Board';
 
@@ -11,11 +11,14 @@ import HTML5Backend from 'react-dnd-html5-backend';
 class App extends React.Component {
 
   render(): any {
+
+    Game.init();
+
     return (
         <div>
-          <HandContainer />
+          {Game.Players[0].hand}
           <Board />
-          <HandContainer className="rightHand" />
+          {Game.Players[1].hand}
         </div>
     );
   }

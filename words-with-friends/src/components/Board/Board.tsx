@@ -25,7 +25,7 @@ export default class BoardContainer extends React.Component<{}, State> {
             board.push([] as any); // board = [[]]
 
             for (let j = 0; j < 15; j++) {
-                board[i][j] = <TileHolder key={`${i}, ${j}`} />;
+                board[i][j] = <TileHolder canDrag={true} key={`${i}, ${j}`} />;
             }
         }
 
