@@ -2,7 +2,8 @@ import * as React from 'react';
 import './App.css';
 import Game from './classes/Game';
 
-import Board from './components/Board/Board';
+// import Board from './components/Board/Board';
+// import ControlsContainer from './components/Controls/Controls';
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -12,15 +13,7 @@ class App extends React.Component {
 
   render(): any {
 
-    Game.init();
-
-    return (
-        <div>
-          {Game.Players[0].hand}
-          <Board />
-          {Game.Players[1].hand}
-        </div>
-    );
+    return <Game />;
   }
 }
 

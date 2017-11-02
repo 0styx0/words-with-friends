@@ -46,7 +46,7 @@ export default class HandContainer extends React.Component<Props, State> {
     }
 
     render() {
-
+        
         return <Hand tiles={this.state.tiles} canDrag={this.props.canDrag} className={this.props.className} />;
     }
 }

@@ -1,5 +1,5 @@
 // import Tile from '../interfaces/Tile';
-// import Hand from '../components/Hand/Hand';
+import Hand from '../components/Hand/Hand';
 // import tileBag from '../services/tilebag';
 
 export default class Player {
@@ -7,5 +7,5 @@ export default class Player {
     name = '';
     turn = false;
     score = 0;
-    hand: any;
+    hand: Hand;
 }
