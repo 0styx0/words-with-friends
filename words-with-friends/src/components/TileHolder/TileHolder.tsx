@@ -2,12 +2,14 @@ import * as React from 'react';
 import TileHolder from './';
 import TileType from '../../interfaces/Tile';
 import { DropTarget } from 'react-dnd';
+import Game from '../../classes/Game';
 
 interface Props {
     tile?: TileType;
     connectDropTarget?: Function;
     isOver?: Function;
     canDrag: boolean;
+    coordinates: string;
 }
 
 interface State {
@@ -26,11 +28,15 @@ const tileTarget = {
     hover(props: any, monitor: any, component: TileHolderContainer) {
 
         // making this.canDrop.tile as the indicator since if create separate property, typescript error
-        (this.canDrop as any).tile = !component.state.tile;
+        (this.canDrop as any).coordinates = component.props.coordinates;
     },
 
     canDrop(props: any, monitor: any) {
-        return (this.canDrop as any).tile;
+
+        const coordinates = (this.canDrop as any).coordinates;
+
+        const data = Game.board.get(coordinates);
+        return !!(data && !data.filled);
     }
 };
 
@@ -68,6 +74,11 @@ export class TileHolderContainer extends React.Component<Props, State> {
         this.setState({
            tile: tile
         });
+
+        Game.board.set(this.props.coordinates, {
+            filled: true,
+            turnTileWasPlaced: Game.turn
+        });
     }
 
     /**
@@ -77,6 +88,11 @@ export class TileHolderContainer extends React.Component<Props, State> {
 
         this.setState({
             tile: undefined
+        });
+
+        Game.board.set(this.props.coordinates, {
+            filled: false,
+            turnTileWasPlaced: 0
         });
     }
 
@@ -91,7 +107,7 @@ export class TileHolderContainer extends React.Component<Props, State> {
                   position: 'relative',
               }}
             >
-                <TileHolder canDrag={this.props.canDrag} {...this.state} removeTile={this.removeTile} />
+                <TileHolder coordinates={this.props.coordinates} canDrag={this.props.canDrag} {...this.state} removeTile={this.removeTile} />
                 {isOver &&
                     <div
                       style={{

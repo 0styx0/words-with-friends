@@ -7,6 +7,7 @@ interface Props {
     tile?: TileType;
     removeTile: Function;
     canDrag: boolean;
+    coordinates: string;
 }
 
 export default function TileHolder(props: Props) {
@@ -18,6 +19,7 @@ export default function TileHolder(props: Props) {
               letter={props.tile.letter}
               points={props.tile.points}
               canDrag={props.canDrag}
+              coordinates={props.coordinates}
             />
         ) : <span />
     );

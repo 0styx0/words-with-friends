@@ -11,6 +11,11 @@ interface State {
 export default class Game extends React.Component<{}, State> {
 
     static Players: Player[] = [new Player(), new Player()];
+    static turn = 1;
+    static board = new Map<string, {
+        filled: boolean,
+        turnTileWasPlaced: number
+    }>();
 
     constructor() {
         super();
@@ -54,11 +59,17 @@ export default class Game extends React.Component<{}, State> {
            player.turn = !player.turn;
         });
 
+        Game.turn++;
+
         this.setHands();
+
+        Game.board.forEach((value, key) => {
+            Game.board.set(key, value);
+        });
     }
 
     render() {
-        
+
         return (
             <div>
                 {Game.Players[0].hand}

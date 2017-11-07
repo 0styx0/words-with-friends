@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Tile from './';
 import { DragSource } from 'react-dnd';
+import Game from '../../classes/Game';
 
 interface Props {
     letter: string;
@@ -9,6 +10,7 @@ interface Props {
     isDragging?: Function;
     removeTile: Function;
     canDrag: boolean;
+    coordinates: string;
 }
 
 interface State {
@@ -25,7 +27,14 @@ function collect(connect: {dragSource: Function}, monitor: {isDragging: Function
 const source = {
 
   canDrag(props: Props) {
-      return props.canDrag;
+
+        const data = Game.board.get(props.coordinates);
+
+        if (!data) {
+            return true;
+        }
+
+        return props.canDrag && (data.turnTileWasPlaced === Game.turn || data.turnTileWasPlaced === 0);
   },
 
   beginDrag(props: Props) {
