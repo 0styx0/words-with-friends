@@ -36,7 +36,8 @@ const tileTarget = {
         const coordinates = (this.canDrop as any).coordinates;
 
         const data = Game.board.get(coordinates);
-        return !!(data && !data.filled);
+        console.log(data, coordinates);
+        return !!(data && !data.filled) && data.canPlace;
     }
 };
 
@@ -77,7 +78,8 @@ export class TileHolderContainer extends React.Component<Props, State> {
 
         Game.board.set(this.props.coordinates, {
             filled: true,
-            turnTileWasPlaced: Game.turn
+            turnTileWasPlaced: Game.turn,
+            canPlace: Game.board.get(this.props.coordinates)!.canPlace
         });
     }
 
@@ -92,7 +94,8 @@ export class TileHolderContainer extends React.Component<Props, State> {
 
         Game.board.set(this.props.coordinates, {
             filled: false,
-            turnTileWasPlaced: 0
+            turnTileWasPlaced: 0,
+            canPlace: true
         });
     }
 

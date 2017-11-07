@@ -14,7 +14,8 @@ export default class Game extends React.Component<{}, State> {
     static turn = 1;
     static board = new Map<string, {
         filled: boolean,
-        turnTileWasPlaced: number
+        turnTileWasPlaced: number,
+        canPlace: boolean
     }>();
 
     constructor() {
