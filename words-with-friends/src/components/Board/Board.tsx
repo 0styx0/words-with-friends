@@ -29,12 +29,12 @@ export default class BoardContainer extends React.Component<{}, State> {
 
                 board[i][j] = <TileHolder coordinates={`${i}, ${j}`} canDrag={true} key={`${i}, ${j}`} />;
 
-                const centerTile = i === 7 && j === 7;
+                // const centerTile = i === 7 && j === 7;
 
                 Game.board.set(`${i}, ${j}`, {
                     filled: false,
                     turnTileWasPlaced: 0,
-                    canPlace: centerTile
+                    recent: false
                 });
             }
         }
