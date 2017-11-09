@@ -56,19 +56,9 @@ export default class Game extends React.Component<{}, State> {
 
     turn() {
 
-        Game.Players.forEach(player => {
-           player.turn = !player.turn;
-        });
-
-        Game.turn++;
-
-        this.setHands();
-
         const recentlyPlacedCoordinates: [number, number][] = [];
 
         Game.board.forEach((value, key) => {
-
-            Game.board.set(key, value);
 
             if (value.recent) {
 
@@ -78,7 +68,28 @@ export default class Game extends React.Component<{}, State> {
             }
         });
 
-        this.checkTilePlacementValidity(recentlyPlacedCoordinates);
+        if (this.checkTilePlacementValidity(recentlyPlacedCoordinates)) {
+
+            Game.Players.forEach(player => {
+                player.turn = !player.turn;
+            });
+
+            (function unmarkRecentTiles() {
+
+                recentlyPlacedCoordinates.forEach(coordinate => {
+
+                    const key = `${coordinate[0]}, ${coordinate[1]}`;
+                    const value = Game.board.get(key)!;
+                    value.recent = false;
+
+                    Game.board.set(key, value);
+                });
+            }());
+
+            Game.turn++;
+
+            this.setHands();
+        }
     }
 
 
@@ -89,6 +100,9 @@ export default class Game extends React.Component<{}, State> {
      */
     checkTilePlacementValidity(coordinates: [number, number][]) {
 
+        /**
+         * Checks if tile is directly under a tile of the previous coordinate
+         */
         const validateVertically = (currentCoordinate: [number, number], indexOfCurrentCoordinate: number) => {
 
             const belowPreviousCoordinate = currentCoordinate[0] === coordinates[indexOfCurrentCoordinate - 1][0] + 1;
@@ -97,18 +111,38 @@ export default class Game extends React.Component<{}, State> {
             return belowPreviousCoordinate && coordinateHasSameX;
         };
 
+        /**
+         * Checks if tile is directly to the right of a prevous tile
+         */
+        const validateHorizontally = (currentCoordinate: [number, number], indexOfCurrentCoordinate: number) => {
+
+            const onSameLine = currentCoordinate[0] === coordinates[indexOfCurrentCoordinate - 1][0];
+            const coordinateHasNextX = currentCoordinate[1] === coordinates[indexOfCurrentCoordinate - 1][1] + 1;
+
+            return onSameLine && coordinateHasNextX;
+        };
+
         const tilesArePlacedVertically = validateVertically(coordinates[1], 1);
+        const tilesArePlacedHorizontally = validateHorizontally(coordinates[1], 1);
 
-        if (tilesArePlacedVertically) {
+        if (!tilesArePlacedVertically && !tilesArePlacedHorizontally) {
+            console.log('bad placement');
+            return false;
+        }
 
-            for (let i = 1; i < coordinates.length; i++) {
+        for (let i = 1; i < coordinates.length; i++) {
 
-                if (!validateVertically(coordinates[i], i)) {
-                    return false;
-                }
+            if (tilesArePlacedVertically && !validateVertically(coordinates[i], i)) {
+                console.log('fail vertical');
+                return false;
+            }
+            else if (tilesArePlacedHorizontally && !validateHorizontally(coordinates[i], i)) {
+                console.log('fail horizontal');
+                return false;
             }
         }
 
+        console.log('pass');
         return true;
     }
 
