@@ -161,7 +161,7 @@ export default class Game extends React.Component<{}, State> {
         const centerIsFilled = Game.board.get(centerCoordinates)!.filled;
 
         if (!centerIsFilled) {
-            return true;
+            return false;
         }
 
         const coordinatesTried = new Set<string>(); // so recursion in checkTileTree doesn't go on forever
