@@ -100,6 +100,11 @@ export default class Game extends React.Component<{}, State> {
      */
     checkTilePlacementValidity(coordinates: [number, number][]) {
 
+        if (!this.checkForCenterTile(coordinates[0])) {
+            console.log('no center');
+            return false;
+        }
+
         /**
          * Checks if tile is directly under a tile of the previous coordinate
          */
@@ -144,6 +149,52 @@ export default class Game extends React.Component<{}, State> {
 
         console.log('pass');
         return true;
+    }
+
+    /**
+     * Checks if center spot on board is filled (all tiles must emenate from center)
+     */
+    checkForCenterTile(currentCoordinates: [number, number]) {
+
+        const centerCoordinates = '7, 7';
+
+        const centerIsFilled = Game.board.get(centerCoordinates)!.filled;
+
+        if (!centerIsFilled) {
+            return true;
+        }
+
+        const coordinatesTried = new Set<string>(); // so recursion in checkTileTree doesn't go on forever
+
+        /**
+         * Recursively checks all paths from `currentCoordinates` until it finds the center tile
+         *
+         * @return boolean if `currentCoordinates` somehow connects to the center of the board
+         */
+        function checkTileTree(coordinates: [number, number]): any {
+
+            const key = `${coordinates[0]}, ${coordinates[1]}`;
+
+            const space = Game.board.get(key);
+
+            if (coordinates[0] === coordinates[1] && coordinates[0] === 7) {
+                return true;
+            }
+
+            if (space && space.filled && !coordinatesTried.has(key)) {
+
+                coordinatesTried.add(key);
+
+                return checkTileTree([coordinates[0] + 1, coordinates[1]]) ||
+                    checkTileTree([coordinates[0], coordinates[1] + 1]) ||
+                    checkTileTree([coordinates[0] - 1, coordinates[1]]) ||
+                    checkTileTree([coordinates[0], coordinates[1] - 1]);
+            }
+
+            return false;
+        }
+        console.log(checkTileTree(currentCoordinates));
+        return checkTileTree(currentCoordinates);
     }
 
     render() {
