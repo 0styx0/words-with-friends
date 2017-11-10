@@ -161,6 +161,7 @@ export default class Game extends React.Component<{}, State> {
         const centerIsFilled = Game.board.get(centerCoordinates)!.filled;
 
         if (!centerIsFilled) {
+            console.log('center not filled');
             return false;
         }
 
@@ -178,6 +179,7 @@ export default class Game extends React.Component<{}, State> {
             const space = Game.board.get(key);
 
             if (coordinates[0] === coordinates[1] && coordinates[0] === 7) {
+                console.log('center is here');
                 return true;
             }
 
@@ -193,7 +195,7 @@ export default class Game extends React.Component<{}, State> {
 
             return false;
         }
-        console.log(checkTileTree(currentCoordinates));
+
         return checkTileTree(currentCoordinates);
     }
 
