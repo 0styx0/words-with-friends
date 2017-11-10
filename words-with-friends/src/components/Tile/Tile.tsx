@@ -30,11 +30,11 @@ const source = {
 
         const data = Game.board.get(props.coordinates);
 
-        if (!data) {
+        if (!data && props.canDrag) {
             return true;
         }
 
-        return props.canDrag && (data.turnTileWasPlaced === Game.turn || data.turnTileWasPlaced === 0);
+        return props.canDrag && (data!.turnTileWasPlaced === Game.turn || data!.turnTileWasPlaced === 0);
   },
 
   beginDrag(props: Props) {
