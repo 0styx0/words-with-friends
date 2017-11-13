@@ -172,7 +172,7 @@ export default class Game extends React.Component<{}, State> {
          *
          * @return boolean if `currentCoordinates` somehow connects to the center of the board
          */
-        function checkTileTree(coordinates: [number, number]): any {
+        function checkTileTree(coordinates: [number, number]): boolean {
 
             const key = `${coordinates[0]}, ${coordinates[1]}`;
 
