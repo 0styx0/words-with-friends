@@ -3,6 +3,7 @@ import HandContainer from '../components/Hand/Hand';
 import Board from '../components/Board/Board';
 import ControlsContainer from '../components/Controls/Controls';
 import Player from './Player';
+import TileInfo from '../interfaces/TileInfo';
 
 interface State {
     number: number;
@@ -12,11 +13,7 @@ export default class Game extends React.Component<{}, State> {
 
     static Players: Player[] = [new Player(), new Player()];
     static turn = 1;
-    static board = new Map<string, {
-        filled: boolean,
-        turnTileWasPlaced: number,
-        recent: boolean
-    }>();
+    static board = new Map<string, TileInfo>();
 
     constructor() {
         super();
