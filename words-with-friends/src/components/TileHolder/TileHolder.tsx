@@ -21,7 +21,7 @@ const tileTarget = {
     drop(props: any, monitor: any, component: TileHolderContainer) {
 
         const tile = monitor.getItem();
-
+console.log(component.props.coordinates);
         component.putTile(tile);
     },
 
@@ -76,11 +76,10 @@ export class TileHolderContainer extends React.Component<Props, State> {
            tile: tile
         });
 
-        Game.board.set(this.props.coordinates, {
-            filled: true,
-            turnTileWasPlaced: Game.turn,
-            recent: true
-        });
+        const tileInfo = Game.board.get(this.props.coordinates)!;
+        tileInfo.place(tile.points);
+
+        Game.board.set(this.props.coordinates, tileInfo);
     }
 
     /**
@@ -92,22 +91,24 @@ export class TileHolderContainer extends React.Component<Props, State> {
             tile: undefined
         });
 
-        Game.board.set(this.props.coordinates, {
-            filled: false,
-            turnTileWasPlaced: 0,
-            recent: false
-        });
+        if (this.props.coordinates) {
+
+            const tileInfo = Game.board.get(this.props.coordinates)!;
+            tileInfo.reset();
+
+            Game.board.set(this.props.coordinates, tileInfo);
+        }
     }
 
     render() {
 
         const { connectDropTarget, isOver } = this.props as {connectDropTarget: Function, isOver: Function};
-
+// TODO: make classes in TileHolder for powerup backgrounds
         return connectDropTarget(
             <div
               className="tileHolder"
               style={{
-                  position: 'relative',
+                  position: 'relative'
               }}
             >
                 <TileHolder coordinates={this.props.coordinates} canDrag={this.props.canDrag} {...this.state} removeTile={this.removeTile} />

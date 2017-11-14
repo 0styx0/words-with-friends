@@ -29,11 +29,7 @@ export default class BoardContainer extends React.Component<{}, State> {
 
             for (let j = 0; j < 15; j++) {
 
-                const tileInfo: TileInfo = {
-                    filled: false,
-                    turnTileWasPlaced: 0,
-                    recent: false
-                };
+                const tileInfo = new TileInfo();
 
                 if (Math.random().toString()[2] === '2') {
 
@@ -47,7 +43,6 @@ export default class BoardContainer extends React.Component<{}, State> {
                       coordinates={`${i}, ${j}`}
                       canDrag={true}
                       key={`${i}, ${j}`}
-                      powerup={tileInfo.powerup}
                     />
                 );
             }
