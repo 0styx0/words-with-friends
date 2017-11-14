@@ -53,17 +53,7 @@ export default class Game extends React.Component<{}, State> {
 
     turn() {
 
-        const recentlyPlacedCoordinates: [number, number][] = [];
-
-        Game.board.forEach((value, key) => {
-
-            if (value.recent) {
-
-                const coordinates = key.split(', ');
-
-                recentlyPlacedCoordinates.push([+coordinates[0], +coordinates[1]]);
-            }
-        });
+        const recentlyPlacedCoordinates = this.getTilesPlaced();
 
         if (this.checkTilePlacementValidity(recentlyPlacedCoordinates)) {
 
@@ -87,6 +77,26 @@ export default class Game extends React.Component<{}, State> {
 
             this.setHands();
         }
+    }
+
+    /**
+     * @return tiles placed during most recent turn
+     */
+    getTilesPlaced() {
+
+        const recentlyPlacedCoordinates: [number, number][] = [];
+
+        Game.board.forEach((value, key) => {
+
+            if (value.recent) {
+
+                const coordinates = key.split(', ');
+
+                recentlyPlacedCoordinates.push([+coordinates[0], +coordinates[1]]);
+            }
+        });
+
+        return recentlyPlacedCoordinates;
     }
 
 
