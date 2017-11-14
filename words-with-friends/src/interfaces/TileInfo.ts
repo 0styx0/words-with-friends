@@ -4,5 +4,5 @@ export default interface TileInfo {
     filled: boolean;
     turnTileWasPlaced: number;
     recent: boolean;
-    powerup?: Powerup;
+    powerup?: Powerup | undefined;
 }
