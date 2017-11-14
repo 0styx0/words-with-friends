@@ -4,6 +4,7 @@ import Board from '../components/Board/Board';
 import ControlsContainer from '../components/Controls/Controls';
 import Player from './Player';
 import TileInfo from '../interfaces/TileInfo';
+import tilebag from '../services/tilebag';
 
 interface State {
     number: number;
@@ -30,7 +31,7 @@ export default class Game extends React.Component<{}, State> {
     componentWillMount() {
 
         Game.Players[0].turn = true;
-
+        tilebag.init(); // move to somewhere else once get game mechanic workings
         this.setHands();
     }
 
@@ -73,10 +74,43 @@ export default class Game extends React.Component<{}, State> {
                 });
             }());
 
+            this.tallyPoints(recentlyPlacedCoordinates);
+
             Game.turn++;
 
             this.setHands();
         }
+    }
+
+    /**
+     * Adds up points that a word is worth and adds that to the current user's total
+     */
+    tallyPoints(recentlyPlacedCoordinates: [number, number][]) {
+
+        const wordMultipliers: number[] = [];
+
+        function calculateTileMultipliers() {
+
+            return recentlyPlacedCoordinates.reduce((accum: number, currentCoordinate) => {
+
+                const tile = Game.board.get(`${currentCoordinate[0]}, ${currentCoordinate[1]}`)!;
+
+                if (tile.powerup && tile.powerup.target === 'word') {
+                    wordMultipliers.push(tile.powerup.multiplyBy);
+                }
+
+                return accum + tile.calculateValue();
+            }, 0);
+        }
+
+        const tilePoints = calculateTileMultipliers();
+
+        const totalPoints = wordMultipliers.reduce((accum: number, multiplier: number) =>
+          accum * multiplier, tilePoints);
+
+        Game.Players[Game.turn % 2].score += totalPoints;
+
+        console.log(totalPoints);
     }
 
     /**
