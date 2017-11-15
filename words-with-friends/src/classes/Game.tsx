@@ -147,49 +147,123 @@ export default class Game extends React.Component<{}, State> {
         }
 
         /**
-         * Checks if tile is directly under a tile of the previous coordinate
+         * Travels validateVertically through the board, starting at firstCoordinate
+         *
+         * @param firstCoordinate - The first coordinate to start checking by
+         *
+         * @return boolean if all tiles in coordinates (param of checkTilePlacementValidity) is covered
+         *  in the travels
          */
-        const validateVertically = (currentCoordinate: [number, number], indexOfCurrentCoordinate: number) => {
+        const validateVertically = (firstCoordinate: [number, number]) => {
 
-            const belowPreviousCoordinate = currentCoordinate[0] === coordinates[indexOfCurrentCoordinate - 1][0] + 1;
-            const coordinateHasSameX = currentCoordinate[1] === coordinates[indexOfCurrentCoordinate - 1][1];
+            let y = firstCoordinate[0]; // should keep going up
+            const coordinatesNotTouched = [...coordinates];
 
-            return belowPreviousCoordinate && coordinateHasSameX;
+            while (this.getTileInfo([y, firstCoordinate[1]]).filled) {
+
+                const currentTileInfo = this.getTileInfo([y, firstCoordinate[1]]);
+
+                if (currentTileInfo.recent) {
+
+                    const recentCoordinateIdx = coordinatesNotTouched.findIndex((coordinate) =>
+                      coordinate[0] === y && coordinate[1] === firstCoordinate[1]);
+
+                    if (recentCoordinateIdx !== -1) {
+                        coordinatesNotTouched.splice(recentCoordinateIdx, 1);
+                    }
+                }
+
+                y++;
+            }
+
+            return !coordinatesNotTouched.length;
         };
 
         /**
-         * Checks if tile is directly to the right of a prevous tile
+         * Travels horizontally through the board, starting at firstCoordinate
+         *
+         * @param firstCoordinate - The first coordinate to start checking by
+         *
+         * @return boolean if all tiles in coordinates (param of checkTilePlacementValidity) is covered
+         *  in the travels
          */
-        const validateHorizontally = (currentCoordinate: [number, number], indexOfCurrentCoordinate: number) => {
+        const validateHorizontally = (firstCoordinate: [number, number]) => {
 
-            const onSameLine = currentCoordinate[0] === coordinates[indexOfCurrentCoordinate - 1][0];
-            const coordinateHasNextX = currentCoordinate[1] === coordinates[indexOfCurrentCoordinate - 1][1] + 1;
+            let x = firstCoordinate[1]; // should keep going up
+            const coordinatesNotTouched = [...coordinates];
 
-            return onSameLine && coordinateHasNextX;
+            while (this.getTileInfo([firstCoordinate[0], x]).filled) {
+
+                const currentTileInfo = this.getTileInfo([firstCoordinate[0], x]);
+
+                if (currentTileInfo.recent) {
+
+                    const recentCoordinateIdx = coordinatesNotTouched.findIndex((coordinate) =>
+                      coordinate[1] === x && coordinate[0] === firstCoordinate[0]);
+
+                    if (recentCoordinateIdx !== -1) {
+                        coordinatesNotTouched.splice(recentCoordinateIdx, 1);
+                    }
+                }
+
+                x++;
+            }
+
+            return !coordinatesNotTouched.length;
         };
 
-        const tilesArePlacedVertically = validateVertically(coordinates[1], 1);
-        const tilesArePlacedHorizontally = validateHorizontally(coordinates[1], 1);
+        // /**
+        //  * Checks if tile is directly under a tile of the previous coordinate
+        //  */
+        // const validateVertically = (currentCoordinate: [number, number], indexOfCurrentCoordinate: number) => {
 
-        if (!tilesArePlacedVertically && !tilesArePlacedHorizontally) {
-            console.log('bad placement');
-            return false;
-        }
+        //     const belowPreviousCoordinate = currentCoordinate[0] === coordinates[indexOfCurrentCoordinate - 1][0] + 1;
+        //     const coordinateHasSameX = currentCoordinate[1] === coordinates[indexOfCurrentCoordinate - 1][1];
 
-        for (let i = 1; i < coordinates.length; i++) {
+        //     return belowPreviousCoordinate && coordinateHasSameX;
+        // };
 
-            if (tilesArePlacedVertically && !validateVertically(coordinates[i], i)) {
-                console.log('fail vertical');
-                return false;
-            }
-            else if (tilesArePlacedHorizontally && !validateHorizontally(coordinates[i], i)) {
-                console.log('fail horizontal');
-                return false;
-            }
-        }
+        // /**
+        //  * Checks if tile is directly to the right of a prevous tile
+        //  */
+        // const validateHorizontally = (currentCoordinate: [number, number], indexOfCurrentCoordinate: number) => {
 
-        console.log('pass');
-        return true;
+        //     const onSameLine = currentCoordinate[0] === coordinates[indexOfCurrentCoordinate - 1][0];
+        //     const coordinateHasNextX = currentCoordinate[1] === coordinates[indexOfCurrentCoordinate - 1][1] + 1;
+
+        //     return onSameLine && coordinateHasNextX;
+        // };
+
+        // const tilesArePlacedVertically = validateVertically(coordinates[1]);
+        // const tilesArePlacedHorizontally = validateHorizontally(coordinates[1], 1);
+
+coordinates.forEach(c => console.log(c, this.getTileInfo(c)))
+
+console.log(validateVertically(coordinates[0]), validateHorizontally(coordinates[0]));
+        return validateVertically(coordinates[0]) || validateHorizontally(coordinates[0]);
+        // if (!tilesArePlacedVertically && !tilesArePlacedHorizontally) {
+        //     console.log('bad placement');
+        //     return false;
+        // }
+
+        // for (let i = 1; i < coordinates.length; i++) {
+
+        //     if (tilesArePlacedVertically && !validateVertically(coordinates[i], i)) {
+        //         console.log('fail vertical');
+        //         return false;
+        //     }
+        //     else if (tilesArePlacedHorizontally && !validateHorizontally(coordinates[i], i)) {
+        //         console.log('fail horizontal');
+        //         return false;
+        //     }
+        // }
+
+        // console.log('pass');
+        // return true;
+    }
+
+    getTileInfo(coordinates: [number, number]) {
+        return Game.board.get(`${coordinates[0]}, ${coordinates[1]}`) || new TileInfo();
     }
 
     /**
