@@ -109,8 +109,8 @@ export default class Game extends React.Component<{}, State> {
           accum * multiplier, tilePoints);
 
         Game.Players[Game.turn % 2].score += totalPoints;
-
-        console.log(totalPoints);
+        
+        console.log('points earned', totalPoints, 'new total', Game.Players[Game.turn % 2].score);
     }
 
     /**
