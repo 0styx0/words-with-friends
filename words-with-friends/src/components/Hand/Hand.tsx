@@ -29,6 +29,10 @@ export default class HandContainer extends React.Component<Props, State> {
         this.generateTiles();
     }
 
+    componentWillReceiveProps() {
+        this.generateTiles(); // after a turn, canDrag is updated so latching onto that
+    }
+
     /**
      * Sets state so there is a full hand of Tiles
      */
@@ -46,7 +50,14 @@ export default class HandContainer extends React.Component<Props, State> {
     }
 
     render() {
-        
-        return <Hand tiles={this.state.tiles} canDrag={this.props.canDrag} className={this.props.className} />;
+
+        return (
+            <Hand
+              key={+this.props.canDrag}
+              tiles={this.state.tiles}
+              canDrag={this.props.canDrag}
+              className={this.props.className}
+            />
+        );
     }
 }
