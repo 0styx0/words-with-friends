@@ -77,7 +77,7 @@ export class TileHolderContainer extends React.Component<Props, State> {
         });
 
         const tileInfo = Game.board.get(this.props.coordinates)!;
-        tileInfo.place(tile.points);
+        tileInfo.place(tile);
 
         Game.board.set(this.props.coordinates, tileInfo);
     }

@@ -1,5 +1,6 @@
 import Powerup from './Powerup';
 import Game from '../classes/Game';
+import Tile from '../interfaces/Tile';
 
 export default class TileInfo {
 
@@ -7,7 +8,7 @@ export default class TileInfo {
     turnTileWasPlaced: number;
     recent: boolean;
     powerup?: Powerup | undefined;
-    points: number;
+    tile?: Tile;
 
     constructor() {
         this.reset();
@@ -17,7 +18,7 @@ export default class TileInfo {
 
         const powerup = (this.powerup && this.powerup.target === 'letter') ? this.powerup.multiplyBy : 1;
 
-        return this.points * powerup;
+        return this.tile ? this.tile.points * powerup : 0;
     }
 
     reset() {
@@ -26,13 +27,13 @@ export default class TileInfo {
         this.turnTileWasPlaced = 0;
         this.recent = false;
         this.powerup = undefined;
-        this.points = 0;
+        this.tile = undefined;
     }
-    
-    place(points: number) {
+
+    place(tile: Tile) {
         this.filled = true;
         this.turnTileWasPlaced = Game.turn;
         this.recent = true;
-        this.points = points;
+        this.tile = tile;
     }
 }
