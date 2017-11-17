@@ -21,23 +21,35 @@ const tileTarget = {
     drop(props: any, monitor: any, component: TileHolderContainer) {
 
         const tile = monitor.getItem();
-console.log(component.props.coordinates);
+
         component.putTile(tile);
     },
 
     hover(props: any, monitor: any, component: TileHolderContainer) {
 
-        // making this.canDrop.tile as the indicator since if create separate property, typescript error
+        // making this.canDrop.property as the indicator since if create separate property, typescript error
         (this.canDrop as any).coordinates = component.props.coordinates;
+        (this.canDrop as any).filled = !!component.state.tile;
     },
 
     canDrop(props: any, monitor: any) {
 
         const coordinates = (this.canDrop as any).coordinates;
+        const filled = (this.canDrop as any).filled;
 
         const data = Game.board.get(coordinates);
 
-        return !!(data && !data.filled);
+        const spaceInPlayerHand = !data;
+        if (spaceInPlayerHand && !filled) {
+            return true;
+        }
+
+        const spaceOnBoard = !!data;
+        if (spaceOnBoard && !data!.filled) {
+            return true;
+        }
+
+        return false;
     }
 };
 
@@ -76,10 +88,13 @@ export class TileHolderContainer extends React.Component<Props, State> {
            tile: tile
         });
 
-        const tileInfo = Game.board.get(this.props.coordinates)!;
-        tileInfo.place(tile);
+        if (this.props.coordinates) {
 
-        Game.board.set(this.props.coordinates, tileInfo);
+            const tileInfo = Game.board.get(this.props.coordinates)!;
+            tileInfo.place(tile);
+            Game.board.set(this.props.coordinates, tileInfo);
+        }
+
     }
 
     /**
@@ -103,7 +118,7 @@ export class TileHolderContainer extends React.Component<Props, State> {
     render() {
 
         const { connectDropTarget, isOver } = this.props as {connectDropTarget: Function, isOver: Function};
-// TODO: make classes in TileHolder for powerup backgrounds
+        
         return connectDropTarget(
             <div
               className="tileHolder"
