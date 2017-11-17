@@ -5,6 +5,7 @@ import ControlsContainer from '../components/Controls/Controls';
 import Player from './Player';
 import TileInfo from '../interfaces/TileInfo';
 import tilebag from '../services/tilebag';
+const dictionary = require('word-list-json'); // no @types file
 
 interface State {
     number: number;
@@ -109,7 +110,7 @@ export default class Game extends React.Component<{}, State> {
           accum * multiplier, tilePoints);
 
         Game.Players[Game.turn % 2].score += totalPoints;
-        
+
         console.log('points earned', totalPoints, 'new total', Game.Players[Game.turn % 2].score);
     }
 
@@ -214,6 +215,57 @@ export default class Game extends React.Component<{}, State> {
 
         console.log('vertical', validateVertically(coordinates[0]), 'horizontal', validateHorizontally(coordinates[0]));
         return validateVertically(coordinates[0]) || validateHorizontally(coordinates[0]);
+    }
+
+    /**
+     * Checks if recent tiles form valid words with all tiles it touches
+     */
+    validateWords(coordinates: [number, number][]) {
+
+        /**
+         * Given a coordinate, this checks if it's part of a valid vertical word
+         */
+        const validateVerticalWord = (coordinateToCheck: typeof coordinates[0]) => {
+
+            /**
+             * @return the y coordinate of the highest tile that connect to coordinateToCheck
+             */
+            const getHighestY = () => {
+
+                let y = coordinateToCheck[0];
+
+                while (this.getTileInfo([y, coordinateToCheck[1]]).filled) {
+                    y--;
+                }
+
+                return y + 1;
+            };
+
+            /**
+             * @return boolean if vertical word that starts at yCoordinateToStartAt is an actual word
+             */
+            const checkWord = (yCoordinateToStartAt: number) => {
+
+                let y = yCoordinateToStartAt;
+                let word = '';
+
+                while (this.getTileInfo([y, coordinateToCheck[1]]).filled) {
+                    word += this.getTileInfo([y, coordinateToCheck[1]]).tile!.letter;
+                    y++;
+                }
+                console.log('word', word);
+
+                return word.length === 1 || dictionary.includes(word.toLowerCase());
+            };
+
+            const highestY = getHighestY();
+            return checkWord(highestY);
+        };
+
+        coordinates.forEach(coordinate => {
+            console.log('vertical word is valid', validateVerticalWord(coordinate));
+        });
+
     }
 
     getTileInfo(coordinates: [number, number]) {
