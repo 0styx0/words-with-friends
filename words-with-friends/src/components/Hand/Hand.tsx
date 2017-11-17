@@ -40,7 +40,7 @@ export default class HandContainer extends React.Component<Props, State> {
 
         const tiles: Tile[] = [...this.state.tiles];
 
-        while (tiles.length < 7) {
+        while (tiles.length < 7 && tilebag.alphabet.size > 0) {
             tiles.push(tilebag.getRandomTile());
         }
 
