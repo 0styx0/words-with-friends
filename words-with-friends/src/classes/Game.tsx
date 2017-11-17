@@ -5,7 +5,7 @@ import ControlsContainer from '../components/Controls/Controls';
 import Player from './Player';
 import TileInfo from '../interfaces/TileInfo';
 import tilebag from '../services/tilebag';
-const dictionary = require('word-list-json'); // no @types file
+import Validate from './Validate';
 
 interface State {
     number: number;
@@ -56,10 +56,11 @@ export default class Game extends React.Component<{}, State> {
     turn() {
 
         const recentlyPlacedCoordinates = this.getTilesPlaced();
+        const validate = new Validate(Game.board);
 
         if (recentlyPlacedCoordinates.length > 0 &&
-            this.checkTilePlacementValidity(recentlyPlacedCoordinates) &&
-            this.validateWords(recentlyPlacedCoordinates)) {
+            validate.checkTilePlacementValidity(recentlyPlacedCoordinates) &&
+            validate.validateWords(recentlyPlacedCoordinates)) {
 
             Game.Players.forEach(player => {
                 player.turn = !player.turn;
@@ -134,243 +135,6 @@ export default class Game extends React.Component<{}, State> {
         });
 
         return recentlyPlacedCoordinates;
-    }
-
-
-    /**
-     * Checks if tiles are placed in a valid manner (straight horizontal or vertical)
-     *
-     * @param coordinates - 2d array of coordinates of tiles. Must be left to right
-     */
-    checkTilePlacementValidity(coordinates: [number, number][]) {
-
-        if (!this.checkForCenterTile(coordinates[0])) {
-            console.log('no center');
-            return false;
-        }
-
-        /**
-         * Travels validateVertically through the board, starting at firstCoordinate
-         *
-         * @param firstCoordinate - The first coordinate to start checking by
-         *
-         * @return boolean if all tiles in coordinates (param of checkTilePlacementValidity) is covered
-         *  in the travels
-         */
-        const validateVertically = (firstCoordinate: [number, number]) => {
-
-            let y = firstCoordinate[0]; // should keep going up
-            const coordinatesNotTouched = [...coordinates];
-
-            while (this.getTileInfo([y, firstCoordinate[1]]).filled) {
-
-                const currentTileInfo = this.getTileInfo([y, firstCoordinate[1]]);
-
-                if (currentTileInfo.recent) {
-
-                    const recentCoordinateIdx = coordinatesNotTouched.findIndex((coordinate) =>
-                      coordinate[0] === y && coordinate[1] === firstCoordinate[1]);
-
-                    if (recentCoordinateIdx !== -1) {
-                        coordinatesNotTouched.splice(recentCoordinateIdx, 1);
-                    }
-                }
-
-                y++;
-            }
-
-            return !coordinatesNotTouched.length;
-        };
-
-        /**
-         * Travels horizontally through the board, starting at firstCoordinate
-         *
-         * @param firstCoordinate - The first coordinate to start checking by
-         *
-         * @return boolean if all tiles in coordinates (param of checkTilePlacementValidity) is covered
-         *  in the travels
-         */
-        const validateHorizontally = (firstCoordinate: [number, number]) => {
-
-            let x = firstCoordinate[1]; // should keep going up
-            const coordinatesNotTouched = [...coordinates];
-
-            while (this.getTileInfo([firstCoordinate[0], x]).filled) {
-
-                const currentTileInfo = this.getTileInfo([firstCoordinate[0], x]);
-
-                if (currentTileInfo.recent) {
-
-                    const recentCoordinateIdx = coordinatesNotTouched.findIndex((coordinate) =>
-                      coordinate[1] === x && coordinate[0] === firstCoordinate[0]);
-
-                    if (recentCoordinateIdx !== -1) {
-                        coordinatesNotTouched.splice(recentCoordinateIdx, 1);
-                    }
-                }
-
-                x++;
-            }
-
-            return !coordinatesNotTouched.length;
-        };
-
-        console.log('vertical', validateVertically(coordinates[0]), 'horizontal', validateHorizontally(coordinates[0]));
-        return validateVertically(coordinates[0]) || validateHorizontally(coordinates[0]);
-    }
-
-    /**
-     * Checks if recent tiles form valid words with all tiles it touches
-     */
-    validateWords(coordinates: [number, number][]) {
-
-        /**
-         * @return the y coordinate of the highest tile that connect to coordinateToCheck
-         */
-        const getHighestX = (coordinateToCheck: typeof coordinates[0]) => {
-
-            let x = coordinateToCheck[1];
-            while (this.getTileInfo([coordinateToCheck[0], x]).filled) {
-                x--;
-            }
-
-            return x + 1;
-        };
-
-        /**
-         * @return the y coordinate of the highest tile that connect to coordinateToCheck
-         */
-        const getHighestY = (coordinateToCheck: typeof coordinates[0]) => {
-
-            let y = coordinateToCheck[0];
-
-            while (this.getTileInfo([y, coordinateToCheck[1]]).filled) {
-                y--;
-            }
-
-            return y + 1;
-        };
-
-
-
-        /**
-         * Given a coordinate, this checks if it's part of a valid vertical word
-         */
-        const validateVerticalWord = (xCoordinateToStartAt: number, yCoordinateToStartAt: number) => {
-
-            /**
-             * @return boolean if vertical word that starts at yCoordinateToStartAt is an actual word
-             */
-            const checkWord = () => {
-
-                let y = yCoordinateToStartAt;
-                let word = '';
-
-                while (this.getTileInfo([y, xCoordinateToStartAt]).filled) {
-                    word += this.getTileInfo([y, xCoordinateToStartAt]).tile!.letter;
-                    y++;
-                }
-                console.log('vertical word', word);
-
-                return word.length === 1 || dictionary.includes(word.toLowerCase());
-            };
-
-            // const highestY = getHighestY(coordinateToCheck);
-            return checkWord();
-        };
-
-        /**
-         * Given a coordinate, this checks if it's part of a valid vertical word
-         */
-        const validateHorizontalWord = (xCoordinateToStartAt: number, yCoordinateToStartAt: number) => {
-
-            /**
-             * @return boolean if horizontal word that starts at xCoordinateToStartAt is an actual word
-             */
-            const checkWord = () => {
-
-                let x = xCoordinateToStartAt;
-                let word = '';
-
-                while (this.getTileInfo([yCoordinateToStartAt, x]).filled) {
-                    word += this.getTileInfo([yCoordinateToStartAt, x]).tile!.letter;
-                    x++;
-                }
-
-                console.log('horizontal word', word);
-
-                return word.length === 1 || dictionary.includes(word.toLowerCase());
-            };
-
-            return checkWord();
-        };
-
-
-
-        return coordinates.every(coordinate => {
-
-            const highestX = getHighestX(coordinate);
-            const highestY = getHighestY(coordinate);
-
-            const verticalIsValid = validateVerticalWord(coordinate[1], highestY);
-            const horizontalIsValid = validateHorizontalWord(highestX, coordinate[0]);
-
-            console.log('word is valid', verticalIsValid, horizontalIsValid);
-
-            return verticalIsValid && horizontalIsValid;
-        });
-    }
-
-    getTileInfo(coordinates: [number, number]) {
-        return Game.board.get(`${coordinates[0]}, ${coordinates[1]}`) || new TileInfo();
-    }
-
-    /**
-     * Checks if center spot on board is filled (all tiles must emenate from center)
-     */
-    checkForCenterTile(currentCoordinates: [number, number]) {
-
-        const centerCoordinates = '7, 7';
-
-        const centerIsFilled = Game.board.get(centerCoordinates)!.filled;
-
-        if (!centerIsFilled) {
-            console.log('center not filled');
-            return false;
-        }
-
-        const coordinatesTried = new Set<string>(); // so recursion in checkTileTree doesn't go on forever
-
-        /**
-         * Recursively checks all paths from `currentCoordinates` until it finds the center tile
-         *
-         * @return boolean if `currentCoordinates` somehow connects to the center of the board
-         */
-        function checkTileTree(coordinates: [number, number]): boolean {
-
-            const key = `${coordinates[0]}, ${coordinates[1]}`;
-
-            const space = Game.board.get(key);
-
-            if (coordinates[0] === coordinates[1] && coordinates[0] === 7) {
-                console.log('center is here');
-                return true;
-            }
-
-            if (space && space.filled && !coordinatesTried.has(key)) {
-
-                coordinatesTried.add(key);
-
-                return checkTileTree([coordinates[0] + 1, coordinates[1]]) ||
-                    checkTileTree([coordinates[0], coordinates[1] + 1]) ||
-                    checkTileTree([coordinates[0] - 1, coordinates[1]]) ||
-                    checkTileTree([coordinates[0], coordinates[1] - 1]);
-            }
-
-            return false;
-        }
-
-        return checkTileTree(currentCoordinates);
     }
 
     render() {
