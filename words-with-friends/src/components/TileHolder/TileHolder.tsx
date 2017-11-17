@@ -10,6 +10,7 @@ interface Props {
     isOver?: Function;
     canDrag: boolean;
     coordinates: string;
+    removeTile?: Function;
 }
 
 interface State {
@@ -21,7 +22,7 @@ const tileTarget = {
     drop(props: any, monitor: any, component: TileHolderContainer) {
 
         const tile = monitor.getItem();
-
+console.log(component.props.coordinates);
         component.putTile(tile);
     },
 
@@ -102,6 +103,8 @@ export class TileHolderContainer extends React.Component<Props, State> {
      */
     removeTile() {
 
+        this.props.removeTile && this.props.removeTile(this.state.tile);
+
         this.setState({
             tile: undefined
         });
@@ -118,7 +121,7 @@ export class TileHolderContainer extends React.Component<Props, State> {
     render() {
 
         const { connectDropTarget, isOver } = this.props as {connectDropTarget: Function, isOver: Function};
-        
+
         return connectDropTarget(
             <div
               className="tileHolder"

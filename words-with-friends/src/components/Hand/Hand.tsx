@@ -7,6 +7,7 @@ import Hand from './';
 
 interface State {
     tiles: Tile[];
+    removedTiles: Tile[];
 }
 
 interface Props {
@@ -20,7 +21,8 @@ export default class HandContainer extends React.Component<Props, State> {
         super();
 
         this.state = {
-            tiles: []
+            tiles: [],
+            removedTiles: []
         };
     }
 
@@ -30,22 +32,31 @@ export default class HandContainer extends React.Component<Props, State> {
     }
 
     componentWillReceiveProps() {
-        this.generateTiles(); // after a turn, canDrag is updated so latching onto that
+
+        const tiles = [...this.state.tiles];
+
+        // remove tiles that were put on the board
+        this.state.removedTiles.map(tile => {
+
+            const indexOfTile = tiles.indexOf(tile);
+            tiles.splice(indexOfTile, 1);
+        });
+
+        this.generateTiles(tiles); // after a turn, canDrag is updated so latching onto that
     }
 
     /**
      * Sets state so there is a full hand of Tiles
      */
-    generateTiles() {
-
-        const tiles: Tile[] = [...this.state.tiles];
+    generateTiles(tiles: Tile[] = []) {
 
         while (tiles.length < 7 && tilebag.alphabet.size > 0) {
             tiles.push(tilebag.getRandomTile());
         }
 
         this.setState({
-           tiles: tiles
+           tiles: tiles,
+           removedTiles: []
         });
     }
 
@@ -57,6 +68,11 @@ export default class HandContainer extends React.Component<Props, State> {
               tiles={this.state.tiles}
               canDrag={this.props.canDrag}
               className={this.props.className}
+              removeTile={(tile: Tile) => {
+                  this.setState({
+                      removedTiles: this.state.removedTiles.concat([tile])
+                  });
+              }}
             />
         );
     }

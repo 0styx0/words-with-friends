@@ -7,6 +7,7 @@ interface Props {
     className?: string;
     tiles: Tile[];
     canDrag: boolean;
+    removeTile: Function;
 }
 
 /**
@@ -14,7 +15,9 @@ interface Props {
  */
 export default function Hand(props: Props) {
 
-    const handHolders = props.tiles.map((tile, i) => <TileHolder canDrag={props.canDrag} tile={tile} key={i} />);
+    const handHolders = props.tiles.map((tile, i) => (
+        <TileHolder removeTile={props.removeTile} canDrag={props.canDrag} tile={tile} key={i} />
+    ));
 
     const className = 'tileHand ' + props.className;
 
