@@ -57,7 +57,9 @@ export default class Game extends React.Component<{}, State> {
 
         const recentlyPlacedCoordinates = this.getTilesPlaced();
 
-        if (this.checkTilePlacementValidity(recentlyPlacedCoordinates)) {
+        if (recentlyPlacedCoordinates.length > 0 &&
+            this.checkTilePlacementValidity(recentlyPlacedCoordinates) &&
+            this.validateWords(recentlyPlacedCoordinates)) {
 
             Game.Players.forEach(player => {
                 player.turn = !player.turn;
@@ -223,49 +225,100 @@ export default class Game extends React.Component<{}, State> {
     validateWords(coordinates: [number, number][]) {
 
         /**
+         * @return the y coordinate of the highest tile that connect to coordinateToCheck
+         */
+        const getHighestX = (coordinateToCheck: typeof coordinates[0]) => {
+
+            let x = coordinateToCheck[1];
+            while (this.getTileInfo([coordinateToCheck[0], x]).filled) {
+                x--;
+            }
+
+            return x + 1;
+        };
+
+        /**
+         * @return the y coordinate of the highest tile that connect to coordinateToCheck
+         */
+        const getHighestY = (coordinateToCheck: typeof coordinates[0]) => {
+
+            let y = coordinateToCheck[0];
+
+            while (this.getTileInfo([y, coordinateToCheck[1]]).filled) {
+                y--;
+            }
+
+            return y + 1;
+        };
+
+
+
+        /**
          * Given a coordinate, this checks if it's part of a valid vertical word
          */
-        const validateVerticalWord = (coordinateToCheck: typeof coordinates[0]) => {
-
-            /**
-             * @return the y coordinate of the highest tile that connect to coordinateToCheck
-             */
-            const getHighestY = () => {
-
-                let y = coordinateToCheck[0];
-
-                while (this.getTileInfo([y, coordinateToCheck[1]]).filled) {
-                    y--;
-                }
-
-                return y + 1;
-            };
+        const validateVerticalWord = (xCoordinateToStartAt: number, yCoordinateToStartAt: number) => {
 
             /**
              * @return boolean if vertical word that starts at yCoordinateToStartAt is an actual word
              */
-            const checkWord = (yCoordinateToStartAt: number) => {
+            const checkWord = () => {
 
                 let y = yCoordinateToStartAt;
                 let word = '';
 
-                while (this.getTileInfo([y, coordinateToCheck[1]]).filled) {
-                    word += this.getTileInfo([y, coordinateToCheck[1]]).tile!.letter;
+                while (this.getTileInfo([y, xCoordinateToStartAt]).filled) {
+                    word += this.getTileInfo([y, xCoordinateToStartAt]).tile!.letter;
                     y++;
                 }
-                console.log('word', word);
+                console.log('vertical word', word);
 
                 return word.length === 1 || dictionary.includes(word.toLowerCase());
             };
 
-            const highestY = getHighestY();
-            return checkWord(highestY);
+            // const highestY = getHighestY(coordinateToCheck);
+            return checkWord();
         };
 
-        coordinates.forEach(coordinate => {
-            console.log('vertical word is valid', validateVerticalWord(coordinate));
-        });
+        /**
+         * Given a coordinate, this checks if it's part of a valid vertical word
+         */
+        const validateHorizontalWord = (xCoordinateToStartAt: number, yCoordinateToStartAt: number) => {
 
+            /**
+             * @return boolean if horizontal word that starts at xCoordinateToStartAt is an actual word
+             */
+            const checkWord = () => {
+
+                let x = xCoordinateToStartAt;
+                let word = '';
+
+                while (this.getTileInfo([yCoordinateToStartAt, x]).filled) {
+                    word += this.getTileInfo([yCoordinateToStartAt, x]).tile!.letter;
+                    x++;
+                }
+
+                console.log('horizontal word', word);
+
+                return word.length === 1 || dictionary.includes(word.toLowerCase());
+            };
+
+            return checkWord();
+        };
+
+
+
+        return coordinates.every(coordinate => {
+
+            const highestX = getHighestX(coordinate);
+            const highestY = getHighestY(coordinate);
+
+            const verticalIsValid = validateVerticalWord(coordinate[1], highestY);
+            const horizontalIsValid = validateHorizontalWord(highestX, coordinate[0]);
+
+            console.log('word is valid', verticalIsValid, horizontalIsValid);
+
+            return verticalIsValid && horizontalIsValid;
+        });
     }
 
     getTileInfo(coordinates: [number, number]) {
