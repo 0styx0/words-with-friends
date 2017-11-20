@@ -61,11 +61,9 @@ export default class TileContainer extends React.Component<Props, State> {
 
         return connectDragSource(
             <div
+              className="tileContainer"
               style={{
-                opacity: isDragging ? 0.99 : 1,
-                fontSize: 25,
-                fontWeight: 'bold',
-                cursor: 'move'
+                opacity: isDragging ? 0.99 : 1
               }}
             >
                 <Tile {...this.props} />

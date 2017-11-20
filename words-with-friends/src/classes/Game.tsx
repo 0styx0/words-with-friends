@@ -6,6 +6,7 @@ import Player from './Player';
 import TileInfo from '../interfaces/TileInfo';
 import tilebag from '../services/tilebag';
 import Validate from './Validate';
+import './index.css';
 
 interface State {
     number: number;
@@ -140,7 +141,7 @@ export default class Game extends React.Component<{}, State> {
     render() {
 
         return (
-            <div>
+            <div id="gameContainer">
                 {Game.Players[0].hand}
                 <Board />
                 {Game.Players[1].hand}

@@ -1,4 +1,11 @@
 .tileHolder {
-    border-radius: 5px;
+    border-radius: 20%;
     border: 3px inset black;
+    /*--tileholder-dimensions: 4vw;
+    width: var(--tileholder-dimensions);
+    height: var(--tileholder-dimensions);*/
+}
+
+.tileHolder > div {
+    /*height: 100%;*/
 }

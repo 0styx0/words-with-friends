@@ -4,11 +4,9 @@
   grid-gap: 7px;
   grid-auto-rows: minmax(calc(6vh - (15px)), auto);
   max-height: 90vh;
-  max-width: 90vh;
+  width: 95%;
   --width-of-player-hand: 13vw; /* width-of-player-hand (defined in Hand/index.css) + 3vw for some space */
   margin: 0 auto;
-  margin-left: var(--width-of-player-hand);
-  margin-right: var(--width-of-player-hand);
 }
 
 /*.wrapper div {

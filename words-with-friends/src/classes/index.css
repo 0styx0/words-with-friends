@@ -1,0 +1,4 @@
+#gameContainer {
+    display: grid;
+    grid-template-columns: 10vw 90fr 10vw;
+}
