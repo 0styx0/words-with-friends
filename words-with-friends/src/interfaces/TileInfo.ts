@@ -26,7 +26,6 @@ export default class TileInfo {
         this.filled = false;
         this.turnTileWasPlaced = 0;
         this.recent = false;
-        this.powerup = undefined;
         this.tile = undefined;
     }
 
