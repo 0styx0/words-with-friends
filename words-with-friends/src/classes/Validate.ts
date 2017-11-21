@@ -144,6 +144,19 @@ export default class Validate {
      */
     validateWords(coordinates: [number, number][]) {
 
+        return this.getWords(coordinates).every(tileInfoArr => {
+
+            const word = tileInfoArr
+                .map((tileInfo => tileInfo.tile!.letter))
+                .join('');
+            console.info(word);
+
+            return dictionary.includes(word.toLowerCase());
+        });
+    }
+
+    getWords(coordinates: [number, number][]): TileInfo[][] {
+
         /**
          * @return the y coordinate of the highest tile that connect to coordinateToCheck
          */
@@ -163,14 +176,12 @@ export default class Validate {
             return highestCoordinate;
         };
 
-
-
         /**
          * Given a coordinate, this checks if it's part of a valid vertical word
          */
-        const validateVerticalWord = (coordinate: [number, number]) => {
+        const getVerticalWord = (coordinate: [number, number]) => {
 
-            let word = '';
+            let word: TileInfo[] = [];
 
             this.travelVertically(coordinate, tileInfo => {
 
@@ -178,22 +189,20 @@ export default class Validate {
                     return false;
                 }
 
-                word += tileInfo.tile!.letter;
+                word.push(tileInfo);
 
                 return true;
-
             });
 
-            console.log('vertical word', word);
-            return word.length === 1 || dictionary.includes(word.toLowerCase());
+            return word;
         };
 
         /**
          * Given a coordinate, this checks if it's part of a valid vertical word
          */
-        const validateHorizontalWord = (coordinate: [number, number]) => {
+        const getHorizontalWord = (coordinate: [number, number]) => {
 
-            let word = '';
+            let word: TileInfo[] = [];
 
             this.travelHorizontally(coordinate, tileInfo => {
 
@@ -201,30 +210,40 @@ export default class Validate {
                     return false;
                 }
 
-                word += tileInfo.tile!.letter;
+                word.push(tileInfo);
 
                 return true;
             });
 
-            console.log('horizontal word', word);
-
-            return word.length === 1 || dictionary.includes(word.toLowerCase());
+            return word;
         };
 
-        return coordinates.every(coordinate => {
+        type reductionParam = { previousX: [number, number], previousY: [number, number], words: TileInfo[][] };
+
+        return coordinates.reduce((accum: reductionParam, coordinate) => {
 
             const highestX = getHighestX(coordinate);
             const highestY = getHighestY(coordinate);
 
-            const verticalIsValid = validateVerticalWord(highestY);
-            const horizontalIsValid = validateHorizontalWord(highestX);
+            const verticalWord = getVerticalWord(highestY);
+            const horizontalWord = getHorizontalWord(highestX);
 
-            console.log('word is valid', verticalIsValid, horizontalIsValid);
+            const sameXWordAsBefore = accum.previousX[0] === highestX[0] && accum.previousX[1] === highestX[1];
+            const sameYWordAsBefore = accum.previousY[0] === highestY[0] && accum.previousY[1] === highestY[1];
 
-            return verticalIsValid && horizontalIsValid;
-        });
+            if (!sameYWordAsBefore && verticalWord.length > 1) {
+                accum.words = accum.words.concat([verticalWord]);
+            }
+            if (!sameXWordAsBefore && horizontalWord.length > 1) {
+                accum.words = accum.words.concat([horizontalWord]);
+            }
+
+            accum.previousX = highestX;
+            accum.previousY = highestY;
+
+            return accum;
+        },                        {previousX: [-1, -1], previousY: [-1, -1], words: [] as any}).words;
     }
-
 
     /**
      * Checks if center spot on board is filled (all tiles must emenate from center)
