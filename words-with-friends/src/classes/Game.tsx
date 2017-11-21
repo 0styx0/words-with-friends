@@ -92,26 +92,34 @@ export default class Game extends React.Component<{}, State> {
      */
     tallyPoints(recentlyPlacedCoordinates: [number, number][]) {
 
-        const wordMultipliers: number[] = [];
+        const validate = new Validate(Game.board);
+        const words = validate.getWords(recentlyPlacedCoordinates);
 
         function calculateTileMultipliers() {
 
-            return recentlyPlacedCoordinates.reduce((accum: number, currentCoordinate) => {
+            return words.reduce((accum: number, word) => {
 
-                const tile = Game.board.get(`${currentCoordinate[0]}, ${currentCoordinate[1]}`)!;
+                const wordMultipliers: number[] = [1];
 
-                if (tile.powerup && tile.powerup.target === 'word') {
-                    wordMultipliers.push(tile.powerup.multiplyBy);
-                }
+                const individualTilePoints = word.
+                    map(tile => {
 
-                return accum + tile.calculateValue();
+                        if (tile.powerup && tile.powerup.target === 'word') {
+                            wordMultipliers.push(tile.powerup.multiplyBy);
+                        }
+
+                        return tile.calculateValue();
+                    })
+                    .reduce((addedPoints, points) => addedPoints + points, 0);
+
+                const total = wordMultipliers.reduce((multiplied, multiplier) =>
+                    multiplier * multiplied, individualTilePoints);
+
+                return accum + total;
             }, 0);
         }
 
-        const tilePoints = calculateTileMultipliers();
-
-        const totalPoints = wordMultipliers.reduce((accum: number, multiplier: number) =>
-          accum * multiplier, tilePoints);
+        const totalPoints = calculateTileMultipliers();
 
         Game.Players[Game.turn % 2].score += totalPoints;
 
