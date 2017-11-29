@@ -34,7 +34,7 @@ const source = {
             return true;
         }
 
-        return props.canDrag && (data!.turnTileWasPlaced === Game.turn || data!.turnTileWasPlaced === 0);
+        return props.canDrag && !!data && data.canDrag;
   },
 
   beginDrag(props: Props) {
@@ -66,7 +66,7 @@ export default class TileContainer extends React.Component<Props, State> {
                 opacity: isDragging ? 0.99 : 1
               }}
             >
-                <Tile {...this.props} />
+                <Tile key={Game.turn} {...this.props} />
             </div>
         );
     }

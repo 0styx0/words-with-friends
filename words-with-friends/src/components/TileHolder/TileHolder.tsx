@@ -129,7 +129,12 @@ export class TileHolderContainer extends React.Component<Props, State> {
                   position: 'relative'
               }}
             >
-                <TileHolder coordinates={this.props.coordinates} canDrag={this.props.canDrag} {...this.state} removeTile={this.removeTile} />
+                <TileHolder
+                    coordinates={this.props.coordinates}
+                    canDrag={this.props.canDrag}
+                    {...this.state}
+                    removeTile={this.removeTile}
+                />
                 {isOver &&
                     <div
                       style={{

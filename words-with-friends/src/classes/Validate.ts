@@ -149,7 +149,6 @@ export default class Validate {
             const word = tileInfoArr
                 .map((tileInfo => tileInfo.tile!.letter))
                 .join('');
-            console.info(word);
 
             return dictionary.includes(word.toLowerCase());
         });

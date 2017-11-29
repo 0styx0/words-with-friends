@@ -8,10 +8,22 @@ export default class TileInfo {
     turnTileWasPlaced: number;
     recent: boolean;
     powerup?: Powerup | undefined;
-    tile?: Tile;
+    _tile?: Tile;
 
     constructor() {
         this.reset();
+    }
+
+    set tile(tile: Tile) {
+        this._tile = tile;
+    }
+
+    get tile() {
+        return (this._tile && this._tile.letter) ? this._tile! : { letter: 'A', points: 0 };
+    }
+
+    get canDrag() {
+        return this.turnTileWasPlaced === Game.turn || this.turnTileWasPlaced === 0;
     }
 
     calculateValue() {
@@ -26,7 +38,7 @@ export default class TileInfo {
         this.filled = false;
         this.turnTileWasPlaced = 0;
         this.recent = false;
-        this.tile = undefined;
+        this._tile = undefined;
     }
 
     place(tile: Tile) {
