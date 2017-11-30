@@ -2,7 +2,7 @@ import * as React from 'react';
 import './index.css';
 import TileType from '../../interfaces/Tile';
 import TileContainer from '../Tile/Tile';
-import Game from '../../classes/Game';
+import Game from '../Game/Game';
 
 interface Props {
     tile?: TileType;

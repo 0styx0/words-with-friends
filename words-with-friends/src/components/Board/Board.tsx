@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Board from './';
 import TileHolder from '../TileHolder/TileHolder';
-import Game from '../../classes/Game';
+import Game from '../Game/Game';
 import TileInfo from '../../interfaces/TileInfo';
 import Powerup from '../../interfaces/Powerup';
 

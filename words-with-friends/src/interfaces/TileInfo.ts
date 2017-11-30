@@ -1,5 +1,5 @@
 import Powerup from './Powerup';
-import Game from '../classes/Game';
+import Game from '../components/Game/Game';
 import Tile from '../interfaces/Tile';
 
 export default class TileInfo {

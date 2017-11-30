@@ -1,11 +1,11 @@
 import * as React from 'react';
-import HandContainer from '../components/Hand/Hand';
-import Board from '../components/Board/Board';
-import ControlsContainer from '../components/Controls/Controls';
-import Player from './Player';
-import TileInfo from '../interfaces/TileInfo';
-import tilebag from '../services/tilebag';
-import Validate from './Validate';
+import HandContainer from '../Hand/Hand';
+import Board from '../Board/Board';
+import ControlsContainer from '../Controls/Controls';
+import Player from '../../classes/Player';
+import TileInfo from '../../interfaces/TileInfo';
+import tilebag from '../../services/tilebag';
+import Validate from '../../classes/Validate';
 import './index.css';
 
 interface State {

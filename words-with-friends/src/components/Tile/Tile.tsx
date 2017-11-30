@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Tile from './';
 import { DragSource } from 'react-dnd';
-import Game from '../../classes/Game';
+import Game from '../Game/Game';
 
 interface Props {
     letter: string;

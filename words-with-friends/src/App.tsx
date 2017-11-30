@@ -1,9 +1,6 @@
 import * as React from 'react';
 import './App.css';
-import Game from './classes/Game';
-
-// import Board from './components/Board/Board';
-// import ControlsContainer from './components/Controls/Controls';
+import Game from './components/Game/Game';
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';

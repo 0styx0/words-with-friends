@@ -2,7 +2,7 @@ import * as React from 'react';
 import TileHolder from './';
 import TileType from '../../interfaces/Tile';
 import { DropTarget } from 'react-dnd';
-import Game from '../../classes/Game';
+import Game from '../Game/Game';
 
 interface Props {
     tile?: TileType;
