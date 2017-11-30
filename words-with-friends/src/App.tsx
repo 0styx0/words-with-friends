@@ -1,7 +1,5 @@
 import * as React from 'react';
-import './App.css';
 import Game from './components/Game/Game';
-
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
