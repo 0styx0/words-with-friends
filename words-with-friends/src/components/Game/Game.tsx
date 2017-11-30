@@ -2,7 +2,7 @@ import * as React from 'react';
 import HandContainer from '../Hand/Hand';
 import Player from '../../classes/Player';
 import TileInfo from '../../interfaces/TileInfo';
-import tilebag from '../../services/tilebag';
+import Tilebag from '../../classes/Tilebag';
 import Validate from '../../classes/Validate';
 import GameComponent from './';
 
@@ -31,7 +31,7 @@ export default class Game extends React.Component<{}, State> {
     componentWillMount() {
 
         Game.Players[0].turn = true;
-        tilebag.init(); // move to somewhere else once get game mechanic workings
+        Tilebag.init(); // move to somewhere else once get game mechanic workings
         this.setHands();
     }
 

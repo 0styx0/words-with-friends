@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './index.css';
-import tilebag from '../../services/tilebag';
+import Tilebag from '../../classes/Tilebag';
 import Tile from '../../interfaces/Tile';
 import Hand from './';
 
@@ -50,8 +50,8 @@ export default class HandContainer extends React.Component<Props, State> {
      */
     generateTiles(tiles: Tile[] = []) {
 
-        while (tiles.length < 7 && tilebag.alphabet.size > 0) {
-            tiles.push(tilebag.getRandomTile());
+        while (tiles.length < 7 && Tilebag.tiles.length > 0) {
+            tiles.push(Tilebag.getRandomTile());
         }
 
         this.setState({
