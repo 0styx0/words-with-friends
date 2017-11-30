@@ -1,5 +1,5 @@
 const dictionary = require('word-list-json'); // no @types file
-import TileInfo from '../interfaces/TileInfo';
+import TileInfo from '../classes/TileInfo';
 
 type boardType = Map<string, TileInfo>;
 

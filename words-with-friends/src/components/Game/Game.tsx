@@ -1,7 +1,7 @@
 import * as React from 'react';
 import HandContainer from '../Hand/Hand';
 import Player from '../../classes/Player';
-import TileInfo from '../../interfaces/TileInfo';
+import TileInfo from '../../classes/TileInfo';
 import Tilebag from '../../classes/Tilebag';
 import Validate from '../../classes/Validate';
 import GameComponent from './';
