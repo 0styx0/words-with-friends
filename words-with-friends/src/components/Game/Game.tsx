@@ -1,12 +1,10 @@
 import * as React from 'react';
 import HandContainer from '../Hand/Hand';
-import Board from '../Board/Board';
-import ControlsContainer from '../Controls/Controls';
 import Player from '../../classes/Player';
 import TileInfo from '../../interfaces/TileInfo';
 import tilebag from '../../services/tilebag';
 import Validate from '../../classes/Validate';
-import './index.css';
+import GameComponent from './';
 
 interface State {
     number: number;
@@ -148,13 +146,6 @@ export default class Game extends React.Component<{}, State> {
 
     render() {
 
-        return (
-            <div id="gameContainer">
-                {Game.Players[0].hand}
-                <Board />
-                {Game.Players[1].hand}
-                <ControlsContainer turn={this.turn} />
-            </div>
-        );
+        return <GameComponent turn={this.turn} hands={Game.Players.map(player => player.hand)} />;
     }
 }
