@@ -148,7 +148,7 @@ export default {
      */
     init() {
 
-        this.tiles = [...this.alphabet].reduce((tiles, letter) => {
+        this.tiles = Array.from(this.alphabet).reduce((tiles, letter) => {
 
             for (let i = 0; i < letter.amount; i++) {
 
