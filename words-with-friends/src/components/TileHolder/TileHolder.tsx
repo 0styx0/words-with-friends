@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TileHolder from './';
 import TileType from '../../interfaces/Tile';
-import { DropTarget } from 'react-dnd';
+// import { DropTarget } from 'react-dnd';
 import Game from '../Game/Game';
 
 interface Props {
@@ -9,14 +9,14 @@ interface Props {
     connectDropTarget?: Function;
     isOver?: Function;
     canDrag: boolean;
-    coordinates: string;
+    coordinates?: string;
     removeTile?: Function;
 }
 
 interface State {
     tile?: TileType;
 }
-
+/*
 const tileTarget = {
 
     drop(props: any, monitor: any, component: TileHolderContainer) {
@@ -61,6 +61,7 @@ function collect(connect: any, monitor: any) {
     isOver: monitor.isOver()
   };
 }
+*/
 
 export class TileHolderContainer extends React.Component<Props, State> {
 
@@ -120,9 +121,7 @@ export class TileHolderContainer extends React.Component<Props, State> {
 
     render() {
 
-        const { connectDropTarget, isOver } = this.props as {connectDropTarget: Function, isOver: Function};
-
-        return connectDropTarget(
+        return (
             <div
               className="tileHolder"
               style={{
@@ -130,28 +129,14 @@ export class TileHolderContainer extends React.Component<Props, State> {
               }}
             >
                 <TileHolder
-                    coordinates={this.props.coordinates}
+                    coordinates={this.props!.coordinates!}
                     canDrag={this.props.canDrag}
                     {...this.state}
                     removeTile={this.removeTile}
                 />
-                {isOver &&
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        height: '100%',
-                        width: '100%',
-                        zIndex: 1,
-                        opacity: 0.5,
-                        backgroundColor: 'red',
-                      }}
-                    />
-                }
             </div>
         );
     }
 }
 
-export default DropTarget('tile', tileTarget, collect)(TileHolderContainer);
+export default TileHolderContainer; // DropTarget('tile', tileTarget, collect)(TileHolderContainer);

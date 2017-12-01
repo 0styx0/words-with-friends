@@ -35,10 +35,15 @@ export default function Tile(props: Props) {
     const tileInfo = (props.coordinates && Game.board.get(props.coordinates)!) || {} as any;
 
     return (
-            <div className="tile">
+        <div
+            className="tile"
+        >
             <span className="points">{props.points}</span>
             {props.letter === '' ?
-                <select disabled={!(!!props.canDrag && !!tileInfo && tileInfo.canDrag)} onChange={(event) => onWildcardChange(event, props.coordinates)}>
+                <select
+                    disabled={!(!!props.canDrag && !!tileInfo && tileInfo.canDrag)}
+                    onChange={(event) => onWildcardChange(event, props.coordinates)}
+                >
                     {new Array(26)
                         .fill('', 0, 26)
                         .map((elt, i) =>
@@ -51,6 +56,6 @@ export default function Tile(props: Props) {
                     {props.letter}
                 </span>
             }
-            </div>
+        </div>
     );
 }
