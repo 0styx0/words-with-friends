@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function Game(props: Props) {
-
+    
     return (
         <div id="gameContainer">
             {props.hands[0]}

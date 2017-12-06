@@ -1,10 +1,10 @@
 import * as React from 'react';
 import './index.css';
 import Game from '../Game/Game';
+import TileType from '../../interfaces/Tile';
 
 interface Props {
-    letter: string;
-    points: number;
+    tile: TileType;
     coordinates?: string;
     canDrag?: boolean;
 }
@@ -25,7 +25,7 @@ function onWildcardChange(event: any, coordinates?: string) {
         return;
     }
 
-    tileInfo.tile = { letter: event.target.value, points: 0 };
+    tileInfo.tile = { letter: event.target.value, points: 0, playerIndex: tileInfo.tile.playerIndex };
 
     Game.board.set(coordinates, tileInfo);
 }
@@ -38,8 +38,8 @@ export default function Tile(props: Props) {
         <div
             className="tile"
         >
-            <span className="points">{props.points}</span>
-            {props.letter === '' ?
+            <span className="points">{props.tile.points}</span>
+            {props.tile.letter === '' ?
                 <select
                     disabled={!(!!props.canDrag && !!tileInfo && tileInfo.canDrag)}
                     onChange={(event) => onWildcardChange(event, props.coordinates)}
@@ -53,7 +53,7 @@ export default function Tile(props: Props) {
                 <span
                     className="letter"
                 >
-                    {props.letter}
+                    {props.tile.letter}
                 </span>
             }
         </div>

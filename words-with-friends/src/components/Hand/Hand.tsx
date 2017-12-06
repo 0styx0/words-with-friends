@@ -4,15 +4,15 @@ import Tilebag from '../../classes/Tilebag';
 import Tile from '../../interfaces/Tile';
 import Hand from './';
 
+interface Props {
+    className?: string;
+    playerIndex: number;
+    turn: boolean;
+}
 
 interface State {
     tiles: Tile[];
     removedTiles: Tile[];
-}
-
-interface Props {
-    className?: string;
-    canDrag: boolean;
 }
 
 export default class HandContainer extends React.Component<Props, State> {
@@ -26,7 +26,7 @@ export default class HandContainer extends React.Component<Props, State> {
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
         this.generateTiles();
     }
@@ -51,12 +51,13 @@ export default class HandContainer extends React.Component<Props, State> {
     generateTiles(tiles: Tile[] = []) {
 
         while (tiles.length < 7 && Tilebag.tiles.length > 0) {
-            tiles.push(Tilebag.getRandomTile());
+            const tile = Tilebag.getRandomTile(this.props.playerIndex);
+            tiles.push(tile);
         }
 
         this.setState({
-           tiles: tiles,
-           removedTiles: []
+            tiles,
+            removedTiles: []
         });
     }
 
@@ -64,9 +65,8 @@ export default class HandContainer extends React.Component<Props, State> {
 
         return (
             <Hand
-              key={+this.props.canDrag}
+              key={+this.props.turn}
               tiles={this.state.tiles}
-              canDrag={this.props.canDrag}
               className={this.props.className}
               removeTile={(tile: Tile) => {
                   this.setState({

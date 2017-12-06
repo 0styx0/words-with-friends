@@ -42,7 +42,14 @@ export default class Game extends React.Component<{}, State> {
 
             const className = (i === 1) ? 'rightHand' : '';
 
-            player.hand = (<HandContainer key={i} className={className} canDrag={player.turn} /> as any);
+            player.hand = (
+                <HandContainer
+                    key={i}
+                    playerIndex={i}
+                    className={className}
+                    turn={player.turn}
+                /> as any
+            );
 
             return player;
         });
@@ -71,6 +78,7 @@ export default class Game extends React.Component<{}, State> {
 
                     const key = `${coordinate[0]}, ${coordinate[1]}`;
                     const value = Game.board.get(key)!;
+                    console.log(value);
                     value.recent = false;
 
                     Game.board.set(key, value);
@@ -145,7 +153,7 @@ export default class Game extends React.Component<{}, State> {
     }
 
     render() {
-
+        
         return <GameComponent turn={this.turn} hands={Game.Players.map(player => player.hand)} />;
     }
 }

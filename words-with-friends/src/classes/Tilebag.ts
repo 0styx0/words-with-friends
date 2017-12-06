@@ -151,7 +151,6 @@ export default class Tilebag {
         Tilebag.tiles = Array.from(Tilebag.alphabet).reduce((tiles, letter) => {
 
             for (let i = 0; i < letter.amount; i++) {
-
                 tiles = tiles.concat(letter);
             }
 
@@ -172,11 +171,12 @@ export default class Tilebag {
     /**
      * Gets a tile and removes it from the Tilebag
      */
-    static getRandomTile() {
+    static getRandomTile(playerIndex: number) {
 
         const tileToGet = this.tiles[Math.floor(Math.random() * this.tiles.length)];
         Tilebag.removeTile(tileToGet);
-
+        tileToGet.playerIndex = playerIndex;
+        
         return tileToGet;
     }
 

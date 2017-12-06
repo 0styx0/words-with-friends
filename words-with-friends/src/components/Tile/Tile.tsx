@@ -1,90 +1,70 @@
 import * as React from 'react';
-import Tile from './';
-// import { DragSource } from 'react-dnd';
 import Game from '../Game/Game';
+import { DragEvent } from 'react';
+import TileType from '../../interfaces/Tile';
+import Tile from './';
 
 interface Props {
-    letter: string;
-    points: number;
-    connectDragSource?: Function;
-    isDragging?: Function;
+    tile: TileType;
     removeTile: Function;
-    canDrag: boolean;
     coordinates: string;
 }
 
-interface State {
-    stop: boolean;
-}
 
-// function collect(connect: {dragSource: Function}, monitor: {isDragging: Function}) {
-//   return {
-//     connectDragSource: connect.dragSource(),
-//     isDragging: monitor.isDragging()
-//   };
-// }
-
-// const source = {
-
-//   canDrag(props: Props) {
-
-//         const data = Game.board.get(props.coordinates);
-
-//         if (!data && props.canDrag) {
-//             return true;
-//         }
-
-//         return props.canDrag && !!data && data.canDrag;
-//   },
-
-//   beginDrag(props: Props) {
-//     return props;
-//   },
-//   endDrag(props: Props, monitor: any, senderComponent: any) {
-
-//       if (monitor.didDrop()) {
-//           senderComponent.props.removeTile();
-//       }
-//   }
-// };
-
-// @DragSource('tile', source, collect)
-export default class TileContainer extends React.Component<Props, State> {
+export default class TileContainer extends React.Component<Props, {}> {
 
     constructor() {
         super();
+
+        this.onDragStart = this.onDragStart.bind(this);
+        this.onDragEnd = this.onDragEnd.bind(this);
     }
 
-
-    onDragStart(e: any) {
-        e.dataTransfer.setData('id', 'setTheId');
-        console.log('onDragStart');
-    }
-    onDrop(e: any) {
-        console.log('onDrop');
-        const id = e.dataTransfer.getData('id');
-        console.log('Dropped with id:', id);
+    onDragStart(e: DragEvent<HTMLDivElement>) {
+        // console.log(this.canDrag());
+        if (this.canDrag()) {
+            e.dataTransfer.setData('tile', JSON.stringify(this.props.tile));
+            e.dataTransfer.dropEffect = 'move';
+        }
     }
 
+    onDragEnd(e: DragEvent<HTMLDivElement>) {
 
+        const tileWasMoved = e.dataTransfer.dropEffect !== 'none';
 
+        if (tileWasMoved) {
+            this.props.removeTile();
+        }
+    }
 
+  canDrag() {
+
+      const data = Game.board.get(this.props.coordinates);
+      const tileIsAlreadyOnBoard = !!data;
+
+      const tileInCurrentPlayersHand = !tileIsAlreadyOnBoard && Game.Players[this.props.tile.playerIndex!].turn;
+      const draggableTileOnBoard = tileIsAlreadyOnBoard && data!.canDrag;
+    //   console.log(tileIsAlreadyOnBoard , Game.Players[this.props.tile.playerIndex!].turn, this.props.tile.playerIndex);
+      return tileInCurrentPlayersHand || draggableTileOnBoard;
+  }
 
     render() {
 
+        // console.log(this.props.tile && this.props.tile.playerIndex);
+        // console.log(this.canDrag());
         return (
             <div
                 className="tileContainer"
                 onDragStart={this.onDragStart}
-                onDrop={this.onDrop}
-                draggable={this.props.canDrag}
+                onDragEnd={this.onDragEnd}
+                draggable={true || this.canDrag()}
+                key={+this.canDrag()}
             >
                 <Tile
-                    key={Game.turn}
-                    letter={this.props.letter}
-                    points={this.props.points}
+                    key={+this.canDrag()}
+                    tile={this.props.tile}
                     coordinates={this.props.coordinates}
-                    canDrag={this.props.canDrag}
+                    canDrag={this.canDrag()}
                 />
             </div>
         );

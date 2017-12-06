@@ -1,14 +1,13 @@
 import * as React from 'react';
 import TileHolder from './';
 import TileType from '../../interfaces/Tile';
-// import { DropTarget } from 'react-dnd';
 import Game from '../Game/Game';
+import { DragEvent } from 'react';
 
 interface Props {
     tile?: TileType;
     connectDropTarget?: Function;
     isOver?: Function;
-    canDrag: boolean;
     coordinates?: string;
     removeTile?: Function;
 }
@@ -16,60 +15,15 @@ interface Props {
 interface State {
     tile?: TileType;
 }
-/*
-const tileTarget = {
-
-    drop(props: any, monitor: any, component: TileHolderContainer) {
-
-        const tile = monitor.getItem();
-console.log(component.props.coordinates);
-        component.putTile(tile);
-    },
-
-    hover(props: any, monitor: any, component: TileHolderContainer) {
-
-        // making this.canDrop.property as the indicator since if create separate property, typescript error
-        (this.canDrop as any).coordinates = component.props.coordinates;
-        (this.canDrop as any).filled = !!component.state.tile;
-    },
-
-    canDrop(props: any, monitor: any) {
-
-        const coordinates = (this.canDrop as any).coordinates;
-        const filled = (this.canDrop as any).filled;
-
-        const data = Game.board.get(coordinates);
-
-        const spaceInPlayerHand = !data;
-        if (spaceInPlayerHand && !filled) {
-            return true;
-        }
-
-        const spaceOnBoard = !!data;
-        if (spaceOnBoard && !data!.filled) {
-            return true;
-        }
-
-        return false;
-    }
-};
-
-function collect(connect: any, monitor: any) {
-
-  return {
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver()
-  };
-}
-*/
 
 export class TileHolderContainer extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super();
-
+        props.tile && console.info(props.tile!.playerIndex);
         this.removeTile = this.removeTile.bind(this);
-
+        this.onDrop = this.onDrop.bind(this);
+        this.onDragOver = this.onDragOver.bind(this);
         this.state = {};
 
         if (props.tile) { // there will always be props.tile, but need to satisfy typescript
@@ -119,18 +73,37 @@ export class TileHolderContainer extends React.Component<Props, State> {
         }
     }
 
+    onDrop(e: DragEvent<HTMLDivElement>) {
+
+        e.preventDefault();
+
+        const tile = JSON.parse(e.dataTransfer.getData('tile'));
+        this.putTile(tile);
+    }
+
+    canDrop() {
+        return !this.state.tile;
+    }
+
+    onDragOver(e: DragEvent<HTMLDivElement>) {
+
+        e.preventDefault();
+
+        if (!this.canDrop()) {
+            e.dataTransfer.dropEffect = 'none';
+        }
+    }
+
     render() {
 
         return (
             <div
               className="tileHolder"
-              style={{
-                  position: 'relative'
-              }}
+              onDrop={this.onDrop}
+              onDragOver={this.onDragOver}
             >
                 <TileHolder
                     coordinates={this.props!.coordinates!}
-                    canDrag={this.props.canDrag}
                     {...this.state}
                     removeTile={this.removeTile}
                 />

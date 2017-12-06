@@ -41,7 +41,6 @@ export default class BoardContainer extends React.Component<{}, State> {
                 board[i][j] = (
                     <TileHolder
                       coordinates={`${i}, ${j}`}
-                      canDrag={true}
                       key={`${i}, ${j}`}
                     />
                 );
