@@ -10,7 +10,8 @@ import { defaultState } from '../../store';
 function mapStateToProps(state: typeof defaultState) {
     return {
         turn: state.turn,
-        Players: state.Players
+        Players: state.Players,
+        board: state.board
     };
 }
 
