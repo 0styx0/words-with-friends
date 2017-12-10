@@ -14,7 +14,8 @@ function mapStateToProps(state: typeof defaultState, props: Props) {
     return {
         coordinates: props.coordinates,
         tile: props.tile,
-        currentPlayer: state.Players.find(player => player.turn)
+        currentPlayer: state.Players.find(player => player.turn),
+        board: state.board
     };
 }
 
@@ -37,7 +38,7 @@ export class TileHolderContainer extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super();
-        props.tile && console.info(props.tile!.playerIndex);
+
         this.removeTile = this.removeTile.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.onDragOver = this.onDragOver.bind(this);
@@ -63,9 +64,9 @@ export class TileHolderContainer extends React.Component<Props, State> {
 
         if (this.props.coordinates) {
 
-            // const tileInfo = Game.board.get(this.props.coordinates)!;
-            // tileInfo.place(tile);
-            // Game.board.set(this.props.coordinates, tileInfo);
+            const tileInfo = this.props.board.get(this.props.coordinates)!;
+            tileInfo.place(tile);
+            this.props.board.set(this.props.coordinates, tileInfo);
         }
 
         if (!this.props.coordinates) {
@@ -89,10 +90,10 @@ export class TileHolderContainer extends React.Component<Props, State> {
 
         if (this.props.coordinates) {
 
-            // const tileInfo = Game.board.get(this.props.coordinates)!;
-            // tileInfo.reset();
+            const tileInfo = this.props.board.get(this.props.coordinates)!;
+            tileInfo.reset();
 
-            // Game.board.set(this.props.coordinates, tileInfo);
+            this.props.board.set(this.props.coordinates, tileInfo);
         }
     }
 
