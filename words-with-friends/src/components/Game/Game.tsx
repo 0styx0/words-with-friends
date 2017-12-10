@@ -1,5 +1,5 @@
 import * as React from 'react';
-// import Validate from '../../classes/Validate';
+import Validate from '../../classes/Validate';
 import GameComponent from './';
 
 import { bindActionCreators } from 'redux';
@@ -45,38 +45,37 @@ class Game extends React.Component<Props, State> {
 
     turn() {
 
-        this.props.incrementTurn(this.props.turn);
 
-        // const recentlyPlacedCoordinates = this.getTilesPlaced();
-        // const validate = new Validate(Game.board);
+        const recentlyPlacedCoordinates = this.getTilesPlaced();
+        const validate = new Validate(this.props.board);
 
-        // if (recentlyPlacedCoordinates.length > 0 &&
-        //     validate.checkTilePlacementValidity(recentlyPlacedCoordinates) &&
-        //     validate.validateWords(recentlyPlacedCoordinates)) {
+        if (recentlyPlacedCoordinates.length > 0 &&
+            validate.checkTilePlacementValidity(recentlyPlacedCoordinates) &&
+            validate.validateWords(recentlyPlacedCoordinates)) {
 
-        //     Game.Players.forEach(player => {
-        //         player.turn = !player.turn;
-        //     });
+            this.props.Players.forEach(player => {
+                player.turn = !player.turn;
+            });
 
-        //     (function unmarkRecentTiles() {
+            (function unmarkRecentTiles(self: Game) {
 
-        //         recentlyPlacedCoordinates.forEach(coordinate => {
+                recentlyPlacedCoordinates.forEach(coordinate => {
 
-        //             const key = `${coordinate[0]}, ${coordinate[1]}`;
-        //             const value = Game.board.get(key)!;
-        //             console.log(value);
-        //             value.recent = false;
+                    const key = `${coordinate[0]}, ${coordinate[1]}`;
+                    const value = self.props.board.get(key)!;
+                    console.log(value);
+                    value.recent = false;
 
-        //             Game.board.set(key, value);
-        //         });
-        //     }());
+                    self.props.board.set(key, value);
+                });
+            }(this));
 
-        //     this.tallyPoints(recentlyPlacedCoordinates);
+            this.tallyPoints(recentlyPlacedCoordinates);
 
-        //     Game.turn++;
+            this.props.incrementTurn(this.props.turn);
 
-        //     this.setHands();
-        // }
+            // this.setHands();
+        }
     }
 
     /**
@@ -84,38 +83,38 @@ class Game extends React.Component<Props, State> {
      */
     tallyPoints(recentlyPlacedCoordinates: [number, number][]) {
 
-        // const validate = new Validate(Game.board);
-        // const words = validate.getWords(recentlyPlacedCoordinates);
+        const validate = new Validate(this.props.board);
+        const words = validate.getWords(recentlyPlacedCoordinates);
 
-        // function calculateTileMultipliers() {
+        function calculateTileMultipliers() {
 
-        //     return words.reduce((accum: number, word) => {
+            return words.reduce((accum: number, word) => {
 
-        //         const wordMultipliers: number[] = [1];
+                const wordMultipliers: number[] = [1];
 
-        //         const individualTilePoints = word.
-        //             map(tile => {
+                const individualTilePoints = word.
+                    map(tile => {
 
-        //                 if (tile.powerup && tile.powerup.target === 'word') {
-        //                     wordMultipliers.push(tile.powerup.multiplyBy);
-        //                 }
+                        if (tile.powerup && tile.powerup.target === 'word') {
+                            wordMultipliers.push(tile.powerup.multiplyBy);
+                        }
 
-        //                 return tile.calculateValue();
-        //             })
-        //             .reduce((addedPoints, points) => addedPoints + points, 0);
+                        return tile.calculateValue();
+                    })
+                    .reduce((addedPoints, points) => addedPoints + points, 0);
 
-        //         const total = wordMultipliers.reduce((multiplied, multiplier) =>
-        //             multiplier * multiplied, individualTilePoints);
+                const total = wordMultipliers.reduce((multiplied, multiplier) =>
+                    multiplier * multiplied, individualTilePoints);
 
-        //         return accum + total;
-        //     }, 0);
-        // }
+                return accum + total;
+            }, 0);
+        }
 
-        // const totalPoints = calculateTileMultipliers();
+        const totalPoints = calculateTileMultipliers();
 
-        // Game.Players[Game.turn % 2].score += totalPoints;
+        this.props.Players[this.props.turn % 2].score += totalPoints;
 
-        // console.log('points earned', totalPoints, 'new total', Game.Players[Game.turn % 2].score);
+        console.log('points earned', totalPoints, 'new total', this.props.Players[this.props.turn % 2].score);
     }
 
     /**
@@ -123,19 +122,19 @@ class Game extends React.Component<Props, State> {
      */
     getTilesPlaced() {
 
-        // const recentlyPlacedCoordinates: [number, number][] = [];
+        const recentlyPlacedCoordinates: [number, number][] = [];
 
-        // Game.board.forEach((value, key) => {
+        this.props.board.forEach((value, key) => {
 
-        //     if (value.recent) {
+            if (value.recent) {
 
-        //         const coordinates = key.split(', ');
+                const coordinates = key.split(', ');
 
-        //         recentlyPlacedCoordinates.push([+coordinates[0], +coordinates[1]]);
-        //     }
-        // });
+                recentlyPlacedCoordinates.push([+coordinates[0], +coordinates[1]]);
+            }
+        });
 
-        // return recentlyPlacedCoordinates;
+        return recentlyPlacedCoordinates;
     }
 
     render() {
