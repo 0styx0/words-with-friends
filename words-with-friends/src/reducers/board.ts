@@ -1,15 +1,19 @@
 import types from '../actions/types';
-import { Board } from '../actions/interfaces';
+import { Board, PlaceTile, RemoveTile } from '../actions/interfaces';
 import TileInfo from '../classes/TileInfo';
 import Powerup from '../classes/Powerup';
+import Tile from '../interfaces/Tile';
 
-export default function board(currentBoard = new Map(), action: Board) {
+export default function board(currentBoard = new Map(), action: Board | PlaceTile | RemoveTile) {
 
     switch (action.type) {
 
         case types.INIT_BOARD:
-            console.log(initializeBoard());
             return initializeBoard();
+        case types.PLACE_TILE:
+            return placeTile(currentBoard, action.coordinates, action.tile);
+        case types.REMOVE_TILE:
+            return removeTile(currentBoard, action.coordinates);
 
         default:
             return currentBoard;
@@ -45,3 +49,23 @@ function setPowerup(): Powerup | undefined {
     return new Powerup(Math.random() > 0.5 ? 'letter' : 'word', Math.random() > 0.5 ? 2 : 3);
 }
 
+function placeTile(boardMap: Map<string, TileInfo>, coordinates: string, tile: Tile) {
+
+    const boardCopy = new Map(boardMap);
+    const tileInfo = boardCopy.get(coordinates)!;
+    tileInfo.place(tile);
+    boardCopy.set(coordinates, tileInfo);
+    return boardCopy;
+}
+
+function removeTile(boardMap: Map<string, TileInfo>, coordinates: string) {
+
+    const boardCopy = new Map(boardMap);
+
+    const tileInfo = boardCopy.get(coordinates)!;
+    tileInfo.reset();
+
+    boardCopy.set(coordinates, tileInfo);
+
+    return boardCopy;
+}
