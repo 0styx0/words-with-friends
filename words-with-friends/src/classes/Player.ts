@@ -28,4 +28,8 @@ export default class Player {
         const positionOfTile = this.tiles.indexOf(tile);
         this.tiles.splice(positionOfTile - 1, 1);
     }
+
+    addTile(tile: Tile) {
+        this.tiles.push(tile);
+    }
 }

@@ -68,6 +68,10 @@ export class TileHolderContainer extends React.Component<Props, State> {
             // Game.board.set(this.props.coordinates, tileInfo);
         }
 
+        if (!this.props.coordinates) {
+            this.props.currentPlayer.addTile(this.state.tile!);
+        }
+
     }
 
     /**
@@ -75,8 +79,9 @@ export class TileHolderContainer extends React.Component<Props, State> {
      */
     removeTile() {
 
-        this.props.removeTileFromHand && this.state.tile &&
-            this.props.removeTileFromHand(this.props.currentPlayer, this.state.tile!);
+        if (!this.props.coordinates) {
+            this.props.currentPlayer.removeTile(this.state.tile!);
+        }
 
         this.setState({
             tile: undefined
