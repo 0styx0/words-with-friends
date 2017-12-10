@@ -1,18 +1,18 @@
 import types from '../actions/types';
-import { Board, PlaceTile, RemoveTile } from '../actions/interfaces';
+import { Board, PlaceTileOnBoard, RemoveTileFromBoard } from '../actions/interfaces';
 import TileInfo from '../classes/TileInfo';
 import Powerup from '../classes/Powerup';
 import Tile from '../interfaces/Tile';
 
-export default function board(currentBoard = new Map(), action: Board | PlaceTile | RemoveTile) {
+export default function board(currentBoard = new Map(), action: Board | PlaceTileOnBoard | RemoveTileFromBoard) {
 
     switch (action.type) {
 
         case types.INIT_BOARD:
             return initializeBoard();
-        case types.PLACE_TILE:
+        case types.PLACE_TILE_ON_BOARD:
             return placeTile(currentBoard, action.coordinates, action.tile);
-        case types.REMOVE_TILE:
+        case types.REMOVE_TILE_FROM_BOARD:
             return removeTile(currentBoard, action.coordinates);
 
         default:

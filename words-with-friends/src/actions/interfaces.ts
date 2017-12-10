@@ -18,13 +18,26 @@ export interface Board {
     readonly board: Map<string, TileInfo>;
 }
 
-export interface PlaceTile {
-    readonly type: types.PLACE_TILE;
+export interface PlaceTileOnBoard {
+    readonly type: types.PLACE_TILE_ON_BOARD;
     readonly tile: Tile;
     readonly coordinates: string;
 }
 
-export interface RemoveTile {
-    readonly type: types.REMOVE_TILE;
+export interface RemoveTileFromBoard {
+    readonly type: types.REMOVE_TILE_FROM_BOARD;
     readonly coordinates: string;
 }
+
+export interface PlaceTileInHand {
+    readonly type: types.PLACE_TILE_IN_HAND;
+    readonly tile: Tile;
+    readonly Player: PlayerClass;
+}
+
+export interface RemoveTileFromHand {
+    readonly type: types.REMOVE_TILE_FROM_HAND;
+    readonly tile: Tile;
+    readonly Player: PlayerClass;
+}
+

@@ -68,9 +68,8 @@ export class TileHolderContainer extends React.Component<Props, State> {
         }
 
         if (!this.props.coordinates) {
-            this.props.currentPlayer.addTile(this.state.tile!);
+            this.props.putTileInHand(this.props.currentPlayer, this.state.tile!);
         }
-
     }
 
     /**
@@ -81,7 +80,7 @@ export class TileHolderContainer extends React.Component<Props, State> {
         const tileInPlayerHand = !this.props.coordinates;
 
         if (tileInPlayerHand) {
-            this.props.currentPlayer.removeTile(this.state.tile!);
+            this.props.removeTileFromHand(this.props.currentPlayer, this.state.tile!);
         } else {
             this.props.removeTileFromBoard(this.props.coordinates!);
         }
