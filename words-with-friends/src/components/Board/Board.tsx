@@ -1,9 +1,6 @@
 import * as React from 'react';
 import Board from './';
 import TileHolder from '../TileHolder/TileHolder';
-// import Game from '../Game/Game';
-// import TileInfo from '../../classes/TileInfo';
-// import Powerup from '../../classes/Powerup';
 
 interface State {
     board: typeof TileHolder[];
