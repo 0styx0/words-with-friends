@@ -11,7 +11,8 @@ import Player from '../../classes/Player';
 
 function mapStateToProps(state: typeof defaultState, props: {playerIndex: number}) {
     return {
-        Player: state.Players[props.playerIndex]
+        Player: state.Players[props.playerIndex],
+        turn: state.turn
     };
 }
 

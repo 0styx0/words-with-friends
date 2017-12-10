@@ -26,7 +26,7 @@ export default class Player {
     removeTile(tile: Tile) {
 
         const positionOfTile = this.tiles.indexOf(tile);
-        this.tiles.splice(positionOfTile - 1, 1);
+        this.tiles.splice(positionOfTile, 1);
     }
 
     addTile(tile: Tile) {
