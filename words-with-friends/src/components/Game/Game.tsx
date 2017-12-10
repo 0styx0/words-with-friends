@@ -54,10 +54,6 @@ class Game extends React.Component<Props, State> {
             validate.checkTilePlacementValidity(recentlyPlacedCoordinates) &&
             validate.validateWords(recentlyPlacedCoordinates)) {
 
-            this.props.Players.forEach(player => {
-                player.turn = !player.turn;
-            });
-
             (function unmarkRecentTiles(self: Game) {
 
                 recentlyPlacedCoordinates.forEach(coordinate => {

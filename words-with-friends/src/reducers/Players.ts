@@ -1,6 +1,7 @@
 import types from '../actions/types';
 import * as actionTypes from '../actions/interfaces';
 import { defaultState } from '../store';
+import { cloneClassInstance } from './helpers';
 
 export default function Players(
     Players = {} as typeof defaultState.Players,
@@ -9,16 +10,15 @@ export default function Players(
 
     switch (action.type) {
 
+        case types.INCREMENT_TURN:
         case types.INIT_PLAYERS:
 
-            const PlayersCopy = [...Players];
-            PlayersCopy[0].turn = true;
+            const PlayersCopy = [...Players].map(cloneClassInstance);
             PlayersCopy.forEach(player => player.generateHand());
+            PlayersCopy.forEach(player => player.turn = !player.turn);
 
             return PlayersCopy;
 
-        case types.INCREMENT_TURN:
-            return [Players[1], Players[0]];
         default:
             return Players;
     }
