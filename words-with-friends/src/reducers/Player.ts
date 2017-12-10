@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/interfaces';
 import { defaultState } from '../store';
 import PlayerClass from '../classes/Player';
 import Tile from '../interfaces/Tile';
+import { cloneClassInstance } from './helpers';
 
 export default function Player(
     state = {} as typeof defaultState,
@@ -22,16 +23,14 @@ export default function Player(
 
 function addTile(PlayerInstance: PlayerClass, tile: Tile) {
 
-    const PlayerClone: PlayerClass =
-        Object.assign(Object.create(Object.getPrototypeOf(PlayerInstance)), PlayerInstance);
+    const PlayerClone: PlayerClass = cloneClassInstance(PlayerInstance);
     PlayerClone.addTile(tile);
     return PlayerClone;
 }
 
 function removeTile(PlayerInstance: PlayerClass, tile: Tile) {
 
-    const PlayerClone: PlayerClass =
-        Object.assign(Object.create(Object.getPrototypeOf(PlayerInstance)), PlayerInstance);
+    const PlayerClone: PlayerClass = cloneClassInstance(PlayerInstance);
     PlayerClone.removeTile(tile);
     return PlayerClone;
 }
