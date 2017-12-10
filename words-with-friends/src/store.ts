@@ -10,7 +10,7 @@ const enhancers = compose('devToolsExtension' in window ?
 
 export const defaultState = {
     turn: 0,
-    Players: [new Player('bob'), new Player('sam')],
+    Players: [new Player(true), new Player(false)],
     board: new Map<string, TileInfo>(),
     Tilebag: new Tilebag()
 };

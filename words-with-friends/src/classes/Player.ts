@@ -10,8 +10,8 @@ export default class Player {
     hand: typeof HandContainer;
     tiles: Tile[] = [];
 
-    constructor(name: string) {
-        this.name = name;
+    constructor(turn: boolean) {
+        this.turn = turn;
     }
 
     generateHand() {
