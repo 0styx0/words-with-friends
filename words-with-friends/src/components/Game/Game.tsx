@@ -1,25 +1,35 @@
 import * as React from 'react';
-import HandContainer from '../Hand/Hand';
-import Player from '../../classes/Player';
-import TileInfo from '../../classes/TileInfo';
-import Tilebag from '../../classes/Tilebag';
-import Validate from '../../classes/Validate';
+// import Validate from '../../classes/Validate';
 import GameComponent from './';
+
+import { bindActionCreators } from 'redux';
+import { connect, Dispatch } from 'react-redux';
+import actionCreators from '../../actions';
+import { defaultState } from '../../store';
+
+function mapStateToProps(state: typeof defaultState) {
+    return {
+        turn: state.turn,
+        Players: state.Players
+    };
+}
+
+function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
+    return bindActionCreators(actionCreators, dispatch);
+}
+
 
 interface State {
     number: number;
 }
 
-export default class Game extends React.Component<{}, State> {
+type Props = typeof actionCreators & typeof defaultState;
 
-    static Players: Player[] = [new Player(), new Player()];
-    static turn = 1;
-    static board = new Map<string, TileInfo>();
+class Game extends React.Component<Props, State> {
 
     constructor() {
         super();
 
-        this.setHands = this.setHands.bind(this);
         this.turn = this.turn.bind(this);
 
         this.state = {
@@ -29,68 +39,44 @@ export default class Game extends React.Component<{}, State> {
     }
 
     componentWillMount() {
-
-        Game.Players[0].turn = true;
-        Tilebag.init(); // move to somewhere else once get game mechanic workings
-        this.setHands();
-    }
-
-    setHands() {
-
-        // trying to put a hand in each player
-        Game.Players = Game.Players.map((player, i) => {
-
-            const className = (i === 1) ? 'rightHand' : '';
-
-            player.hand = (
-                <HandContainer
-                    key={i}
-                    playerIndex={i}
-                    className={className}
-                    turn={player.turn}
-                /> as any
-            );
-
-            return player;
-        });
-
-        this.setState({
-            number: this.state.number + 1
-        });
+        this.props.initializeBoard();
+        this.props.initializePlayers();
     }
 
     turn() {
 
-        const recentlyPlacedCoordinates = this.getTilesPlaced();
-        const validate = new Validate(Game.board);
+        this.props.incrementTurn(this.props.turn);
 
-        if (recentlyPlacedCoordinates.length > 0 &&
-            validate.checkTilePlacementValidity(recentlyPlacedCoordinates) &&
-            validate.validateWords(recentlyPlacedCoordinates)) {
+        // const recentlyPlacedCoordinates = this.getTilesPlaced();
+        // const validate = new Validate(Game.board);
 
-            Game.Players.forEach(player => {
-                player.turn = !player.turn;
-            });
+        // if (recentlyPlacedCoordinates.length > 0 &&
+        //     validate.checkTilePlacementValidity(recentlyPlacedCoordinates) &&
+        //     validate.validateWords(recentlyPlacedCoordinates)) {
 
-            (function unmarkRecentTiles() {
+        //     Game.Players.forEach(player => {
+        //         player.turn = !player.turn;
+        //     });
 
-                recentlyPlacedCoordinates.forEach(coordinate => {
+        //     (function unmarkRecentTiles() {
 
-                    const key = `${coordinate[0]}, ${coordinate[1]}`;
-                    const value = Game.board.get(key)!;
-                    console.log(value);
-                    value.recent = false;
+        //         recentlyPlacedCoordinates.forEach(coordinate => {
 
-                    Game.board.set(key, value);
-                });
-            }());
+        //             const key = `${coordinate[0]}, ${coordinate[1]}`;
+        //             const value = Game.board.get(key)!;
+        //             console.log(value);
+        //             value.recent = false;
 
-            this.tallyPoints(recentlyPlacedCoordinates);
+        //             Game.board.set(key, value);
+        //         });
+        //     }());
 
-            Game.turn++;
+        //     this.tallyPoints(recentlyPlacedCoordinates);
 
-            this.setHands();
-        }
+        //     Game.turn++;
+
+        //     this.setHands();
+        // }
     }
 
     /**
@@ -98,38 +84,38 @@ export default class Game extends React.Component<{}, State> {
      */
     tallyPoints(recentlyPlacedCoordinates: [number, number][]) {
 
-        const validate = new Validate(Game.board);
-        const words = validate.getWords(recentlyPlacedCoordinates);
+        // const validate = new Validate(Game.board);
+        // const words = validate.getWords(recentlyPlacedCoordinates);
 
-        function calculateTileMultipliers() {
+        // function calculateTileMultipliers() {
 
-            return words.reduce((accum: number, word) => {
+        //     return words.reduce((accum: number, word) => {
 
-                const wordMultipliers: number[] = [1];
+        //         const wordMultipliers: number[] = [1];
 
-                const individualTilePoints = word.
-                    map(tile => {
+        //         const individualTilePoints = word.
+        //             map(tile => {
 
-                        if (tile.powerup && tile.powerup.target === 'word') {
-                            wordMultipliers.push(tile.powerup.multiplyBy);
-                        }
+        //                 if (tile.powerup && tile.powerup.target === 'word') {
+        //                     wordMultipliers.push(tile.powerup.multiplyBy);
+        //                 }
 
-                        return tile.calculateValue();
-                    })
-                    .reduce((addedPoints, points) => addedPoints + points, 0);
+        //                 return tile.calculateValue();
+        //             })
+        //             .reduce((addedPoints, points) => addedPoints + points, 0);
 
-                const total = wordMultipliers.reduce((multiplied, multiplier) =>
-                    multiplier * multiplied, individualTilePoints);
+        //         const total = wordMultipliers.reduce((multiplied, multiplier) =>
+        //             multiplier * multiplied, individualTilePoints);
 
-                return accum + total;
-            }, 0);
-        }
+        //         return accum + total;
+        //     }, 0);
+        // }
 
-        const totalPoints = calculateTileMultipliers();
+        // const totalPoints = calculateTileMultipliers();
 
-        Game.Players[Game.turn % 2].score += totalPoints;
+        // Game.Players[Game.turn % 2].score += totalPoints;
 
-        console.log('points earned', totalPoints, 'new total', Game.Players[Game.turn % 2].score);
+        // console.log('points earned', totalPoints, 'new total', Game.Players[Game.turn % 2].score);
     }
 
     /**
@@ -137,23 +123,25 @@ export default class Game extends React.Component<{}, State> {
      */
     getTilesPlaced() {
 
-        const recentlyPlacedCoordinates: [number, number][] = [];
+        // const recentlyPlacedCoordinates: [number, number][] = [];
 
-        Game.board.forEach((value, key) => {
+        // Game.board.forEach((value, key) => {
 
-            if (value.recent) {
+        //     if (value.recent) {
 
-                const coordinates = key.split(', ');
+        //         const coordinates = key.split(', ');
 
-                recentlyPlacedCoordinates.push([+coordinates[0], +coordinates[1]]);
-            }
-        });
+        //         recentlyPlacedCoordinates.push([+coordinates[0], +coordinates[1]]);
+        //     }
+        // });
 
-        return recentlyPlacedCoordinates;
+        // return recentlyPlacedCoordinates;
     }
 
     render() {
-        
-        return <GameComponent turn={this.turn} hands={Game.Players.map(player => player.hand)} />;
+        return <GameComponent turn={this.turn} hands={this.props.Players.map(player => player.hand)} />;
     }
 }
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game as any);

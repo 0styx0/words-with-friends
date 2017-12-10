@@ -6,7 +6,6 @@ import Tile from '../../interfaces/Tile';
 interface Props {
     className?: string;
     tiles: Tile[];
-    removeTile: Function;
 }
 
 /**
@@ -14,13 +13,9 @@ interface Props {
  */
 export default function Hand(props: Props) {
 
-    console.log('hand', props.tiles.reduce((acc = [], tile) => acc.concat([tile.playerIndex!]), [] as any));
-
     const handHolders = props.tiles.map((tile, i) => (
-        <TileHolder removeTile={props.removeTile} tile={tile} key={i} />
+        <TileHolder tile={tile} key={i} {...[] as any}/>
     ));
 
-    const className = 'tileHand ' + props.className;
-
-    return <div className={className}>{handHolders}</div>;
+    return <div className="tileHand">{handHolders}</div>;
 }

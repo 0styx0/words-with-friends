@@ -1,5 +1,5 @@
 import Powerup from './Powerup';
-import Game from '../components/Game/Game';
+// import Game from '../components/Game/Game';
 import Tile from '../interfaces/Tile';
 import Player from '../classes/Player';
 
@@ -27,11 +27,11 @@ export default class TileInfo {
     }
 
     get canDrag() {
-        return this.turnTileWasPlaced === Game.turn || this.Player.turn;
+        return true // this.turnTileWasPlaced === Game.turn || this.Player.turn;
     }
 
     get recent() {
-        return this.turnTileWasPlaced === Game.turn;
+        return true // this.turnTileWasPlaced === Game.turn;
     }
 
     set recent(value: boolean) {
@@ -55,9 +55,9 @@ export default class TileInfo {
 
     place(tile: Tile) {
         this.filled = true;
-        this.turnTileWasPlaced = Game.turn;
+        // this.turnTileWasPlaced = Game.turn;
         this.recent = true;
         this.tile = tile;
-        this.Player = Game.Players[tile.playerIndex!];
+        // this.Player = Game.Players[tile.playerIndex!];
     }
 }

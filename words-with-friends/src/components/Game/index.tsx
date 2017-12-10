@@ -5,17 +5,23 @@ import ControlsContainer from '../Controls/Controls';
 import './index.css';
 
 interface Props {
-    hands: HandContainer[];
+    hands: typeof HandContainer[];
     turn: Function;
 }
 
 export default function Game(props: Props) {
-    
+
     return (
         <div id="gameContainer">
-            {props.hands[0]}
+            {<HandContainer
+                key={0}
+                playerIndex={0}
+            />}
             <BoardContainer />
-            {props.hands[1]}
+            {<HandContainer
+                key={1}
+                playerIndex={1}
+            />}
             <ControlsContainer turn={props.turn} />
         </div>
     );

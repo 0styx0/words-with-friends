@@ -2,10 +2,10 @@ import Tile from '../interfaces/Tile';
 
 export default class Tilebag {
 
-    public static tiles: Tile[] = [];
+    tiles: Tile[] = [];
 
     // http://www.thewordfinder.com/wwf-point-values.php
-    private static readonly alphabet = new Set<(Tile & { amount: number })>([
+    readonly alphabet = new Set<(Tile & { amount: number })>([
         {
             letter: '',
             points: 0,
@@ -146,9 +146,9 @@ export default class Tilebag {
     /**
      * Generates all tiles needed in Tilebag
      */
-    static init() {
+    constructor() {
 
-        Tilebag.tiles = Array.from(Tilebag.alphabet).reduce((tiles, letter) => {
+        this.tiles = Array.from(this.alphabet).reduce((tiles, letter) => {
 
             for (let i = 0; i < letter.amount; i++) {
                 tiles = tiles.concat(letter);
@@ -162,21 +162,20 @@ export default class Tilebag {
     /**
      * Removes tile from bag
      */
-    static removeTile(tile: Tile) {
+    removeTile(tile: Tile) {
 
-        const positionOfTile = Tilebag.tiles.indexOf(tile);
-        Tilebag.tiles.splice(positionOfTile - 1, 1);
+        const positionOfTile = this.tiles.indexOf(tile);
+        this.tiles.splice(positionOfTile - 1, 1);
     }
 
     /**
      * Gets a tile and removes it from the Tilebag
      */
-    static getRandomTile(playerIndex: number) {
+    getRandomTile() {
 
         const tileToGet = this.tiles[Math.floor(Math.random() * this.tiles.length)];
-        Tilebag.removeTile(tileToGet);
-        tileToGet.playerIndex = playerIndex;
-        
+        this.removeTile(tileToGet);
+
         return tileToGet;
     }
 

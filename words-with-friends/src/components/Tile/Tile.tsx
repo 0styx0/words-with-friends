@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Game from '../Game/Game';
+// import Game from '../Game/Game';
 import { DragEvent } from 'react';
 import TileType from '../../interfaces/Tile';
 import Tile from './';
@@ -39,11 +39,11 @@ export default class TileContainer extends React.Component<Props, {}> {
 
   canDrag() {
 
-      const data = Game.board.get(this.props.coordinates);
+      const data = false // Game.board.get(this.props.coordinates);
       const tileIsAlreadyOnBoard = !!data;
 
-      const tileInCurrentPlayersHand = !tileIsAlreadyOnBoard && Game.Players[this.props.tile.playerIndex!].turn;
-      const draggableTileOnBoard = tileIsAlreadyOnBoard && data!.canDrag;
+      const tileInCurrentPlayersHand = !tileIsAlreadyOnBoard // && Game.Players[this.props.tile.playerIndex!].turn;
+      const draggableTileOnBoard = tileIsAlreadyOnBoard // && data!.canDrag;
     //   console.log(tileIsAlreadyOnBoard , Game.Players[this.props.tile.playerIndex!].turn, this.props.tile.playerIndex);
       return tileInCurrentPlayersHand || draggableTileOnBoard;
   }

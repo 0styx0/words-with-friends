@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './index.css';
-import Game from '../Game/Game';
+// import Game from '../Game/Game';
 import TileType from '../../interfaces/Tile';
 
 interface Props {
@@ -14,25 +14,25 @@ function onWildcardChange(event: any, coordinates?: string) {
     if (!coordinates) {
         return;
     }
-    const tileInfo = Game.board.get(coordinates)!;
+    // const tileInfo = Game.board.get(coordinates)!;
 
-    if (tileInfo.tile!.points > 0 || !tileInfo.recent) {
+    // if (tileInfo.tile!.points > 0 || !tileInfo.recent) {
 
-        if (tileInfo) {
-            event.target.value = tileInfo.tile!.letter;
-            event.target.disabled = true;
-        }
-        return;
-    }
+    //     if (tileInfo) {
+    //         event.target.value = tileInfo.tile!.letter;
+    //         event.target.disabled = true;
+    //     }
+    //     return;
+    // }
 
-    tileInfo.tile = { letter: event.target.value, points: 0, playerIndex: tileInfo.tile.playerIndex };
+    // tileInfo.tile = { letter: event.target.value, points: 0, playerIndex: tileInfo.tile.playerIndex };
 
-    Game.board.set(coordinates, tileInfo);
+    // Game.board.set(coordinates, tileInfo);
 }
 
 export default function Tile(props: Props) {
 
-    const tileInfo = (props.coordinates && Game.board.get(props.coordinates)!) || {} as any;
+    const tileInfo = { canDrag: true } // (props.coordinates && Game.board.get(props.coordinates)!) || {} as any;
 
     return (
         <div
