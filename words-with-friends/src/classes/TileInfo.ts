@@ -1,7 +1,7 @@
 import Powerup from './Powerup';
-// import Game from '../components/Game/Game';
 import Tile from '../interfaces/Tile';
 import Player from '../classes/Player';
+import store, { defaultState } from '../store';
 
 export default class TileInfo {
 
@@ -27,11 +27,11 @@ export default class TileInfo {
     }
 
     get canDrag() {
-        return true // this.turnTileWasPlaced === Game.turn || this.Player.turn;
+        return this.turnTileWasPlaced === (store.getState() as typeof defaultState).turn || this.Player.turn;
     }
 
     get recent() {
-        return true // this.turnTileWasPlaced === Game.turn;
+        return this.turnTileWasPlaced === (store.getState() as typeof defaultState).turn;
     }
 
     set recent(value: boolean) {
@@ -54,10 +54,13 @@ export default class TileInfo {
     }
 
     place(tile: Tile) {
+
+        const storeState = (store.getState() as typeof defaultState);
+
         this.filled = true;
-        // this.turnTileWasPlaced = Game.turn;
+        this.turnTileWasPlaced = storeState.turn;
         this.recent = true;
         this.tile = tile;
-        // this.Player = Game.Players[tile.playerIndex!];
+        this.Player = storeState.Players.find(player => player.turn)!;
     }
 }
