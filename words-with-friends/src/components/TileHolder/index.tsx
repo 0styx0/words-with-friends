@@ -3,7 +3,6 @@ import './index.css';
 import TileType from '../../interfaces/Tile';
 import TileContainer from '../Tile/Tile';
 import Powerup from '../../classes/Powerup';
-// import Game from '../Game/Game';
 
 interface Props {
     tile?: TileType;
@@ -20,6 +19,7 @@ export default function TileHolder(props: Props) {
               removeTile={props.removeTile}
               tile={props.tile}
               coordinates={props.coordinates}
+              {...[] as any}
             />
         ) : <span>{props.powerup ? props.powerup.name : ''}</span>
     );
