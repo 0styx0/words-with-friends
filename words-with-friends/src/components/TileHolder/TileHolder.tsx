@@ -15,7 +15,8 @@ function mapStateToProps(state: typeof defaultState, props: Props) {
         coordinates: props.coordinates,
         tile: props.tile,
         currentPlayer: state.Players.find(player => player.turn),
-        board: state.board
+        board: state.board,
+        turn: state.turn
     };
 }
 
@@ -93,7 +94,7 @@ export class TileHolderContainer extends React.Component<Props, State> {
     onDrop(e: DragEvent<HTMLDivElement>) {
 
         e.preventDefault();
-
+        console.log(this.props.coordinates);
         const tile = JSON.parse(e.dataTransfer.getData('tile'));
         this.putTile(tile);
     }
@@ -121,6 +122,8 @@ export class TileHolderContainer extends React.Component<Props, State> {
             >
                 <TileHolder
                     coordinates={this.props!.coordinates!}
+                    powerup={this.props.board.get(this.props.coordinates!) &&
+                        this.props.board.get(this.props.coordinates!)!.powerup}
                     {...this.state}
                     removeTile={this.removeTile}
                 />

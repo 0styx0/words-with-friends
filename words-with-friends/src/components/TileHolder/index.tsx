@@ -2,23 +2,17 @@ import * as React from 'react';
 import './index.css';
 import TileType from '../../interfaces/Tile';
 import TileContainer from '../Tile/Tile';
+import Powerup from '../../classes/Powerup';
 // import Game from '../Game/Game';
 
 interface Props {
     tile?: TileType;
     removeTile: Function;
     coordinates: string;
+    powerup?: Powerup;
 }
 
 export default function TileHolder(props: Props) {
-
-    let powerupName = '';
-
-    // const data = Game.board.get(props.coordinates);
-
-    // if (data && Game.board.get(props.coordinates)!.powerup) {
-    //     powerupName = Game.board.get(props.coordinates)!.powerup!.name;
-    // }
 
     return (
         props.tile ? (
@@ -27,6 +21,6 @@ export default function TileHolder(props: Props) {
               tile={props.tile}
               coordinates={props.coordinates}
             />
-        ) : <span>{powerupName}</span>
+        ) : <span>{props.powerup ? props.powerup.name : ''}</span>
     );
 }
