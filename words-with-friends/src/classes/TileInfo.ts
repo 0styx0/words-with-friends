@@ -15,15 +15,13 @@ export default class TileInfo {
         this.reset();
     }
 
-    set tile(tile: Tile) {
+    set tile(tile: Tile | undefined) {
         this._tile = tile;
     }
 
-    get tile() {
+    get tile(): Tile | undefined {
 
-        return (this._tile && this._tile.letter)
-            ? this._tile!
-            : { letter: 'A', points: 0, playerIndex: this._tile!.playerIndex };
+        return this._tile;
     }
 
     get canDrag() {
