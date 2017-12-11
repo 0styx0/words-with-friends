@@ -1,17 +1,36 @@
 import * as React from 'react';
-// import Game from '../Game/Game';
 import { DragEvent } from 'react';
 import TileType from '../../interfaces/Tile';
 import Tile from './';
+import { bindActionCreators } from 'redux';
+import { connect, Dispatch } from 'react-redux';
+import actionCreators from '../../actions';
+import { defaultState } from '../../store';
 
-interface Props {
-    tile: TileType;
-    removeTile: Function;
-    coordinates: string;
+
+function mapStateToProps(state: typeof defaultState, props: Props) {
+    return {
+        coordinates: props.coordinates,
+        tile: props.tile,
+        Players: state.Players,
+        board: state.board,
+        turn: state.turn
+    };
+}
+
+function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
+    return bindActionCreators(actionCreators, dispatch);
 }
 
 
-export default class TileContainer extends React.Component<Props, {}> {
+type Props = typeof actionCreators & typeof defaultState & {
+    tile: TileType;
+    removeTile: Function;
+    coordinates: string;
+};
+
+
+class TileContainer extends React.Component<Props, {}> {
 
     constructor() {
         super();
@@ -21,11 +40,9 @@ export default class TileContainer extends React.Component<Props, {}> {
     }
 
     onDragStart(e: DragEvent<HTMLDivElement>) {
-        // console.log(this.canDrag());
-        if (this.canDrag()) {
-            e.dataTransfer.setData('tile', JSON.stringify(this.props.tile));
-            e.dataTransfer.dropEffect = 'move';
-        }
+        console.log('starting drag', this.props.tile);
+        e.dataTransfer.dropEffect = 'move';
+        e.dataTransfer.setData('tile', JSON.stringify(this.props.tile));
     }
 
     onDragEnd(e: DragEvent<HTMLDivElement>) {
@@ -39,35 +56,33 @@ export default class TileContainer extends React.Component<Props, {}> {
 
   canDrag() {
 
-      const data = false // Game.board.get(this.props.coordinates);
+      const data = this.props.board.get(this.props.coordinates);
       const tileIsAlreadyOnBoard = !!data;
 
-      const tileInCurrentPlayersHand = !tileIsAlreadyOnBoard // && Game.Players[this.props.tile.playerIndex!].turn;
-      const draggableTileOnBoard = tileIsAlreadyOnBoard // && data!.canDrag;
-    //   console.log(tileIsAlreadyOnBoard , Game.Players[this.props.tile.playerIndex!].turn, this.props.tile.playerIndex);
+      const tileInCurrentPlayersHand = !tileIsAlreadyOnBoard  && this.props.Players[this.props.tile.playerIndex!].turn;
+      const draggableTileOnBoard = tileIsAlreadyOnBoard && data!.canDrag;
+
       return tileInCurrentPlayersHand || draggableTileOnBoard;
   }
 
     render() {
 
-        // console.log(this.props.tile && this.props.tile.playerIndex);
-        // console.log(this.canDrag());
         return (
             <div
                 className="tileContainer"
                 onDragStart={this.onDragStart}
                 onDragEnd={this.onDragEnd}
                 draggable={true || this.canDrag()}
-                key={+this.canDrag()}
             >
                 <Tile
-                    key={+this.canDrag()}
                     tile={this.props.tile}
                     coordinates={this.props.coordinates}
-                    canDrag={this.canDrag()}
+                    canDrag={true || this.canDrag()}
                 />
             </div>
         );
     }
 
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(TileContainer as any);
