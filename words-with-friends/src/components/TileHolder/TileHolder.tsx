@@ -35,7 +35,7 @@ interface State {
     tile?: TileType;
 }
 
-export class TileHolderContainer extends React.Component<Props, State> {
+class TileHolderContainer extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super();
@@ -54,6 +54,16 @@ export class TileHolderContainer extends React.Component<Props, State> {
 
     }
 
+    componentWillReceiveProps(newProps: Props) {
+
+        if (newProps.coordinates && this.props.board.get(newProps.coordinates)) {
+
+            this.setState({
+                tile: this.props.board.get(newProps.coordinates)!.tile
+            });
+        }
+    }
+
     /**
      * Puts tile down (@see tileTarget.drop)
      */
@@ -64,12 +74,11 @@ export class TileHolderContainer extends React.Component<Props, State> {
         });
 
         if (this.props.coordinates) {
-
             this.props.putTileOnBoard(tile, this.props.coordinates);
         }
 
         if (!this.props.coordinates) {
-            this.props.putTileInHand(this.props.currentPlayer, this.state.tile!);
+            this.props.putTileInHand(this.props.currentPlayer, tile!);
         }
     }
 
@@ -94,7 +103,6 @@ export class TileHolderContainer extends React.Component<Props, State> {
     onDrop(e: DragEvent<HTMLDivElement>) {
 
         e.preventDefault();
-        console.log(this.props.coordinates);
         const tile = JSON.parse(e.dataTransfer.getData('tile'));
         this.putTile(tile);
     }
@@ -122,9 +130,9 @@ export class TileHolderContainer extends React.Component<Props, State> {
             >
                 <TileHolder
                     coordinates={this.props!.coordinates!}
+                    tile={this.state.tile}
                     powerup={this.props.board.get(this.props.coordinates!) &&
                         this.props.board.get(this.props.coordinates!)!.powerup}
-                    {...this.state}
                     removeTile={this.removeTile}
                 />
             </div>
