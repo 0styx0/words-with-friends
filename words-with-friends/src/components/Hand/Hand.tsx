@@ -12,7 +12,8 @@ import Player from '../../classes/Player';
 function mapStateToProps(state: typeof defaultState, props: {playerIndex: number}) {
     return {
         Player: state.Players[props.playerIndex],
-        turn: state.turn
+        turn: state.turn,
+        playerIndex: props.playerIndex
     };
 }
 
@@ -22,6 +23,7 @@ function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
 
 type Props = typeof actionCreators & typeof defaultState & {
     Player: Player;
+    playerIndex: number;
 };
 
 interface State {
@@ -41,11 +43,11 @@ class HandContainer extends React.Component<Props, State> {
     }
 
     render() {
-        console.log(this.props.Player);
+
         return (
             <Hand
               key={+this.props.turn}
-              tiles={this.props.Player.tiles}
+              tiles={this.props.Player.tiles.map(tile => Object.assign(tile, { playerIndex: this.props.playerIndex}))}
             />
         );
     }
