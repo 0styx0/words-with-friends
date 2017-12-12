@@ -8,28 +8,36 @@ export default class Player {
     turn = false;
     score = 0;
     hand: typeof HandContainer;
-    tiles: Tile[] = [];
+    private _tiles: Tile[] = [];
+    private _playerIndex: number;
 
-    constructor(turn: boolean) {
+    constructor(turn: boolean, playerIndex: number) {
         this.turn = turn;
+        this._playerIndex = playerIndex;
+    }
+
+    get tiles() {
+        return this._tiles;
     }
 
     generateHand() {
 
-        while (this.tiles.length < 7 && (store.getState() as typeof defaultState).Tilebag.tiles.length > 0) {
+        while (this._tiles.length < 7 && (store.getState() as typeof defaultState).Tilebag.tiles.length > 0) {
 
-            const tile = (store.getState() as typeof defaultState).Tilebag.getRandomTile();
-            this.tiles.push(tile);
+            const tile = (store.getState() as typeof defaultState).Tilebag.getRandomTile(this._playerIndex);
+            tile.playerIndex = this._playerIndex;
+            this._tiles.push(tile);
         }
     }
 
     removeTile(tile: Tile) {
 
-        const positionOfTile = this.tiles.indexOf(tile);
-        this.tiles.splice(positionOfTile, 1);
+        const positionOfTile = this._tiles.indexOf(tile);
+        this._tiles.splice(positionOfTile, 1);
     }
 
     addTile(tile: Tile) {
-        this.tiles.push(tile);
+        tile.playerIndex = this._playerIndex;
+        this._tiles.push(tile);
     }
 }

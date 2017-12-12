@@ -165,17 +165,19 @@ export default class Tilebag {
     removeTile(tile: Tile) {
 
         const positionOfTile = this.tiles.indexOf(tile);
-        this.tiles.splice(positionOfTile - 1, 1);
+        return JSON.parse(JSON.stringify(this.tiles.splice(positionOfTile, 1)[0]));
     }
 
     /**
      * Gets a tile and removes it from the Tilebag
      */
-    getRandomTile() {
+    getRandomTile(playerIndex: number) {
 
-        const tileToGet = this.tiles[Math.floor(Math.random() * this.tiles.length)];
-        this.removeTile(tileToGet);
+        const tileToFind = this.tiles[Math.floor(Math.random() * this.tiles.length)];
 
+        const tileToGet = this.removeTile(tileToFind);
+
+        tileToGet.playerIndex = playerIndex;
         return tileToGet;
     }
 
