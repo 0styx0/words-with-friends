@@ -1,6 +1,5 @@
 import * as React from 'react';
 import './index.css';
-import Tile from '../../interfaces/Tile';
 import Hand from './';
 
 import { bindActionCreators } from 'redux';
@@ -12,8 +11,7 @@ import Player from '../../classes/Player';
 function mapStateToProps(state: typeof defaultState, props: {playerIndex: number}) {
     return {
         Player: state.Players[props.playerIndex],
-        turn: state.turn,
-        playerIndex: props.playerIndex
+        turn: state.turn // force refresh after turn
     };
 }
 
@@ -26,28 +24,14 @@ type Props = typeof actionCreators & typeof defaultState & {
     playerIndex: number;
 };
 
-interface State {
-    tiles: Tile[];
-    removedTiles: Tile[];
-}
-
-class HandContainer extends React.Component<Props, State> {
-
-    constructor() {
-        super();
-
-        this.state = {
-            tiles: [],
-            removedTiles: []
-        };
-    }
+class HandContainer extends React.Component<Props, {}> {
 
     render() {
 
         return (
             <Hand
-              key={+this.props.turn}
-              tiles={this.props.Player.tiles.map(tile => Object.assign(tile, { playerIndex: this.props.playerIndex}))}
+              key={this.props.turn}
+              tiles={this.props.Player.tiles}
             />
         );
     }

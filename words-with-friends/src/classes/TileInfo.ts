@@ -25,7 +25,7 @@ export default class TileInfo {
     }
 
     get canDrag() {
-        return this.turnTileWasPlaced === (store.getState() as typeof defaultState).turn || this.Player.turn;
+        return this.turnTileWasPlaced === (store.getState() as typeof defaultState).turn;
     }
 
     get recent() {

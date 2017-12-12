@@ -14,7 +14,7 @@ interface Props {
 export default function Hand(props: Props) {
 
     const handHolders = props.tiles.map((tile, i) => (
-        <TileHolder tile={tile} key={i} {...[] as any}/>
+        <TileHolder tile={tile} key={i + tile.letter} {...[] as any}/>
     ));
 
     return <div className="tileHand">{handHolders}</div>;

@@ -67,17 +67,19 @@ class TileContainer extends React.Component<Props, {}> {
 
     render() {
 
+        const canDrag = this.canDrag();
+
         return (
             <div
                 className="tileContainer"
                 onDragStart={this.onDragStart}
                 onDragEnd={this.onDragEnd}
-                draggable={true || this.canDrag()}
+                draggable={canDrag}
             >
                 <Tile
                     tile={this.props.tile}
                     coordinates={this.props.coordinates}
-                    canDrag={true || this.canDrag()}
+                    canDrag={canDrag}
                 />
             </div>
         );
