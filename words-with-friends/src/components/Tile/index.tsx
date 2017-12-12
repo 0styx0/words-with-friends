@@ -1,7 +1,8 @@
 import * as React from 'react';
 import './index.css';
-// import Game from '../Game/Game';
 import TileType from '../../interfaces/Tile';
+import store, { defaultState } from '../../store';
+import { ChangeEvent } from 'react';
 
 interface Props {
     tile: TileType;
@@ -9,39 +10,45 @@ interface Props {
     canDrag?: boolean;
 }
 
-function onWildcardChange(event: any, coordinates?: string) {
+function onWildcardChange(event: ChangeEvent<HTMLSelectElement>, coordinates?: string) {
 
     if (!coordinates) {
         return;
     }
-    // const tileInfo = Game.board.get(coordinates)!;
 
-    // if (tileInfo.tile!.points > 0 || !tileInfo.recent) {
+    const board = (store.getState() as typeof defaultState).board;
+    const tileInfo = board.get(coordinates)!;
 
-    //     if (tileInfo) {
-    //         event.target.value = tileInfo.tile!.letter;
-    //         event.target.disabled = true;
-    //     }
-    //     return;
-    // }
+    if (tileInfo.tile!.points > 0 || !tileInfo.recent) {
 
-    // tileInfo.tile = { letter: event.target.value, points: 0, playerIndex: tileInfo.tile.playerIndex };
+        if (tileInfo) {
+            event.target.value = tileInfo.tile!.letter;
+            event.target.disabled = true;
+        }
+        return;
+    }
 
-    // Game.board.set(coordinates, tileInfo);
+    store.dispatch({
+        type: 'PLACE_TILE_ON_BOARD',
+        tile: {
+            letter: event.target.value,
+            points: 0,
+            playerIndex: tileInfo.tile!.playerIndex
+        },
+        coordinates
+    });
 }
 
 export default function Tile(props: Props) {
-
-    const tileInfo = { canDrag: true } // (props.coordinates && Game.board.get(props.coordinates)!) || {} as any;
 
     return (
         <div
             className="tile"
         >
             <span className="points">{props.tile.points}</span>
-            {props.tile.letter === '' ?
+            {props.tile.points === 0 ?
                 <select
-                    disabled={!(!!props.canDrag && !!tileInfo && tileInfo.canDrag)}
+                    disabled={!props.canDrag}
                     onChange={(event) => onWildcardChange(event, props.coordinates)}
                 >
                     {new Array(26)
