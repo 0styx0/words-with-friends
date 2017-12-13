@@ -161,6 +161,12 @@ export default class Validate {
         });
     }
 
+    /**
+     *
+     * @param coordinates - where to start
+     *
+     * @return 2d array with all tiles that connect to `coordinates`, 1 "word" per inner array
+     */
     getWords(coordinates: [number, number][]): TileInfo[][] {
 
         /**
