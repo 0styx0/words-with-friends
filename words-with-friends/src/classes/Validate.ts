@@ -12,7 +12,8 @@ export default class Validate {
     }
 
     /**
-     * Travels horizontally through the board, calling callback on every space is passes through
+     * Travels horizontally through the board, calling callback on every space is passes through.
+     *  Goes until `callback` returns false
      *
      * @param startCoordinate - coordinate to start from
      * @param callback - gets called on every coordinate
