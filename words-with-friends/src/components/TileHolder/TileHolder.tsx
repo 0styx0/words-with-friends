@@ -8,13 +8,15 @@ import { connect, Dispatch } from 'react-redux';
 import actionCreators from '../../actions';
 import { defaultState } from '../../store';
 import Player from '../../classes/Player';
+import TileInfo from '../../classes/TileInfo';
 
 
 function mapStateToProps(state: typeof defaultState, props: Props) {
+
     return {
         coordinates: props.coordinates,
-        tile: props.tile,
-        currentPlayer: state.Players.find(player => player.turn),
+        tile: state.board.get(props.coordinates)!.tile,
+        currentPlayer: state.Players.find(player => player.turn)!,
         board: state.board,
         turn: state.turn
     };
@@ -29,13 +31,11 @@ type Props = typeof actionCreators & typeof defaultState & {
     tile?: TileType;
     coordinates: string;
     currentPlayer: Player;
+    board: Map<string, TileInfo>,
+    turn: number
 };
 
-interface State {
-    tile?: TileType;
-}
-
-class TileHolderContainer extends React.Component<Props, State> {
+class TileHolderContainer extends React.Component<Props, {}> {
 
     constructor(props: Props) {
         super();
@@ -43,35 +43,12 @@ class TileHolderContainer extends React.Component<Props, State> {
         this.removeTile = this.removeTile.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.onDragOver = this.onDragOver.bind(this);
-        this.state = {};
-
-        if (props.tile) { // there will always be props.tile, but need to satisfy typescript
-
-            this.state = {
-                tile: props.tile
-            };
-        }
-
-    }
-
-    componentWillReceiveProps(newProps: Props) {
-
-        if (this.props.board.get(newProps.coordinates)) {
-
-            this.setState({
-                tile: this.props.board.get(newProps.coordinates)!.tile
-            });
-        }
     }
 
     /**
      * Puts tile down (@see tileTarget.drop)
      */
     putTile(tile: TileType) {
-
-        this.setState({
-           tile: tile
-        });
 
         this.props.putTileOnBoard(tile, this.props.coordinates);
     }
@@ -81,11 +58,7 @@ class TileHolderContainer extends React.Component<Props, State> {
      */
     removeTile() {
 
-        this.props.removeTileFromBoard(this.props.coordinates!);
-
-        this.setState({
-            tile: undefined
-        });
+        this.props.removeTileFromBoard(this.props.coordinates);
     }
 
     onDrop(e: DragEvent<HTMLDivElement>) {
@@ -96,7 +69,7 @@ class TileHolderContainer extends React.Component<Props, State> {
     }
 
     canDrop() {
-        return !this.state.tile;
+        return !this.props.tile;
     }
 
     onDragOver(e: DragEvent<HTMLDivElement>) {
@@ -118,9 +91,9 @@ class TileHolderContainer extends React.Component<Props, State> {
             >
                 <TileHolder
                     coordinates={this.props.coordinates!}
-                    tile={this.state.tile}
-                    powerup={this.props.board.get(this.props.coordinates!) &&
-                        this.props.board.get(this.props.coordinates!)!.powerup}
+                    tile={this.props.tile}
+                    powerup={this.props.board.get(this.props.coordinates) &&
+                        this.props.board.get(this.props.coordinates)!.powerup}
                     removeTile={this.removeTile}
                 />
             </div>
