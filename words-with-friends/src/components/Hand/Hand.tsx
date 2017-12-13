@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './index.css';
-import HandTileHolder from '../TileHolder/Hand/HandTileHolder';
+import HandTileHolder from '../TileHolder/HandTileHolder';
 import { bindActionCreators } from 'redux';
 import { connect, Dispatch } from 'react-redux';
 import actionCreators from '../../actions';

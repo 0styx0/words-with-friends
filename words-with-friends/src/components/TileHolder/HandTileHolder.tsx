@@ -1,14 +1,14 @@
 import * as React from 'react';
-import TileHolder from '../';
-import TileType from '../../../interfaces/Tile';
+import TileHolder from './';
+import TileType from '../../interfaces/Tile';
 import { DragEvent } from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect, Dispatch } from 'react-redux';
-import actionCreators from '../../../actions';
-import { defaultState } from '../../../store';
-import Player from '../../../classes/Player';
-import TileInfo from '../../../classes/TileInfo';
+import actionCreators from '../../actions';
+import { defaultState } from '../../store';
+import Player from '../../classes/Player';
+import TileInfo from '../../classes/TileInfo';
 
 
 function mapStateToProps(state: typeof defaultState, props: Props) {
