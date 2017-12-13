@@ -74,6 +74,20 @@ describe('Validate', () => {
         });
     });
 
+    describe('#checkForCenterTile', () => {
+
+        describe('returns false if', () => {
+
+            it('center is not filled', () => {
+
+            });
+
+            it(`any tile doesn't connect to center`, () => {
+
+            });
+        });
+    });
+
     describe('#validateWords', () => {
 
         describe('marks word as valid when', () => {
