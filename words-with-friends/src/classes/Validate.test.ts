@@ -55,6 +55,25 @@ describe('Validate', () => {
         });
     });
 
+    describe('#getWords', () => {
+
+        it('gets full word when given a coordinate in the middle of a vertical word', () => {
+
+        });
+
+        it('gets full word when given a coordinate in the middle of a horizontal word', () => {
+
+        });
+
+        it('gets all words that connect directly to coordinates (perpendicularly)', () => {
+
+        });
+
+        it('gets all words that connect directly to coordinates (parallel)', () => {
+
+        });
+    });
+
     describe('#validateWords', () => {
 
         describe('marks word as valid when', () => {
