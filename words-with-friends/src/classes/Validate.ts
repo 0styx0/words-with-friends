@@ -41,13 +41,19 @@ export default class Validate {
     }
 
     /**
-     * Travels horizontally through the board, calling callback on every space is passes through
+     * Travels vertically through the board, calling callback on every space is passes through.
+     *  Goes until `callback` returns false
      *
      * @param startCoordinate - coordinate to start from
+     * @param callback - gets called on every coordinate
+     * @param up - whether to travel up-down or down-up
+     *
+     * @return last coordinate callback returned `true` on
      */
+
     travelVertically(startCoordinate: [number, number],
                      callback: (tileInfo: TileInfo, currentCoordinate: [number, number]) => boolean,
-                     forwards: boolean = true): typeof startCoordinate {
+                     up: boolean = true): typeof startCoordinate {
 
         let x = startCoordinate[1];
         let y = startCoordinate[0];
@@ -58,7 +64,7 @@ export default class Validate {
                 break;
             }
 
-            forwards ? y++ : y--;
+            up ? y++ : y--;
         }
 
         return [y + 1, x];
