@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Board from './';
-import TileHolder from '../TileHolder/TileHolder';
+import BoardTileHolder from '../TileHolder/TileHolder';
 
 interface State {
-    board: typeof TileHolder[];
+    board: typeof BoardTileHolder[];
 }
 
 export default class BoardContainer extends React.Component<{}, State> {
@@ -18,18 +18,18 @@ export default class BoardContainer extends React.Component<{}, State> {
 
     componentDidMount() {
 
-        let board: typeof TileHolder[] = [];
+        let board: typeof BoardTileHolder[] = [];
 
         for (let i = 0; i < 15; i++) {
 
             for (let j = 0; j < 15; j++) {
 
                 board.push(
-                    <TileHolder
+                    <BoardTileHolder
                         coordinates={`${i}, ${j}`}
                         key={`${i}, ${j}`}
                         {...[] as any}
-                    /> as {} as typeof TileHolder
+                    /> as {} as typeof BoardTileHolder
                 );
             }
         }

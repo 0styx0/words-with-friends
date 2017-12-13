@@ -35,7 +35,7 @@ type Props = typeof actionCreators & typeof defaultState & {
     turn: number
 };
 
-class TileHolderContainer extends React.Component<Props, {}> {
+class BoardTileHolderContainer extends React.Component<Props, {}> {
 
     constructor(props: Props) {
         super();
@@ -101,4 +101,4 @@ class TileHolderContainer extends React.Component<Props, {}> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TileHolderContainer as any);
+export default connect(mapStateToProps, mapDispatchToProps)(BoardTileHolderContainer as any);
