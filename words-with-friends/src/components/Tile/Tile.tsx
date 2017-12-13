@@ -40,7 +40,6 @@ class TileContainer extends React.Component<Props, {}> {
     }
 
     onDragStart(e: DragEvent<HTMLDivElement>) {
-        console.log('starting drag', this.props.tile);
         e.dataTransfer.dropEffect = 'move';
         e.dataTransfer.setData('tile', JSON.stringify(this.props.tile));
     }

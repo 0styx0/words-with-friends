@@ -15,11 +15,13 @@ export default function Game(props: Props) {
             {<HandContainer
                 key={0}
                 playerIndex={0}
+                {...[] as any}
             />}
             <BoardContainer />
             {<HandContainer
                 key={1}
                 playerIndex={1}
+                {...[] as any}
             />}
             <ControlsContainer turn={props.turn} />
         </div>

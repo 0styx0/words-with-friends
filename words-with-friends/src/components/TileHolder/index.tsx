@@ -7,7 +7,7 @@ import Powerup from '../../classes/Powerup';
 interface Props {
     tile?: TileType;
     removeTile: Function;
-    coordinates: string;
+    coordinates?: string;
     powerup?: Powerup;
 }
 
