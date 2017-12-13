@@ -135,7 +135,7 @@ class Game extends React.Component<Props, State> {
     }
 
     render() {
-        return <GameComponent turn={this.turn} hands={this.props.Players.map(player => player.hand)} />;
+        return <GameComponent turn={this.turn} />;
     }
 }
 

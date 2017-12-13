@@ -5,7 +5,6 @@ import ControlsContainer from '../Controls/Controls';
 import './index.css';
 
 interface Props {
-    hands: typeof HandContainer[];
     turn: Function;
 }
 
