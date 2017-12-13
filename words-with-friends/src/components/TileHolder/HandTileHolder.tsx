@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TileHolder from './';
 import TileType from '../../interfaces/Tile';
-import { DragEvent } from 'react';
+import AbstractTileHolder from './AbstractTileHolder';
 
 import { bindActionCreators } from 'redux';
 import { connect, Dispatch } from 'react-redux';
@@ -33,15 +33,7 @@ type Props = typeof actionCreators & typeof defaultState & {
 };
 
 
-class HandTileHolderContainer extends React.Component<Props, {}> {
-
-    constructor(props: Props) {
-        super();
-
-        this.removeTile = this.removeTile.bind(this);
-        this.onDrop = this.onDrop.bind(this);
-        this.onDragOver = this.onDragOver.bind(this);
-    }
+class HandTileHolderContainer extends AbstractTileHolder<Props> {
 
     /**
      * Puts tile down (@see tileTarget.drop)
@@ -56,26 +48,6 @@ class HandTileHolderContainer extends React.Component<Props, {}> {
      */
     removeTile() {
         this.props.removeTileFromHand(this.props.currentPlayer, this.props.tile!);
-    }
-
-    onDrop(e: DragEvent<HTMLDivElement>) {
-
-        e.preventDefault();
-        const tile = JSON.parse(e.dataTransfer.getData('tile'));
-        this.putTile(tile);
-    }
-
-    canDrop() {
-        return !this.props.tile;
-    }
-
-    onDragOver(e: DragEvent<HTMLDivElement>) {
-
-        e.preventDefault();
-
-        if (!this.canDrop()) {
-            e.dataTransfer.dropEffect = 'none';
-        }
     }
 
     render() {

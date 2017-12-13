@@ -1,7 +1,6 @@
 import * as React from 'react';
 import TileHolder from './';
 import TileType from '../../interfaces/Tile';
-import { DragEvent } from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect, Dispatch } from 'react-redux';
@@ -9,6 +8,7 @@ import actionCreators from '../../actions';
 import { defaultState } from '../../store';
 import Player from '../../classes/Player';
 import TileInfo from '../../classes/TileInfo';
+import AbstractTileHolder from './AbstractTileHolder';
 
 
 function mapStateToProps(state: typeof defaultState, props: Props) {
@@ -35,15 +35,7 @@ type Props = typeof actionCreators & typeof defaultState & {
     turn: number
 };
 
-class BoardTileHolderContainer extends React.Component<Props, {}> {
-
-    constructor(props: Props) {
-        super();
-
-        this.removeTile = this.removeTile.bind(this);
-        this.onDrop = this.onDrop.bind(this);
-        this.onDragOver = this.onDragOver.bind(this);
-    }
+class BoardTileHolderContainer extends AbstractTileHolder<Props> {
 
     /**
      * Puts tile down (@see tileTarget.drop)
@@ -59,26 +51,6 @@ class BoardTileHolderContainer extends React.Component<Props, {}> {
     removeTile() {
 
         this.props.removeTileFromBoard(this.props.coordinates);
-    }
-
-    onDrop(e: DragEvent<HTMLDivElement>) {
-
-        e.preventDefault();
-        const tile = JSON.parse(e.dataTransfer.getData('tile'));
-        this.putTile(tile);
-    }
-
-    canDrop() {
-        return !this.props.tile;
-    }
-
-    onDragOver(e: DragEvent<HTMLDivElement>) {
-
-        e.preventDefault();
-
-        if (!this.canDrop()) {
-            e.dataTransfer.dropEffect = 'none';
-        }
     }
 
     render() {
