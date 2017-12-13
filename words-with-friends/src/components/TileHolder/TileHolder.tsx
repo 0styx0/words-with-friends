@@ -27,7 +27,7 @@ function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
 
 type Props = typeof actionCreators & typeof defaultState & {
     tile?: TileType;
-    coordinates?: string;
+    coordinates: string;
     currentPlayer: Player;
 };
 
@@ -56,7 +56,7 @@ class TileHolderContainer extends React.Component<Props, State> {
 
     componentWillReceiveProps(newProps: Props) {
 
-        if (newProps.coordinates && this.props.board.get(newProps.coordinates)) {
+        if (this.props.board.get(newProps.coordinates)) {
 
             this.setState({
                 tile: this.props.board.get(newProps.coordinates)!.tile
@@ -73,13 +73,7 @@ class TileHolderContainer extends React.Component<Props, State> {
            tile: tile
         });
 
-        if (this.props.coordinates) {
-            this.props.putTileOnBoard(tile, this.props.coordinates);
-        }
-
-        if (!this.props.coordinates) {
-            this.props.putTileInHand(this.props.currentPlayer, tile!);
-        }
+        this.props.putTileOnBoard(tile, this.props.coordinates);
     }
 
     /**
@@ -87,13 +81,7 @@ class TileHolderContainer extends React.Component<Props, State> {
      */
     removeTile() {
 
-        const tileInPlayerHand = !this.props.coordinates;
-
-        if (tileInPlayerHand) {
-            this.props.removeTileFromHand(this.props.currentPlayer, this.state.tile!);
-        } else {
-            this.props.removeTileFromBoard(this.props.coordinates!);
-        }
+        this.props.removeTileFromBoard(this.props.coordinates!);
 
         this.setState({
             tile: undefined
@@ -129,7 +117,7 @@ class TileHolderContainer extends React.Component<Props, State> {
               onDragOver={this.onDragOver}
             >
                 <TileHolder
-                    coordinates={this.props!.coordinates!}
+                    coordinates={this.props.coordinates!}
                     tile={this.state.tile}
                     powerup={this.props.board.get(this.props.coordinates!) &&
                         this.props.board.get(this.props.coordinates!)!.powerup}
