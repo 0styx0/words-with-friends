@@ -2,10 +2,8 @@ import Tile from '../interfaces/Tile';
 
 export default class Tilebag {
 
-    tiles: Tile[] = [];
-
     // http://www.thewordfinder.com/wwf-point-values.php
-    readonly alphabet = new Set<(Tile & { amount: number })>([
+    static readonly alphabet = new Set<(Tile & { amount: number })>([
         {
             letter: '',
             points: 0,
@@ -143,12 +141,14 @@ export default class Tilebag {
         }
     ]);
 
+    tiles: Tile[] = [];
+
     /**
      * Generates all tiles needed in Tilebag
      */
     constructor() {
 
-        this.tiles = Array.from(this.alphabet).reduce((tiles, letter) => {
+        this.tiles = Array.from(Tilebag.alphabet).reduce((tiles, letter) => {
 
             for (let i = 0; i < letter.amount; i++) {
                 tiles = tiles.concat(letter);
