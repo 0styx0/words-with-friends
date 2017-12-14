@@ -11,7 +11,7 @@ import store, { defaultState } from '../../src/store';
  *
  * @return { board: boardWithWord, tileInfos: arrayOfInfoAboutLetters }
  */
-function putWord(
+export default function placeWord(
     word: string, startCoordinate: [number, number], horizontal: boolean = true,
     board: Map<string, TileInfo> = new Map()
 ) {
