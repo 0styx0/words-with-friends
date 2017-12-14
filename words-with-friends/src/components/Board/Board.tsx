@@ -7,11 +7,9 @@ export default function Board() {
 
     let board: typeof BoardTileHolder[] = [];
 
-    const boardDimensions = 15;
+    for (let i = 0; i < +process.env.BOARD_DIMENSIONS!; i++) {
 
-    for (let i = 0; i < boardDimensions; i++) {
-
-        for (let j = 0; j < boardDimensions; j++) {
+        for (let j = 0; j < +process.env.BOARD_DIMENSIONS!; j++) {
 
             board.push(
                 <BoardTileHolder

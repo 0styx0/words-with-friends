@@ -24,9 +24,9 @@ function initializeBoard() {
 
     const boardMap = new Map<string, TileInfo>();
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < +process.env.BOARD_DIMENSIONS!; i++) {
 
-        for (let j = 0; j < 15; j++) {
+        for (let j = 0; j < +process.env.BOARD_DIMENSIONS!; j++) {
 
             const tileInfo = new TileInfo();
 
