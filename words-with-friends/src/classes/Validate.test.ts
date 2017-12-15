@@ -28,100 +28,103 @@ describe('Validate', () => {
         };
     }
 
-    /**
-     * Tests if it travels through coordinates that it's expected to
-     *
-     * @param horizontal - if word should be placed horizontally or vertically
-     */
-    function testCallbackControls(horizontal: boolean = true) {
+    describe('#travel', () => {
 
-        const { randomWord, startCoordinate, validate } = setupRandomWord(horizontal);
+        /**
+         * Tests if it travels through coordinates that it's expected to
+         *
+         * @param horizontal - if word should be placed horizontally or vertically
+         */
+        function testCallbackControls(horizontal: boolean = true) {
 
-        const expectedCallbackTimes = casual.integer(
-            1, Math.min(randomWord.length, +process.env.BOARD_DIMENSIONS!)
-        );
+            const { randomWord, startCoordinate, validate } = setupRandomWord(horizontal);
 
-        const spy = sinon.spy();
+            const expectedCallbackTimes = casual.integer(
+                1, Math.min(randomWord.length, +process.env.BOARD_DIMENSIONS!)
+            );
 
-        const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
-            spy();
-            return (horizontal) ?
-                currentCoordinate[1] < expectedCallbackTimes - 1 :
-                currentCoordinate[0] < expectedCallbackTimes - 1;
-        };
+            const spy = sinon.spy();
 
-        horizontal ?
-            validate.travelHorizontally(startCoordinate, mock) :
-            validate.travelVertically(startCoordinate, mock);
+            const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
+                spy();
+                return (horizontal) ?
+                    currentCoordinate[1] < expectedCallbackTimes - 1 :
+                    currentCoordinate[0] < expectedCallbackTimes - 1;
+            };
 
-        expect(spy.callCount).toBe(expectedCallbackTimes);
-    }
+            horizontal ?
+                validate.travelHorizontally(startCoordinate, mock) :
+                validate.travelVertically(startCoordinate, mock);
 
-    /**
-     * Tests that callback provided to travel* gets correct tile for spaces travelled on
-     *
-     * @param horizontal - if word should be placed horizontally or vertically
-     */
-    function testCallbackGetsCorrectTile(horizontal: boolean = true) {
+            expect(spy.callCount).toBe(expectedCallbackTimes);
+        }
 
-        const { board, randomWord, startCoordinate, validate } = setupRandomWord(horizontal);
+        /**
+         * Tests that callback provided to travel* gets correct tile for spaces travelled on
+         *
+         * @param horizontal - if word should be placed horizontally or vertically
+         */
+        function testCallbackGetsCorrectTile(horizontal: boolean = true) {
 
-        const spy = sinon.spy();
+            const { board, randomWord, startCoordinate, validate } = setupRandomWord(horizontal);
 
-        const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
+            const spy = sinon.spy();
 
-            spy();
-            const expected = board.get(`${currentCoordinate[0]}, ${currentCoordinate[1]}`);
+            const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
 
-            expect(tileInfo).toEqual(expected);
-            return !!tileInfo.filled;
-        };
+                spy();
+                const expected = board.get(`${currentCoordinate[0]}, ${currentCoordinate[1]}`);
 
-        horizontal ?
-            validate.travelHorizontally(startCoordinate, mock) :
-            validate.travelVertically(startCoordinate, mock);
+                expect(tileInfo).toEqual(expected);
+                return !!tileInfo.filled;
+            };
 
-        expect(spy.callCount).toBe(randomWord.length + 1);
-    }
+            horizontal ?
+                validate.travelHorizontally(startCoordinate, mock) :
+                validate.travelVertically(startCoordinate, mock);
 
-    function testCanGoOppositeDirection(horizontal: boolean = true) {
+            expect(spy.callCount).toBe(randomWord.length + 1);
+        }
 
-        const { randomWord, startCoordinate, validate, tileInfos } = setupRandomWord(horizontal);
+        function testCanGoOppositeDirection(horizontal: boolean = true) {
 
-        const spy = sinon.spy();
+            const { randomWord, startCoordinate, validate, tileInfos } = setupRandomWord(horizontal);
 
-        let i = randomWord.length - 1;
-        const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
-            spy();
+            const spy = sinon.spy();
 
-            tileInfos[i] ? expect(tileInfo).toEqual(tileInfos[i]) : expect(tileInfo).toEqual(new TileInfo());
-            i--;
-            return tileInfo.filled;
-        };
+            let i = randomWord.length - 1;
+            const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
+                spy();
 
-        horizontal ?
-            validate.travelHorizontally([startCoordinate[1], randomWord.length - 1], mock, false) :
-            validate.travelVertically([randomWord.length - 1, startCoordinate[0]], mock, false);
+                tileInfos[i] ? expect(tileInfo).toEqual(tileInfos[i]) : expect(tileInfo).toEqual(new TileInfo());
+                i--;
+                return tileInfo.filled;
+            };
 
-        expect(spy.callCount).toBe(randomWord.length + 1);
-    }
+            horizontal ?
+                validate.travelHorizontally([startCoordinate[1], randomWord.length - 1], mock, false) :
+                validate.travelVertically([randomWord.length - 1, startCoordinate[0]], mock, false);
 
-    describe('#travelHorizontally', () => {
+            expect(spy.callCount).toBe(randomWord.length + 1);
+        }
 
-        it('stops if callback returns `false`', () => testCallbackControls());
+        describe('Horizontally', () => {
 
-        it('Puts proper tile into callback', () => testCallbackGetsCorrectTile());
+            it('stops if callback returns `false`', () => testCallbackControls());
 
-        it('can go backwards', () => testCanGoOppositeDirection());
-    });
+            it('Puts proper tile into callback', () => testCallbackGetsCorrectTile());
 
-    describe('#travelVertically', () => {
+            it('can go backwards', () => testCanGoOppositeDirection());
+        });
 
-        it('stops if callback returns `false`', () => testCallbackControls(false));
+        describe('Vertically', () => {
 
-        it('Puts proper tile into callback', () => testCallbackGetsCorrectTile(false));
+            it('stops if callback returns `false`', () => testCallbackControls(false));
 
-        it('can go backwards', () => testCanGoOppositeDirection(false));
+            it('Puts proper tile into callback', () => testCallbackGetsCorrectTile(false));
+
+            it('can go backwards', () => testCanGoOppositeDirection(false));
+        });
     });
 
     describe('#getWords', () => {
