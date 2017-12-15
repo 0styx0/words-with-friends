@@ -8,110 +8,106 @@ import * as wordList from 'word-list-json';
 
 describe('Validate', () => {
 
+    function setupRandomWord(horizontal: boolean = true) {
+
+        const randomWord = getWord();
+
+        const startCoordinate: [number, number] = [0, 0];
+        const { board, tileInfos } = placeWord(randomWord, startCoordinate, horizontal);
+
+        return {
+            validate: new Validate(board),
+            board,
+            tileInfos,
+            randomWord,
+            startCoordinate
+        };
+    }
+
+    function testCallbackControls(horizontal: boolean = true) {
+
+        const { randomWord, startCoordinate, validate } = setupRandomWord(horizontal);
+
+        const expectedCallbackTimes = casual.integer(
+            1, Math.min(randomWord.length, +process.env.BOARD_DIMENSIONS!)
+        );
+
+        const spy = sinon.spy();
+
+        const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
+            spy();
+            return (horizontal) ?
+                currentCoordinate[1] < expectedCallbackTimes - 1 :
+                currentCoordinate[0] < expectedCallbackTimes - 1;
+        };
+
+        horizontal ?
+            validate.travelHorizontally(startCoordinate, mock) :
+            validate.travelVertically(startCoordinate, mock);
+
+        expect(spy.callCount).toBe(expectedCallbackTimes);
+    }
+
+    function testCallbackGetsCorrectTile(horizontal: boolean = true) {
+
+        const { board, randomWord, startCoordinate, validate } = setupRandomWord(horizontal);
+
+        const spy = sinon.spy();
+
+        const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
+
+            spy();
+            const expected = board.get(`${currentCoordinate[0]}, ${currentCoordinate[1]}`);
+
+            expect(tileInfo).toEqual(expected);
+            return !!tileInfo.filled;
+        };
+
+        horizontal ?
+            validate.travelHorizontally(startCoordinate, mock) :
+            validate.travelVertically(startCoordinate, mock);
+
+        expect(spy.callCount).toBe(randomWord.length + 1);
+    }
+
+    function testCanGoOppositeDirection(horizontal: boolean = true) {
+
+        const { randomWord, startCoordinate, validate, tileInfos } = setupRandomWord(horizontal);
+
+        const spy = sinon.spy();
+
+        let i = randomWord.length - 1;
+        const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
+            spy();
+
+            tileInfos[i] ? expect(tileInfo).toEqual(tileInfos[i]) : expect(tileInfo).toEqual(new TileInfo());
+            i--;
+            return tileInfo.filled;
+        };
+
+        horizontal ?
+            validate.travelHorizontally([startCoordinate[1], randomWord.length - 1], mock, false) :
+            validate.travelVertically([randomWord.length - 1, startCoordinate[0]], mock, false);
+
+        expect(spy.callCount).toBe(randomWord.length + 1);
+    }
+
     describe('#travelHorizontally', () => {
 
-        function setupRandomWord() {
+        it('stops if callback returns `false`', () => testCallbackControls());
 
-            const randomWord = getWord();
+        it('Puts proper tile into callback', () => testCallbackGetsCorrectTile());
 
-            const startCoordinate: [number, number] = [0, 0];
-            const { board, tileInfos } = placeWord(randomWord, startCoordinate);
-
-            return {
-                validate: new Validate(board),
-                board,
-                tileInfos,
-                randomWord,
-                startCoordinate
-            };
-        }
-
-        it('stops if callback returns `false`', () => {
-
-            const { randomWord, startCoordinate, validate } = setupRandomWord();
-
-            const expectedCallbackTimes = casual.integer(
-                0, Math.min(randomWord.length, +process.env.BOARD_DIMENSIONS!)
-            );
-
-            const spy = sinon.spy();
-
-            const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
-                spy();
-                return currentCoordinate[1] < expectedCallbackTimes - 1;
-            };
-
-            validate.travelHorizontally(startCoordinate, mock);
-
-            expect(spy.callCount).toBe(expectedCallbackTimes);
-        });
-
-        it('Puts proper tile into callback', () => {
-
-            const { board, randomWord, startCoordinate, validate } = setupRandomWord();
-
-            const spy = sinon.spy();
-
-            const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
-
-                spy();
-                const expected = board.get(`${currentCoordinate[0]}, ${currentCoordinate[1]}`);
-
-                expect(tileInfo).toEqual(expected);
-                return !!tileInfo.filled;
-            };
-
-            validate.travelHorizontally(startCoordinate, mock);
-
-            expect(spy.callCount).toBe(randomWord.length + 1);
-        });
-
-        it('can go backwards', () => {
-
-            const { randomWord, startCoordinate, validate, tileInfos } = setupRandomWord();
-
-            const spy = sinon.spy();
-
-            let i = randomWord.length - 1;
-            const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
-                spy();
-
-                tileInfos[i] ? expect(tileInfo).toEqual(tileInfos[i]) : expect(tileInfo).toEqual(new TileInfo());
-                i--;
-                return tileInfo.filled;
-            };
-
-            validate.travelHorizontally([startCoordinate[1], randomWord.length - 1], mock, false);
-
-            expect(spy.callCount).toBe(randomWord.length + 1);
-        });
+        it('can go backwards', () => testCanGoOppositeDirection());
     });
 
     describe('#travelVertically', () => {
 
-        it('stops if callback returns `false`', () => {
+        it('stops if callback returns `false`', () => testCallbackControls(false));
 
-        });
+        it('Puts proper tile into callback', () => testCallbackGetsCorrectTile(false));
 
-        it('only travels in the line specified (nowhere else)', () => {
-
-        });
-
-        it('calls `callback` param on every space it comes across', () => {
-
-        });
-
-        it('can go down-up', () => {
-
-        });
-
-        it(`doesn't go past the bottom of the board`, () => {
-
-        });
-
-        it(`doesn't go past the top of the board (when up = false)`, () => {
-
-        });
+        it('can go backwards', () => testCanGoOppositeDirection(false));
     });
 
     describe('#getWords', () => {
