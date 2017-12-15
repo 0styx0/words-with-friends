@@ -4,10 +4,14 @@ import Validate from './Validate';
 import TileInfo from './TileInfo';
 import * as sinon from 'sinon';
 import * as casual from 'casual';
-import * as wordList from 'word-list-json';
 
 describe('Validate', () => {
 
+    /**
+     * Generic stuff for setting up. Puts random word on board
+     *
+     * @param horizontal - if word should be placed horizontally or vertically
+     */
     function setupRandomWord(horizontal: boolean = true) {
 
         const randomWord = getWord();
@@ -24,6 +28,11 @@ describe('Validate', () => {
         };
     }
 
+    /**
+     * Tests if it travels through coordinates that it's expected to
+     *
+     * @param horizontal - if word should be placed horizontally or vertically
+     */
     function testCallbackControls(horizontal: boolean = true) {
 
         const { randomWord, startCoordinate, validate } = setupRandomWord(horizontal);
@@ -48,6 +57,11 @@ describe('Validate', () => {
         expect(spy.callCount).toBe(expectedCallbackTimes);
     }
 
+    /**
+     * Tests that callback provided to travel* gets correct tile for spaces travelled on
+     *
+     * @param horizontal - if word should be placed horizontally or vertically
+     */
     function testCallbackGetsCorrectTile(horizontal: boolean = true) {
 
         const { board, randomWord, startCoordinate, validate } = setupRandomWord(horizontal);
