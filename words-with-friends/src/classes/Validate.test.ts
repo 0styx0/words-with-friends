@@ -129,12 +129,29 @@ describe('Validate', () => {
 
     describe('#getWords', () => {
 
-        it('gets full word when given a coordinate in the middle of a vertical word', () => {
+        describe('gets full word when given a coordinate in the middle of a', () => {
 
-        });
+            function runTest(horizontal: boolean = true) {
 
-        it('gets full word when given a coordinate in the middle of a horizontal word', () => {
+                const randomWord = getWord(3);
 
+                const startCoordinate: [number, number] = [0, 0];
+                const { board, tileInfos } = placeWord(randomWord, startCoordinate, horizontal);
+
+                const validate = new Validate(board);
+                
+                const middleCoordinate: [number, number][] = horizontal ?
+                    [[startCoordinate[1], 1]] :
+                    [[1, startCoordinate[0]]];
+
+                const words = validate.getWords(middleCoordinate);
+
+                expect(words).toEqual([tileInfos]);
+            }
+
+            it('horizontal word', () => runTest());
+
+            it('vertical word', () => runTest(false));
         });
 
         it('gets all words that connect directly to coordinates (perpendicularly)', () => {
