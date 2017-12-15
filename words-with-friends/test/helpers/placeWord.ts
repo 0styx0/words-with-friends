@@ -17,6 +17,13 @@ export default function placeWord(
 ) {
 
     const boardCopy = new Map(board);
+
+    for (let i = 0; i < +process.env.BOARD_DIMENSIONS!; i++) {
+        for (let j = 0; j < +process.env.BOARD_DIMENSIONS!; j++) {
+            boardCopy.set(`${i}, ${j}`, new TileInfo());
+        }
+    }
+
     const tileInfos: TileInfo[] = [];
     const wordArr = word.split('');
 
@@ -46,7 +53,7 @@ export default function placeWord(
 
         while (wordArr.length > 0) {
 
-            boardCopy.set(`${currentX}, ${startCoordinate[1]}`, setTileInfos());
+            boardCopy.set(`${startCoordinate[1]}, ${currentX}`, setTileInfos());
             currentX++;
         }
     } else {
@@ -55,7 +62,7 @@ export default function placeWord(
 
         while (wordArr.length > 0) {
 
-            boardCopy.set(`${startCoordinate[0]}, ${currentY}`, setTileInfos());
+            boardCopy.set(`${currentY}, ${startCoordinate[0]}`, setTileInfos());
             currentY++;
         }
     }
