@@ -1,30 +1,89 @@
+import placeWord from '../../test/helpers/placeWord';
+import getWord from '../../test/helpers/getWord';
+import Validate from './Validate';
+import TileInfo from './TileInfo';
+import * as sinon from 'sinon';
+import * as casual from 'casual';
+import * as wordList from 'word-list-json';
 
 describe('Validate', () => {
 
     describe('#travelHorizontally', () => {
 
+        function setupRandomWord() {
+
+            const randomWord = getWord();
+
+            const startCoordinate: [number, number] = [0, 0];
+            const { board, tileInfos } = placeWord(randomWord, startCoordinate);
+
+            return {
+                validate: new Validate(board),
+                board,
+                tileInfos,
+                randomWord,
+                startCoordinate
+            };
+        }
+
         it('stops if callback returns `false`', () => {
 
+            const { randomWord, startCoordinate, validate } = setupRandomWord();
+
+            const expectedCallbackTimes = casual.integer(
+                0, Math.min(randomWord.length, +process.env.BOARD_DIMENSIONS!)
+            );
+
+            const spy = sinon.spy();
+
+            const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
+                spy();
+                return currentCoordinate[1] < expectedCallbackTimes - 1;
+            };
+
+            validate.travelHorizontally(startCoordinate, mock);
+
+            expect(spy.callCount).toBe(expectedCallbackTimes);
         });
 
-        it('only travels in the line specified (nowhere else)', () => {
+        it('Puts proper tile into callback', () => {
 
-        });
+            const { board, randomWord, startCoordinate, validate } = setupRandomWord();
 
-        it('calls `callback` param on every space it comes across', () => {
+            const spy = sinon.spy();
 
+            const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
+
+                spy();
+                const expected = board.get(`${currentCoordinate[0]}, ${currentCoordinate[1]}`);
+
+                expect(tileInfo).toEqual(expected);
+                return !!tileInfo.filled;
+            };
+
+            validate.travelHorizontally(startCoordinate, mock);
+
+            expect(spy.callCount).toBe(randomWord.length + 1);
         });
 
         it('can go backwards', () => {
 
-        });
+            const { randomWord, startCoordinate, validate, tileInfos } = setupRandomWord();
 
-        it(`doesn't go past the end of the board`, () => {
+            const spy = sinon.spy();
 
-        });
+            let i = randomWord.length - 1;
+            const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
+                spy();
 
-        it(`doesn't go past the start of the board (when forwards = false)`, () => {
+                tileInfos[i] ? expect(tileInfo).toEqual(tileInfos[i]) : expect(tileInfo).toEqual(new TileInfo());
+                i--;
+                return tileInfo.filled;
+            };
 
+            validate.travelHorizontally([startCoordinate[1], randomWord.length - 1], mock, false);
+
+            expect(spy.callCount).toBe(randomWord.length + 1);
         });
     });
 
