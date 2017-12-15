@@ -9,7 +9,7 @@ import * as wordList from 'word-list-json';
  */
 export default function getWord(length: number = 0): string {
 
-    const indexOfWordWithLength = wordList.lengths[length];
+    const indexOfWordWithLength = wordList.lengths[length - 1];
 
     const word: string = (length === 0) ?
         casual.random_element(wordList as {} as string[]) :
