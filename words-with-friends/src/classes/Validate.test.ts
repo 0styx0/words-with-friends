@@ -75,7 +75,7 @@ describe('Validate', () => {
                 spy();
                 const expected = board.get(`${currentCoordinate[0]}, ${currentCoordinate[1]}`);
 
-                expect(tileInfo).toEqual(expected);
+                expect(tileInfo).toEqual(expected === undefined ? new TileInfo() : expected);
                 return !!tileInfo.filled;
             };
 
