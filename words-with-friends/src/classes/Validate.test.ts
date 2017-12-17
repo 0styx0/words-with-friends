@@ -130,20 +130,6 @@ describe('Validate', () => {
 
     describe('#getWords', () => {
 
-        function placeFirstWord() {
-
-            const firstWord = getWord();
-            const startCoordinate: [number, number] = [0, 0];
-
-            const firstPlacement = placeWord(firstWord, startCoordinate);
-
-            return {
-                startCoordinate,
-                firstPlacement,
-                firstWord
-            };
-        }
-
         describe('gets full word when given a coordinate in the middle of a', () => {
 
             function runTest(horizontal: boolean = true) {
@@ -171,11 +157,12 @@ describe('Validate', () => {
 
         it('gets all words that connect directly to coordinates (perpendicularly)', () => {
 
-            const { firstPlacement, firstWord, startCoordinate } = placeFirstWord();
+            const firstPlacement = setupRandomWord();
+
             const secondWord = getWord();
 
             const secondWordCoordinates: [number, number] =
-                [casual.integer(0, firstWord.length - 1), startCoordinate[1]];
+                [casual.integer(0, firstPlacement.randomWord.length - 1), firstPlacement.startCoordinate[1]];
 
             const secondPlacement = placeWord(secondWord, secondWordCoordinates, false, firstPlacement.board, 2);
 
@@ -195,12 +182,12 @@ describe('Validate', () => {
 
         it('gets all words that connect directly to coordinates (parallel)', () => {
 
-            const { firstPlacement, startCoordinate, firstWord } = placeFirstWord();
+            const firstPlacement = setupRandomWord();
 
-            const secondWord = getWord(firstWord.length);
+            const secondWord = getWord(firstPlacement.randomWord.length);
 
             const secondWordCoordinates: [number, number] =
-                [startCoordinate[0], startCoordinate[1] + 1];
+                [firstPlacement.startCoordinate[0], firstPlacement.startCoordinate[1] + 1];
 
             const secondPlacement = placeWord(secondWord, secondWordCoordinates, true, firstPlacement.board, 2);
 
