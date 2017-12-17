@@ -13,12 +13,15 @@ describe('Validate', () => {
      *
      * @param horizontal - if word should be placed horizontally or vertically
      */
-    function setupRandomWord(horizontal: boolean = true) {
+    function setupRandomWord(
+        horizontal: boolean = true,
+        startCoordinate: [number, number] = [0, 0],
+        boardMap?: Map<string, TileInfo>
+    ) {
 
         const randomWord = getWord();
 
-        const startCoordinate: [number, number] = [0, 0];
-        const { board, tileInfos } = placeWord(randomWord, startCoordinate, horizontal);
+        const { board, tileInfos } = placeWord(randomWord, startCoordinate, horizontal, boardMap);
 
         return {
             validate: new Validate(board),
@@ -210,10 +213,35 @@ describe('Validate', () => {
 
             it('center is not filled', () => {
 
+                const placement = setupRandomWord();
+
+                expect(placement.validate.checkForCenterTile(placement.startCoordinate)).toBeFalsy();
             });
 
-            it(`any tile doesn't connect to center`, () => {
+            it(`tile doesn't connect to center`, () => {
 
+                const centerPlacement = setupRandomWord(true, [7, 7]);
+                const secondPlacement = setupRandomWord(true, [0, 0], centerPlacement.board);
+
+                expect(secondPlacement.validate.checkForCenterTile(secondPlacement.startCoordinate)).toBeFalsy();
+            });
+        });
+
+        describe('returns true if', () => {
+
+            it('center is filled', () => {
+
+                const placement = setupRandomWord(true, [7, 7]);
+
+                expect(placement.validate.checkForCenterTile(placement.startCoordinate)).toBeTruthy();
+            });
+
+            it('word connects to a word that is in center', () => {
+
+                const centerPlacement = setupRandomWord(true, [7, 7]);
+                const secondPlacement = setupRandomWord(false, [centerPlacement.randomWord.length, 7], centerPlacement.board);
+
+                expect(secondPlacement.validate.checkForCenterTile(secondPlacement.startCoordinate)).toBeFalsy();
             });
         });
     });
