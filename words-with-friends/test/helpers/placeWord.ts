@@ -13,14 +13,20 @@ import store, { defaultState } from '../../src/store';
  */
 export default function placeWord(
     word: string, startCoordinate: [number, number], horizontal: boolean = true,
-    board: Map<string, TileInfo> = new Map()
+    board: Map<string, TileInfo> = new Map(),
+    turn: number = 1
 ) {
 
     const boardCopy = new Map(board);
+    const initialCoordinates = [...startCoordinate];
+    const coordinates: [number, number][] = [];
 
-    for (let i = 0; i < +process.env.BOARD_DIMENSIONS!; i++) {
-        for (let j = 0; j < +process.env.BOARD_DIMENSIONS!; j++) {
-            boardCopy.set(`${i}, ${j}`, new TileInfo());
+    if (boardCopy.size === 0) {
+
+        for (let i = 0; i < +process.env.BOARD_DIMENSIONS!; i++) {
+            for (let j = 0; j < +process.env.BOARD_DIMENSIONS!; j++) {
+                boardCopy.set(`${i}, ${j}`, new TileInfo());
+            }
         }
     }
 
@@ -38,7 +44,8 @@ export default function placeWord(
         const tile = {
             letter: currentLetter,
             points: Array.from(Tilebag.alphabet).find(letter => letter.letter === currentLetter)!.points,
-            playerIndex: (store.getState() as typeof defaultState).Players.findIndex(player => player.turn)
+            playerIndex: (store.getState() as typeof defaultState).Players.findIndex(player => player.turn),
+            turn
         };
 
         tileInfo.place(tile);
@@ -49,26 +56,29 @@ export default function placeWord(
 
     if (horizontal) {
 
-        let currentX = startCoordinate[0];
+        let currentX = initialCoordinates[0];
 
         while (wordArr.length > 0) {
 
-            boardCopy.set(`${startCoordinate[1]}, ${currentX}`, setTileInfos());
+            boardCopy.set(`${initialCoordinates[1]}, ${currentX}`, setTileInfos());
+            coordinates.push([initialCoordinates[1], currentX]);
             currentX++;
         }
     } else {
 
-        let currentY = startCoordinate[1];
+        let currentY = initialCoordinates[1];
 
         while (wordArr.length > 0) {
 
-            boardCopy.set(`${currentY}, ${startCoordinate[0]}`, setTileInfos());
+            boardCopy.set(`${currentY}, ${initialCoordinates[0]}`, setTileInfos());
+            coordinates.push([currentY, initialCoordinates[0]]);
             currentY++;
         }
     }
 
     return {
         tileInfos,
-        board: boardCopy
+        board: boardCopy,
+        coordinates
     };
 }
