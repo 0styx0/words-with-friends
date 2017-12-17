@@ -4,6 +4,7 @@ import Validate from './Validate';
 import TileInfo from './TileInfo';
 import * as sinon from 'sinon';
 import * as casual from 'casual';
+import visualizeBoard from '../../test/helpers/board.visualize';
 
 describe('Validate', () => {
 
@@ -129,6 +130,20 @@ describe('Validate', () => {
 
     describe('#getWords', () => {
 
+        function placeFirstWord() {
+
+            const firstWord = getWord();
+            const startCoordinate: [number, number] = [0, 0];
+
+            const firstPlacement = placeWord(firstWord, startCoordinate);
+
+            return {
+                startCoordinate,
+                firstPlacement,
+                firstWord
+            };
+        }
+
         describe('gets full word when given a coordinate in the middle of a', () => {
 
             function runTest(horizontal: boolean = true) {
@@ -139,7 +154,7 @@ describe('Validate', () => {
                 const { board, tileInfos } = placeWord(randomWord, startCoordinate, horizontal);
 
                 const validate = new Validate(board);
-                
+
                 const middleCoordinate: [number, number][] = horizontal ?
                     [[startCoordinate[1], 1]] :
                     [[1, startCoordinate[0]]];
@@ -156,10 +171,49 @@ describe('Validate', () => {
 
         it('gets all words that connect directly to coordinates (perpendicularly)', () => {
 
+            const { firstPlacement, firstWord, startCoordinate } = placeFirstWord();
+            const secondWord = getWord();
+
+            const secondWordCoordinates: [number, number] =
+                [casual.integer(0, firstWord.length - 1), startCoordinate[1]];
+
+            const secondPlacement = placeWord(secondWord, secondWordCoordinates, false, firstPlacement.board, 2);
+
+            const validate = new Validate(secondPlacement.board);
+            const actualTileInfos = validate.getWords(secondPlacement.coordinates);
+
+            // replaces letter in the first word that was overwritten by the second word
+            firstPlacement.tileInfos[secondWordCoordinates[0]] = secondPlacement.tileInfos[0];
+
+            const expectedTileInfos = [
+                firstPlacement.tileInfos,
+                secondPlacement.tileInfos
+            ];
+
+            expect(actualTileInfos).toEqual(expect.arrayContaining(expectedTileInfos));
         });
 
         it('gets all words that connect directly to coordinates (parallel)', () => {
 
+            const { firstPlacement, startCoordinate, firstWord } = placeFirstWord();
+
+            const secondWord = getWord(firstWord.length);
+
+            const secondWordCoordinates: [number, number] =
+                [startCoordinate[0], startCoordinate[1] + 1];
+
+            const secondPlacement = placeWord(secondWord, secondWordCoordinates, true, firstPlacement.board, 2);
+
+            const validate = new Validate(secondPlacement.board);
+            const actualTileInfos = validate.getWords(secondPlacement.coordinates);
+
+            const allExpectedTileInfoArrs = secondPlacement
+                .tileInfos
+                .reduce((accum: TileInfo[][], tileInfo, i) =>
+                    accum.concat([[firstPlacement.tileInfos[i], tileInfo]])
+                , [secondPlacement.tileInfos]);
+
+            expect(actualTileInfos).toEqual(expect.arrayContaining(allExpectedTileInfoArrs));
         });
     });
 
