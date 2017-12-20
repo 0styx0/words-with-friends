@@ -6,6 +6,10 @@ import * as sinon from 'sinon';
 import * as casual from 'casual';
 import visualizeBoard from '../../test/helpers/board.visualize';
 
+casual.define('upperLetter', () => casual.letter.toUpperCase());
+
+const customCasual: typeof casual & { upperLetter: string } = casual;
+
 describe('Validate', () => {
 
     /**
@@ -43,7 +47,7 @@ describe('Validate', () => {
 
             const { randomWord, startCoordinate, validate } = setupRandomWord(horizontal);
 
-            const expectedCallbackTimes = casual.integer(
+            const expectedCallbackTimes = customCasual.integer(
                 1, Math.min(randomWord.length, +process.env.BOARD_DIMENSIONS!)
             );
 
@@ -165,7 +169,7 @@ describe('Validate', () => {
             const secondWord = getWord();
 
             const secondWordCoordinates: [number, number] =
-                [casual.integer(0, firstPlacement.randomWord.length - 1), firstPlacement.startCoordinate[1]];
+                [customCasual.integer(0, firstPlacement.randomWord.length - 1), firstPlacement.startCoordinate[1]];
 
             const secondPlacement = placeWord(secondWord, secondWordCoordinates, false, firstPlacement.board, 2);
 
@@ -239,9 +243,46 @@ describe('Validate', () => {
             it('word connects to a word that is in center', () => {
 
                 const centerPlacement = setupRandomWord(true, [7, 7]);
-                const secondPlacement = setupRandomWord(false, [centerPlacement.randomWord.length, 7], centerPlacement.board);
+                const secondPlacement = setupRandomWord(
+                    false, [centerPlacement.randomWord.length, 7], centerPlacement.board
+                );
 
                 expect(secondPlacement.validate.checkForCenterTile(secondPlacement.startCoordinate)).toBeFalsy();
+            });
+        });
+    });
+
+    describe('#checkTilePlacementValidity', () => {
+
+        describe('returns false if', () => {
+
+            it('tiles are diagonal', () => {
+
+                const wordCoordinates: [number, number][] = [[7, 7], [8, 8]];
+
+                const firstLetter = placeWord(customCasual.upperLetter, wordCoordinates[0]);
+                const secondLetter = placeWord(customCasual.upperLetter, wordCoordinates[1], true, firstLetter.board);
+
+                const validate = new Validate(secondLetter.board);
+
+                expect(validate.checkTilePlacementValidity(wordCoordinates)).toBeFalsy();
+            });
+
+            // can't have one tile attached to one word and another tile from that same turn attached
+            // to a completely different word
+            it('tiles are attached to to other (valid) words (in a valid manner)', () => {
+
+                const coordinatesToTest: [number, number][] = [[7, 8], [8, 6]];
+                const firstPlacement = setupRandomWord(true, [7, 7]);
+                const secondPlacement = placeWord(
+                    customCasual.upperLetter, coordinatesToTest[0], true, firstPlacement.board, 2
+                );
+                const thirdPlacement = placeWord(
+                    customCasual.upperLetter, coordinatesToTest[1], true, secondPlacement.board, 2
+                );
+
+                const validate = new Validate(thirdPlacement.board);
+                expect(validate.checkTilePlacementValidity(coordinatesToTest)).toBeFalsy();
             });
         });
     });
