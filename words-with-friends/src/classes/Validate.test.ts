@@ -4,13 +4,21 @@ import Validate from './Validate';
 import TileInfo from './TileInfo';
 import * as sinon from 'sinon';
 import * as casual from 'casual';
-import visualizeBoard from '../../test/helpers/board.visualize';
 
 casual.define('upperLetter', () => casual.letter.toUpperCase());
 
 const customCasual: typeof casual & { upperLetter: string } = casual;
 
 describe('Validate', () => {
+
+    type randomWordType = {
+        validate: Validate;
+        board: Map<string, TileInfo>;
+        tileInfos: TileInfo[];
+        randomWord: string;
+        startCoordinate: [number, number];
+        coordinates: [number, number][];
+    };
 
     /**
      * Generic stuff for setting up. Puts random word on board
@@ -21,18 +29,19 @@ describe('Validate', () => {
         horizontal: boolean = true,
         startCoordinate: [number, number] = [0, 0],
         boardMap?: Map<string, TileInfo>
-    ) {
+    ): randomWordType {
 
         const randomWord = getWord();
 
-        const { board, tileInfos } = placeWord(randomWord, startCoordinate, horizontal, boardMap);
+        const { board, tileInfos, coordinates } = placeWord(randomWord, startCoordinate, horizontal, boardMap);
 
         return {
             validate: new Validate(board),
             board,
             tileInfos,
             randomWord,
-            startCoordinate
+            startCoordinate,
+            coordinates
         };
     }
 
@@ -289,30 +298,53 @@ describe('Validate', () => {
 
     describe('#validateWords', () => {
 
+        function findWordStartingWithLetter(firstPlacement: randomWordType) {
+
+            let placement;
+
+            do {
+                placement = setupRandomWord(true, firstPlacement.startCoordinate, firstPlacement.board);
+            }
+            while (placement.tileInfos[0].tile!.letter !== firstPlacement.tileInfos[0].tile!.letter);
+
+            return placement;
+        }
+
         describe('marks word as valid when', () => {
-
-            it('it is an actual word', () => {
-
-            });
 
             it(`it's horizontal`, () => {
 
+                const placement = setupRandomWord();
+                const validate = new Validate(placement.board);
+
+                expect(validate.validateWords(placement.coordinates)).toBeTruthy();
             });
 
             it(`it's vertical`, () => {
 
+                const placement = setupRandomWord(false);
+                const validate = new Validate(placement.board);
+
+                expect(validate.validateWords(placement.coordinates)).toBeTruthy();
             });
 
             it('is connected to another word perpendicularly', () => {
 
+                const firstPlacement = setupRandomWord(false);
+
+                const secondPlacement = findWordStartingWithLetter(firstPlacement);
+
+                const validate = new Validate(secondPlacement.board);
+                expect(validate.validateWords(secondPlacement.coordinates)).toBeTruthy();
             });
 
             it('is connected to another word in parallel', () => {
 
-            });
+                const firstPlacement = placeWord('AWE', [0, 0]);
+                const secondPlacement = placeWord('RED', [0, 1], true, firstPlacement.board);
 
-            it('is intersected by multiple perpendicular words', () => {
-
+                const validate = new Validate(secondPlacement.board);
+                expect(validate.validateWords(secondPlacement.coordinates)).toBeTruthy();
             });
         });
 
@@ -320,18 +352,19 @@ describe('Validate', () => {
 
             it(`it's not a real word`, () => {
 
+                const firstPlacement = placeWord('QWRTYP', [0, 0]);
+
+                const validate = new Validate(firstPlacement.board);
+                expect(validate.validateWords(firstPlacement.coordinates)).toBeFalsy();
             });
 
             it('intersects a word, making that word invalid', () => {
 
-            });
+                const firstPlacement = placeWord('AWE', [0, 0], false);
+                const secondPlacement = placeWord('WAR', [0, 3], true, firstPlacement.board);
 
-            it(`isn't connected to the center`, () => {
-
-            });
-
-            it('is a real word, but random letters somewhere else on the board', () => {
-
+                const validate = new Validate(secondPlacement.board);
+                expect(validate.validateWords(secondPlacement.coordinates)).toBeFalsy();
             });
         });
     });
