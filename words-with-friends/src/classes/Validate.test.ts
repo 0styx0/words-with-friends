@@ -32,7 +32,11 @@ describe('Validate', () => {
         boardMap?: Board
     ): randomWordType {
 
-        const randomWord = getWord();
+        const limit = horizontal ?
+            +process.env.BOARD_DIMENSIONS! - startCoordinate[0] :
+            +process.env.BOARD_DIMENSIONS! - startCoordinate[1];
+
+        const randomWord = getWord(casual.integer(3, limit));
 
         const { board, tileInfos, coordinates } = placeWord(randomWord, startCoordinate, horizontal, boardMap);
 
@@ -254,10 +258,10 @@ describe('Validate', () => {
 
                 const centerPlacement = setupRandomWord(true, [7, 7]);
                 const secondPlacement = setupRandomWord(
-                    false, [centerPlacement.randomWord.length, 7], centerPlacement.board
+                    false, [7, 7], centerPlacement.board
                 );
 
-                expect(secondPlacement.validate.checkForCenterTile(secondPlacement.startCoordinate)).toBeFalsy();
+                expect(secondPlacement.validate.checkForCenterTile(secondPlacement.startCoordinate)).toBeTruthy();
             });
         });
     });
