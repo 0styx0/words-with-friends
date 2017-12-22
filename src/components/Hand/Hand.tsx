@@ -43,7 +43,7 @@ function HandContainer(props: Props) {
         handHolders.push(<HandTileHolder key={handHolders.length} {...[] as any} />);
     }
 
-    return handHolders;
+    return <div className="tileHand">{handHolders}</div>;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HandContainer as any);
