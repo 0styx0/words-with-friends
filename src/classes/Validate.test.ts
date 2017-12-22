@@ -33,8 +33,8 @@ describe('Validate', () => {
     ): randomWordType {
 
         const limit = horizontal ?
-            +process.env.BOARD_DIMENSIONS! - startCoordinate[0] :
-            +process.env.BOARD_DIMENSIONS! - startCoordinate[1];
+            +process.env.REACT_APP_BOARD_DIMENSIONS! - startCoordinate[0] :
+            +process.env.REACT_APP_BOARD_DIMENSIONS! - startCoordinate[1];
 
         const randomWord = getWord(casual.integer(3, limit));
 
@@ -62,7 +62,7 @@ describe('Validate', () => {
             const { randomWord, startCoordinate, validate } = setupRandomWord(horizontal);
 
             const expectedCallbackTimes = customCasual.integer(
-                1, Math.min(randomWord.length, +process.env.BOARD_DIMENSIONS!)
+                1, Math.min(randomWord.length, +process.env.REACT_APP_BOARD_DIMENSIONS!)
             );
 
             const spy = sinon.spy();

@@ -4,6 +4,7 @@ import TileInfo from '../classes/TileInfo';
 import Powerup from '../classes/Powerup';
 import Tile from '../interfaces/Tile';
 import BoardClass from '../classes/Board';
+import visualizeBoard from '../test/helpers/board.visualize';
 
 export default function board(
     currentBoard: BoardClass = new BoardClass(), action: Board | PlaceTileOnBoard | RemoveTileFromBoard
@@ -27,9 +28,9 @@ function initializeBoard() {
 
     const boardMap = new BoardClass();
 
-    for (let i = 0; i < +process.env.BOARD_DIMENSIONS!; i++) {
+    for (let i = 0; i < +process.env.REACT_APP_BOARD_DIMENSIONS!; i++) {
 
-        for (let j = 0; j < +process.env.BOARD_DIMENSIONS!; j++) {
+        for (let j = 0; j < +process.env.REACT_APP_BOARD_DIMENSIONS!; j++) {
 
             const tileInfo = new TileInfo();
 
@@ -40,6 +41,8 @@ function initializeBoard() {
             boardMap.set([i, j], tileInfo);
         }
     }
+
+    visualizeBoard(boardMap);
 
     return boardMap;
 }
