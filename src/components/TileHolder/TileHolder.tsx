@@ -29,7 +29,7 @@ function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
 
 type Props = typeof actionCreators & typeof defaultState & {
     tile?: TileType;
-    coordinates: string;
+    coordinates: number[];
     currentPlayer: Player;
     board: Board,
     turn: number

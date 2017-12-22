@@ -1,9 +1,8 @@
-import TileInfo from '../../src/classes/TileInfo';
-import Tilebag from '../../src/classes/Tilebag';
-import store, { defaultState } from '../../src/store';
-import Board from '../../src/classes/Board';
+import TileInfo from '../../classes/TileInfo';
+import Tilebag from '../../classes/Tilebag';
+import store, { defaultState } from '../../store';
+import Board from '../../classes/Board';
 
-new Board();
 
 /**
  *

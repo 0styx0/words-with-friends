@@ -3,10 +3,10 @@ import { Board, PlaceTileOnBoard, RemoveTileFromBoard } from '../actions/interfa
 import TileInfo from '../classes/TileInfo';
 import Powerup from '../classes/Powerup';
 import Tile from '../interfaces/Tile';
-import BoardType from '../interfaces/Board';
+import BoardClass from '../classes/Board';
 
 export default function board(
-    currentBoard: BoardType = new Map(), action: Board | PlaceTileOnBoard | RemoveTileFromBoard
+    currentBoard: BoardClass = new BoardClass(), action: Board | PlaceTileOnBoard | RemoveTileFromBoard
 ) {
 
     switch (action.type) {
@@ -52,7 +52,7 @@ function setPowerup(): Powerup | undefined {
     return new Powerup(Math.random() > 0.5 ? 'letter' : 'word', Math.random() > 0.5 ? 2 : 3);
 }
 
-function placeTile(boardMap: BoardType, coordinates: number[], tile: Tile) {
+function placeTile(boardMap: BoardClass, coordinates: number[], tile: Tile) {
 
     const boardCopy = new Map(boardMap);
     const tileInfo = boardCopy.get(coordinates)!;
@@ -61,7 +61,7 @@ function placeTile(boardMap: BoardType, coordinates: number[], tile: Tile) {
     return boardCopy;
 }
 
-function removeTile(boardMap: BoardType, coordinates: number[]) {
+function removeTile(boardMap: BoardClass, coordinates: number[]) {
 
     const boardCopy = new Map(boardMap);
 

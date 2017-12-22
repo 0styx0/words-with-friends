@@ -1,4 +1,4 @@
-import Board from '../../src/classes/Board';
+import Board from '../../classes/Board';
 
 /**
  * console.logs letters in board in the shape of a board

@@ -11,7 +11,7 @@ const enhancers = compose('devToolsExtension' in window ?
 export const defaultState = {
     turn: 0,
     Players: [new Player(true, 0), new Player(false, 1)], // turns switched around on INIT_PLAYERS
-    board: Board,
+    board: new Board(),
     Tilebag: new Tilebag()
 };
 

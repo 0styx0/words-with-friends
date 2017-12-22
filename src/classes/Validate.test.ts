@@ -1,5 +1,5 @@
-import placeWord from '../../test/helpers/placeWord';
-import getWord from '../../test/helpers/getWord';
+import placeWord from '../test/helpers/placeWord';
+import getWord from '../test/helpers/getWord';
 import Validate from './Validate';
 import TileInfo from './TileInfo';
 import * as sinon from 'sinon';
@@ -8,7 +8,7 @@ import Board from './Board';
 
 casual.define('upperLetter', () => casual.letter.toUpperCase());
 
-const customCasual: typeof casual & { upperLetter: string } = casual;
+const customCasual = casual as typeof casual & { upperLetter: string };
 
 describe('Validate', () => {
 
