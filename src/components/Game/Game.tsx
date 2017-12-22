@@ -7,6 +7,7 @@ import { connect, Dispatch } from 'react-redux';
 import actionCreators from '../../actions';
 import { defaultState } from '../../store';
 
+
 function mapStateToProps(state: typeof defaultState) {
     return {
         turn: state.turn,
@@ -28,8 +29,8 @@ type Props = typeof actionCreators & typeof defaultState;
 
 class Game extends React.Component<Props, State> {
 
-    constructor() {
-        super();
+    constructor(props: Props) {
+        super(props);
 
         this.turn = this.turn.bind(this);
 

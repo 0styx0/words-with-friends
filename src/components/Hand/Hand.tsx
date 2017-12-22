@@ -8,6 +8,7 @@ import { defaultState } from '../../store';
 import Tile from '../../interfaces/Tile';
 import Board from '../../classes/Board';
 
+
 function mapStateToProps(state: typeof defaultState, props: {playerIndex: number}) {
     return {
         tiles: state.Players[props.playerIndex].tiles,
@@ -42,7 +43,7 @@ function HandContainer(props: Props) {
         handHolders.push(<HandTileHolder key={handHolders.length} {...[] as any} />);
     }
 
-    return <div className="tileHand">{handHolders}</div>;
+    return handHolders;
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HandContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(HandContainer as any);

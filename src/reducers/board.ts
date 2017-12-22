@@ -25,7 +25,7 @@ export default function board(
 
 function initializeBoard() {
 
-    const boardMap = new Map<number[], TileInfo>();
+    const boardMap = new BoardClass();
 
     for (let i = 0; i < +process.env.BOARD_DIMENSIONS!; i++) {
 
@@ -54,7 +54,7 @@ function setPowerup(): Powerup | undefined {
 
 function placeTile(boardMap: BoardClass, coordinates: number[], tile: Tile) {
 
-    const boardCopy = new Map(boardMap);
+    const boardCopy = new BoardClass(boardMap);
     const tileInfo = boardCopy.get(coordinates)!;
     tileInfo.place(tile);
     boardCopy.set(coordinates, tileInfo);
@@ -63,7 +63,7 @@ function placeTile(boardMap: BoardClass, coordinates: number[], tile: Tile) {
 
 function removeTile(boardMap: BoardClass, coordinates: number[]) {
 
-    const boardCopy = new Map(boardMap);
+    const boardCopy = new BoardClass(boardMap);
 
     const tileInfo = boardCopy.get(coordinates)!;
     tileInfo.reset();

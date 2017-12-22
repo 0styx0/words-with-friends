@@ -16,6 +16,6 @@ export default class Board extends Map {
     }
 
     get(coordinates: number[]): TileInfo | undefined {
-        return super.get(`${coordinates[0]}, ${coordinates[1]}`);
+        return super.get(`${coordinates[0]}, ${coordinates[1]}`) || new TileInfo();
     }
 }

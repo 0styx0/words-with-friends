@@ -10,7 +10,7 @@ interface PropBase {
 abstract class AbstractTileHolder<Props> extends React.Component<Props & PropBase, {}> {
 
     constructor(props: Props & PropBase) {
-        super();
+        super(props);
 
         this.removeTile = this.removeTile.bind(this);
         this.onDrop = this.onDrop.bind(this);

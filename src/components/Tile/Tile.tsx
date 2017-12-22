@@ -32,8 +32,8 @@ type Props = typeof actionCreators & typeof defaultState & {
 
 class TileContainer extends React.Component<Props, {}> {
 
-    constructor() {
-        super();
+    constructor(props: Props) {
+        super(props);
 
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragEnd = this.onDragEnd.bind(this);
