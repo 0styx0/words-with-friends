@@ -7,8 +7,8 @@ import { connect, Dispatch } from 'react-redux';
 import actionCreators from '../../actions';
 import { defaultState } from '../../store';
 import Player from '../../classes/Player';
-import TileInfo from '../../classes/TileInfo';
 import AbstractTileHolder from './AbstractTileHolder';
+import Board from '../../classes/Board';
 
 
 function mapStateToProps(state: typeof defaultState, props: Props) {
@@ -31,7 +31,7 @@ type Props = typeof actionCreators & typeof defaultState & {
     tile?: TileType;
     coordinates: string;
     currentPlayer: Player;
-    board: Map<string, TileInfo>,
+    board: Board,
     turn: number
 };
 

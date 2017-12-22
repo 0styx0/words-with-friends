@@ -1,7 +1,7 @@
 import types from './types';
 import PlayerClass from '../classes/Player';
-import TileInfo from '../classes/TileInfo';
 import Tile from '../interfaces/Tile';
+import BoardClass from '../classes/Board';
 
 export interface Turn {
     readonly type: types.INCREMENT_TURN;
@@ -15,18 +15,18 @@ export interface Players {
 
 export interface Board {
     readonly type: types.INIT_BOARD;
-    readonly board: Map<string, TileInfo>;
+    readonly board: BoardClass;
 }
 
 export interface PlaceTileOnBoard {
     readonly type: types.PLACE_TILE_ON_BOARD;
     readonly tile: Tile;
-    readonly coordinates: string;
+    readonly coordinates: number[];
 }
 
 export interface RemoveTileFromBoard {
     readonly type: types.REMOVE_TILE_FROM_BOARD;
-    readonly coordinates: string;
+    readonly coordinates: number[];
 }
 
 export interface PlaceTileInHand {

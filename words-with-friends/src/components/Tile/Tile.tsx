@@ -26,7 +26,7 @@ function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
 type Props = typeof actionCreators & typeof defaultState & {
     tile: TileType;
     removeTile: Function;
-    coordinates: string;
+    coordinates: number[];
 };
 
 

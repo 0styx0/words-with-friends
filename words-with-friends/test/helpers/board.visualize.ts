@@ -1,13 +1,13 @@
-import TileInfo from '../../src/classes/TileInfo';
+import Board from '../../src/classes/Board';
 
 /**
  * console.logs letters in board in the shape of a board
  *
  * @param board - regular map of board
  */
-export default function visualizeBoard(board: Map<string, TileInfo>) {
+export default function visualizeBoard(board: Board) {
 
-    const copy = new Map(board);
+    const copy = new Board(board);
 
     const boardArr = Array.from(copy).reduce((accum = [], twoD) => {
 

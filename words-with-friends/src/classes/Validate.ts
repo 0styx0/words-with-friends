@@ -1,13 +1,12 @@
 const dictionary = require('word-list-json'); // no @types file
 import TileInfo from '../classes/TileInfo';
-
-type boardType = Map<string, TileInfo>;
+import Board from './Board';
 
 export default class Validate {
 
-    board: boardType;
+    board: Board;
 
-    constructor(board: boardType) {
+    constructor(board: Board) {
         this.board = board;
     }
 
@@ -21,8 +20,8 @@ export default class Validate {
      *
      * @return last coordinate callback returned `true` on
      */
-    travelHorizontally(startCoordinate: [number, number],
-                       callback: (tileInfo: TileInfo, currentCoordinate: [number, number]) => boolean,
+    travelHorizontally(startCoordinate: number[],
+                       callback: (tileInfo: TileInfo, currentCoordinate: number[]) => boolean,
                        forwards: boolean = true): typeof startCoordinate {
 
         let x = startCoordinate[1];
@@ -51,8 +50,8 @@ export default class Validate {
      * @return last coordinate callback returned `true` on
      */
 
-    travelVertically(startCoordinate: [number, number],
-                     callback: (tileInfo: TileInfo, currentCoordinate: [number, number]) => boolean,
+    travelVertically(startCoordinate: number[],
+                     callback: (tileInfo: TileInfo, currentCoordinate: number[]) => boolean,
                      up: boolean = true): typeof startCoordinate {
 
         let x = startCoordinate[1];
@@ -75,7 +74,7 @@ export default class Validate {
      *
      * @param coordinates - 2d array of coordinates of tiles. Must be left to right
      */
-    checkTilePlacementValidity(coordinates: [number, number][]) {
+    checkTilePlacementValidity(coordinates: number[][]) {
 
         if (!this.checkForCenterTile(coordinates[0])) {
             console.log('no center');
@@ -90,7 +89,7 @@ export default class Validate {
          * @return boolean if all tiles in coordinates (param of checkTilePlacementValidity) is covered
          *  in the travels
          */
-        const validateVertically = (firstCoordinate: [number, number]) => {
+        const validateVertically = (firstCoordinate: number[]) => {
 
             const coordinatesNotTouched = [...coordinates];
 
@@ -120,7 +119,7 @@ export default class Validate {
          * @return boolean if all tiles in coordinates (param of checkTilePlacementValidity) is covered
          *  in the travels
          */
-        const validateHorizontally = (firstCoordinate: [number, number]) => {
+        const validateHorizontally = (firstCoordinate: number[]) => {
 
             const coordinatesNotTouched = [...coordinates];
 
@@ -149,7 +148,7 @@ export default class Validate {
     /**
      * Checks if recent tiles form valid words with all tiles it touches
      */
-    validateWords(coordinates: [number, number][]) {
+    validateWords(coordinates: number[][]) {
 
         return this.getWords(coordinates).every(tileInfoArr => {
 
@@ -167,7 +166,7 @@ export default class Validate {
      *
      * @return 2d array with all tiles that connect to `coordinates`, 1 "word" per inner array
      */
-    getWords(coordinates: [number, number][]): TileInfo[][] {
+    getWords(coordinates: number[][]): TileInfo[][] {
 
         /**
          * @return the y coordinate of the highest tile that connect to coordinateToCheck
@@ -191,7 +190,7 @@ export default class Validate {
         /**
          * Given a coordinate, this checks if it's part of a valid vertical word
          */
-        const getVerticalWord = (coordinate: [number, number]) => {
+        const getVerticalWord = (coordinate: number[]) => {
 
             let word: TileInfo[] = [];
 
@@ -212,7 +211,7 @@ export default class Validate {
         /**
          * Given a coordinate, this checks if it's part of a valid vertical word
          */
-        const getHorizontalWord = (coordinate: [number, number]) => {
+        const getHorizontalWord = (coordinate: number[]) => {
 
             let word: TileInfo[] = [];
 
@@ -230,7 +229,7 @@ export default class Validate {
             return word;
         };
 
-        type reductionParam = { previousX: [number, number], previousY: [number, number], words: TileInfo[][] };
+        type reductionParam = { previousX: number[], previousY: number[], words: TileInfo[][] };
 
         return coordinates.reduce((accum: reductionParam, coordinate) => {
 
@@ -260,9 +259,9 @@ export default class Validate {
     /**
      * Checks if center spot on board is filled (all tiles must emenate from center)
      */
-    checkForCenterTile(currentCoordinates: [number, number]) {
+    checkForCenterTile(currentCoordinates: number[]) {
 
-        const centerCoordinates = '7, 7';
+        const centerCoordinates = [7, 7];
 
         const centerIsFilled = this.board.get(centerCoordinates)!.filled;
 
@@ -271,27 +270,26 @@ export default class Validate {
             return false;
         }
 
-        const coordinatesTried = new Set<string>(); // so recursion in checkTileTree doesn't go on forever
+        // so recursion in checkTileTree doesn't go on forever. Must be string since can't use arrays in Set
+        const coordinatesTried = new Set<string>();
 
         /**
          * Recursively checks all paths from `currentCoordinates` until it finds the center tile
          *
          * @return boolean if `currentCoordinates` somehow connects to the center of the board
          */
-        const checkTileTree = (coordinates: [number, number]): boolean => {
+        const checkTileTree = (coordinates: number[]): boolean => {
 
-            const key = `${coordinates[0]}, ${coordinates[1]}`;
-
-            const space = this.board.get(key);
+            const space = this.board.get(coordinates);
 
             if (coordinates[0] === coordinates[1] && coordinates[0] === 7) {
                 console.log('center is here');
                 return true;
             }
 
-            if (space && space.filled && !coordinatesTried.has(key)) {
+            if (space && space.filled && !coordinatesTried.has(coordinates.toString())) {
 
-                coordinatesTried.add(key);
+                coordinatesTried.add(coordinates.toString());
 
                 return checkTileTree([coordinates[0] + 1, coordinates[1]]) ||
                     checkTileTree([coordinates[0], coordinates[1] + 1]) ||
@@ -305,8 +303,8 @@ export default class Validate {
         return checkTileTree(currentCoordinates);
     }
 
-    getTileInfo(coordinates: [number, number]) {
-        return this.board.get(`${coordinates[0]}, ${coordinates[1]}`) || new TileInfo();
+    getTileInfo(coordinates: number[]) {
+        return this.board.get(coordinates) || new TileInfo();
     }
 
 }

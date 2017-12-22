@@ -4,6 +4,7 @@ import Validate from './Validate';
 import TileInfo from './TileInfo';
 import * as sinon from 'sinon';
 import * as casual from 'casual';
+import Board from './Board';
 
 casual.define('upperLetter', () => casual.letter.toUpperCase());
 
@@ -13,7 +14,7 @@ describe('Validate', () => {
 
     type randomWordType = {
         validate: Validate;
-        board: Map<string, TileInfo>;
+        board: Board;
         tileInfos: TileInfo[];
         randomWord: string;
         startCoordinate: [number, number];
@@ -28,7 +29,7 @@ describe('Validate', () => {
     function setupRandomWord(
         horizontal: boolean = true,
         startCoordinate: [number, number] = [0, 0],
-        boardMap?: Map<string, TileInfo>
+        boardMap?: Board
     ): randomWordType {
 
         const randomWord = getWord();
@@ -90,7 +91,7 @@ describe('Validate', () => {
             const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
 
                 spy();
-                const expected = board.get(`${currentCoordinate[0]}, ${currentCoordinate[1]}`);
+                const expected = board.get(currentCoordinate);
 
                 expect(tileInfo).toEqual(expected === undefined ? new TileInfo() : expected);
                 return !!tileInfo.filled;

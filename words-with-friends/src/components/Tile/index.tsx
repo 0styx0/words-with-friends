@@ -6,11 +6,11 @@ import { ChangeEvent } from 'react';
 
 interface Props {
     tile: TileType;
-    coordinates?: string;
+    coordinates?: number[];
     canDrag?: boolean;
 }
 
-function onWildcardChange(event: ChangeEvent<HTMLSelectElement>, coordinates?: string) {
+function onWildcardChange(event: ChangeEvent<HTMLSelectElement>, coordinates?: number[]) {
 
     if (!coordinates) {
         return;

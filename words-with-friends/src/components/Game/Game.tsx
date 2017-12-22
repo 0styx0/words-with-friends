@@ -58,12 +58,11 @@ class Game extends React.Component<Props, State> {
 
                 recentlyPlacedCoordinates.forEach(coordinate => {
 
-                    const key = `${coordinate[0]}, ${coordinate[1]}`;
-                    const value = self.props.board.get(key)!;
+                    const value = self.props.board.get(coordinate)!;
                     console.log(value);
                     value.recent = false;
 
-                    self.props.board.set(key, value);
+                    self.props.board.set(coordinate, value);
                 });
             }(this));
 
@@ -78,7 +77,7 @@ class Game extends React.Component<Props, State> {
     /**
      * Adds up points that a word is worth and adds that to the current user's total
      */
-    tallyPoints(recentlyPlacedCoordinates: [number, number][]) {
+    tallyPoints(recentlyPlacedCoordinates: number[][]) {
 
         const validate = new Validate(this.props.board);
         const words = validate.getWords(recentlyPlacedCoordinates);
@@ -119,15 +118,13 @@ class Game extends React.Component<Props, State> {
      */
     getTilesPlaced() {
 
-        const recentlyPlacedCoordinates: [number, number][] = [];
+        const recentlyPlacedCoordinates: number[][] = [];
 
         this.props.board.forEach((value, key) => {
 
             if (value.recent) {
 
-                const coordinates = key.split(', ');
-
-                recentlyPlacedCoordinates.push([+coordinates[0], +coordinates[1]]);
+                recentlyPlacedCoordinates.push(key);
             }
         });
 

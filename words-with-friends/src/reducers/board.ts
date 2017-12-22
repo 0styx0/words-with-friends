@@ -3,8 +3,11 @@ import { Board, PlaceTileOnBoard, RemoveTileFromBoard } from '../actions/interfa
 import TileInfo from '../classes/TileInfo';
 import Powerup from '../classes/Powerup';
 import Tile from '../interfaces/Tile';
+import BoardType from '../interfaces/Board';
 
-export default function board(currentBoard = new Map(), action: Board | PlaceTileOnBoard | RemoveTileFromBoard) {
+export default function board(
+    currentBoard: BoardType = new Map(), action: Board | PlaceTileOnBoard | RemoveTileFromBoard
+) {
 
     switch (action.type) {
 
@@ -22,7 +25,7 @@ export default function board(currentBoard = new Map(), action: Board | PlaceTil
 
 function initializeBoard() {
 
-    const boardMap = new Map<string, TileInfo>();
+    const boardMap = new Map<number[], TileInfo>();
 
     for (let i = 0; i < +process.env.BOARD_DIMENSIONS!; i++) {
 
@@ -34,7 +37,7 @@ function initializeBoard() {
                 tileInfo.powerup = setPowerup();
             }
 
-            boardMap.set(`${i}, ${j}`, tileInfo);
+            boardMap.set([i, j], tileInfo);
         }
     }
 
@@ -49,7 +52,7 @@ function setPowerup(): Powerup | undefined {
     return new Powerup(Math.random() > 0.5 ? 'letter' : 'word', Math.random() > 0.5 ? 2 : 3);
 }
 
-function placeTile(boardMap: Map<string, TileInfo>, coordinates: string, tile: Tile) {
+function placeTile(boardMap: BoardType, coordinates: number[], tile: Tile) {
 
     const boardCopy = new Map(boardMap);
     const tileInfo = boardCopy.get(coordinates)!;
@@ -58,7 +61,7 @@ function placeTile(boardMap: Map<string, TileInfo>, coordinates: string, tile: T
     return boardCopy;
 }
 
-function removeTile(boardMap: Map<string, TileInfo>, coordinates: string) {
+function removeTile(boardMap: BoardType, coordinates: number[]) {
 
     const boardCopy = new Map(boardMap);
 

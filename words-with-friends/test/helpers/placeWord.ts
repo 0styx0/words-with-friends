@@ -1,6 +1,9 @@
 import TileInfo from '../../src/classes/TileInfo';
 import Tilebag from '../../src/classes/Tilebag';
 import store, { defaultState } from '../../src/store';
+import Board from '../../src/classes/Board';
+
+new Board();
 
 /**
  *
@@ -13,11 +16,12 @@ import store, { defaultState } from '../../src/store';
  */
 export default function placeWord(
     word: string, startCoordinate: [number, number], horizontal: boolean = true,
-    board: Map<string, TileInfo> = new Map(),
+    board: Board = new Board(),
     turn: number = 1
 ) {
 
-    const boardCopy = new Map(board);
+    const boardCopy = new Board(board);
+
     const initialCoordinates = [...startCoordinate];
     const coordinates: [number, number][] = [];
 
@@ -25,7 +29,7 @@ export default function placeWord(
 
         for (let i = 0; i < +process.env.BOARD_DIMENSIONS!; i++) {
             for (let j = 0; j < +process.env.BOARD_DIMENSIONS!; j++) {
-                boardCopy.set(`${i}, ${j}`, new TileInfo());
+                boardCopy.set([i, j], new TileInfo());
             }
         }
     }
@@ -60,7 +64,7 @@ export default function placeWord(
 
         while (wordArr.length > 0) {
 
-            boardCopy.set(`${initialCoordinates[1]}, ${currentX}`, setTileInfos());
+            boardCopy.set([initialCoordinates[1], currentX], setTileInfos());
             coordinates.push([initialCoordinates[1], currentX]);
             currentX++;
         }
@@ -70,7 +74,7 @@ export default function placeWord(
 
         while (wordArr.length > 0) {
 
-            boardCopy.set(`${currentY}, ${initialCoordinates[0]}`, setTileInfos());
+            boardCopy.set([currentY, initialCoordinates[0]], setTileInfos());
             coordinates.push([currentY, initialCoordinates[0]]);
             currentY++;
         }

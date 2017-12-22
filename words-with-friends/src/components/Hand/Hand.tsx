@@ -6,7 +6,7 @@ import { connect, Dispatch } from 'react-redux';
 import actionCreators from '../../actions';
 import { defaultState } from '../../store';
 import Tile from '../../interfaces/Tile';
-import TileInfo from '../../classes/TileInfo';
+import Board from '../../classes/Board';
 
 function mapStateToProps(state: typeof defaultState, props: {playerIndex: number}) {
     return {
@@ -23,8 +23,8 @@ function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
 
 type Props = typeof actionCreators & typeof defaultState & {
     tiles: Tile[],
-    board: Map<string, TileInfo>,
-    tileNumber: number
+    board: Board,
+    tileNumber: number,
     turn: number
 };
 
