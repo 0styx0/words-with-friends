@@ -6,21 +6,16 @@ import store, { defaultState } from '../store';
 export default class TileInfo {
 
     filled: boolean;
-    turnTileWasPlaced: number;
     powerup?: Powerup | undefined;
-    _tile?: Tile;
     Player: Player;
+    private _tile?: Tile;
+    private turnTileWasPlaced: number;
 
     constructor() {
         this.reset();
     }
 
-    set tile(tile: Tile | undefined) {
-        this._tile = tile;
-    }
-
-    get tile(): Tile | undefined {
-
+    get tile() {
         return this._tile;
     }
 
@@ -40,7 +35,7 @@ export default class TileInfo {
 
         const powerup = (this.powerup && this.powerup.target === 'letter') ? this.powerup.multiplyBy : 1;
 
-        return this.tile ? this.tile.points * powerup : 0;
+        return this._tile ? this._tile.points * powerup : 0;
     }
 
     reset() {
@@ -58,7 +53,7 @@ export default class TileInfo {
         this.filled = true;
         this.turnTileWasPlaced = storeState.turn;
         this.recent = true;
-        this.tile = tile;
+        this._tile = tile;
         this.Player = storeState.Players.find(player => player.turn)!;
     }
 }
