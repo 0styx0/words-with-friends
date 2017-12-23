@@ -9,6 +9,7 @@ import { defaultState } from '../../store';
 
 
 function mapStateToProps(state: typeof defaultState, props: Props) {
+
     return {
         coordinates: props.coordinates,
         tile: props.tile,
@@ -56,7 +57,7 @@ class TileContainer extends React.Component<Props, {}> {
   canDrag() {
 
       const data = this.props.board.get(this.props.coordinates);
-      const tileIsAlreadyOnBoard = !!data;
+      const tileIsAlreadyOnBoard = !!data!.tile;
 
       const tileInCurrentPlayersHand = !tileIsAlreadyOnBoard  && this.props.Players[this.props.tile.playerIndex!].turn;
       const draggableTileOnBoard = tileIsAlreadyOnBoard && data!.canDrag;
