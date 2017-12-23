@@ -7,7 +7,7 @@ export default class TileInfo {
 
     filled: boolean;
     powerup?: Powerup | undefined;
-    Player: Player;
+    Player?: Player;
     private _tile?: Tile;
     private turnTileWasPlaced: number;
 
@@ -41,9 +41,10 @@ export default class TileInfo {
     reset() {
 
         this.filled = false;
-        this.turnTileWasPlaced = 0;
+        this.turnTileWasPlaced = -1;
         this.recent = false;
         this._tile = undefined;
+        this.Player = undefined;
     }
 
     place(tile: Tile) {
