@@ -1,3 +1,16 @@
 sudo: required
 dist: trusty
 language: node_js
+
+cache:
+  directories:
+    - node_modules
+node_js:
+  # LTS version
+  - "8.0"
+install:
+  - npm install
+notifications:
+  email:
+    on_success: change # only if status change from fail to success
+    on_failure: always # if there is a fail
