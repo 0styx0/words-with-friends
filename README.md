@@ -1,3 +1,4 @@
+![Build status](https://travis-ci.org/DovidM/words-with-friends.svg?branch=master)
 
 This is a words-with-friends clone
 
