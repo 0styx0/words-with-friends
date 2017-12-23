@@ -13,8 +13,8 @@ export default function Board() {
 
             board.push(
                 <BoardTileHolder
-                    coordinates={`${i}, ${j}`}
-                    key={`${i}, ${j}`}
+                    coordinates={[j, i]}
+                    key={`${j}, ${i}`}
                     {...[] as any}
                 /> as {} as typeof BoardTileHolder
             );

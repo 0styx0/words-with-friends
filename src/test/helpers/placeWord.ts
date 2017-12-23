@@ -28,7 +28,7 @@ export default function placeWord(
 
         for (let i = 0; i < +process.env.REACT_APP_BOARD_DIMENSIONS!; i++) {
             for (let j = 0; j < +process.env.REACT_APP_BOARD_DIMENSIONS!; j++) {
-                boardCopy.set([i, j], new TileInfo());
+                boardCopy.set([j, i], new TileInfo());
             }
         }
     }
@@ -63,8 +63,8 @@ export default function placeWord(
 
         while (wordArr.length > 0) {
 
-            boardCopy.set([initialCoordinates[1], currentX], setTileInfos());
-            coordinates.push([initialCoordinates[1], currentX]);
+            boardCopy.set([currentX, initialCoordinates[1]], setTileInfos());
+            coordinates.push([currentX, initialCoordinates[1]]);
             currentX++;
         }
     } else {
@@ -73,8 +73,8 @@ export default function placeWord(
 
         while (wordArr.length > 0) {
 
-            boardCopy.set([currentY, initialCoordinates[0]], setTileInfos());
-            coordinates.push([currentY, initialCoordinates[0]]);
+            boardCopy.set([initialCoordinates[0], currentY], setTileInfos());
+            coordinates.push([initialCoordinates[0], currentY]);
             currentY++;
         }
     }

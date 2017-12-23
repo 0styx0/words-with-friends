@@ -38,7 +38,7 @@ function initializeBoard() {
                 tileInfo.powerup = setPowerup();
             }
 
-            boardMap.set([i, j], tileInfo);
+            boardMap.set([j, i], tileInfo);
         }
     }
 

@@ -70,8 +70,8 @@ describe('Validate', () => {
             const mock = (tileInfo: TileInfo, currentCoordinate: typeof startCoordinate) => {
                 spy();
                 return (horizontal) ?
-                    currentCoordinate[1] < expectedCallbackTimes - 1 :
-                    currentCoordinate[0] < expectedCallbackTimes - 1;
+                    currentCoordinate[0] < expectedCallbackTimes - 1 :
+                    currentCoordinate[1] < expectedCallbackTimes - 1;
             };
 
             horizontal ?
@@ -124,8 +124,8 @@ describe('Validate', () => {
             };
 
             horizontal ?
-                validate.travelHorizontally([startCoordinate[1], randomWord.length - 1], mock, false) :
-                validate.travelVertically([randomWord.length - 1, startCoordinate[0]], mock, false);
+                validate.travelHorizontally([randomWord.length - 1, startCoordinate[1]], mock, false) :
+                validate.travelVertically([startCoordinate[0], randomWord.length - 1], mock, false);
 
             expect(spy.callCount).toBe(randomWord.length + 1);
         }
@@ -163,8 +163,8 @@ describe('Validate', () => {
                 const validate = new Validate(board);
 
                 const middleCoordinate: [number, number][] = horizontal ?
-                    [[startCoordinate[1], 1]] :
-                    [[1, startCoordinate[0]]];
+                    [[1, startCoordinate[1]]] :
+                    [[startCoordinate[0], 1]];
 
                 const words = validate.getWords(middleCoordinate);
 

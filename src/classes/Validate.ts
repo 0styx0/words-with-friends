@@ -24,19 +24,19 @@ export default class Validate {
                        callback: (tileInfo: TileInfo, currentCoordinate: number[]) => boolean,
                        forwards: boolean = true): typeof startCoordinate {
 
-        let x = startCoordinate[1];
-        let y = startCoordinate[0];
+        let x = startCoordinate[0];
+        let y = startCoordinate[1];
 
-        while (this.getTileInfo([y, x])) {
+        while (this.getTileInfo([x, y])) {
 
-            if (!callback(this.getTileInfo([y, x]), [y, x])) {
+            if (!callback(this.getTileInfo([x, y]), [x, y])) {
                 break;
             }
 
             forwards ? x++ : x--;
         }
 
-        return [y, x + 1];
+        return [x + 1, y];
     }
 
     /**
@@ -54,19 +54,19 @@ export default class Validate {
                      callback: (tileInfo: TileInfo, currentCoordinate: number[]) => boolean,
                      up: boolean = true): typeof startCoordinate {
 
-        let x = startCoordinate[1];
-        let y = startCoordinate[0];
+        let x = startCoordinate[0];
+        let y = startCoordinate[1];
 
-        while (this.getTileInfo([y, x])) {
+        while (this.getTileInfo([x, y])) {
 
-            if (!callback(this.getTileInfo([y, x]), [y, x])) {
+            if (!callback(this.getTileInfo([x, y]), [x, y])) {
                 break;
             }
 
             up ? y++ : y--;
         }
 
-        return [y + 1, x];
+        return [x, y + 1];
     }
 
     /**
