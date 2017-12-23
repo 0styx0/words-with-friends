@@ -175,7 +175,7 @@ export default class Tilebag {
     /**
      * Removes tile from bag
      */
-    private removeTile(tile: Tile) {
+    private removeTile(tile: Tile): Tile {
 
         const positionOfTile = this.tiles.indexOf(tile);
         return JSON.parse(JSON.stringify(this.tiles.splice(positionOfTile, 1)[0]));
