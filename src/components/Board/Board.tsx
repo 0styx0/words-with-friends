@@ -7,14 +7,14 @@ export default function Board() {
 
     let board: typeof BoardTileHolder[] = [];
 
-    for (let i = 0; i < +process.env.REACT_APP_BOARD_DIMENSIONS!; i++) {
+    for (let y = 0; y < +process.env.REACT_APP_BOARD_DIMENSIONS!; y++) {
 
-        for (let j = 0; j < +process.env.REACT_APP_BOARD_DIMENSIONS!; j++) {
+        for (let x = 0; x < +process.env.REACT_APP_BOARD_DIMENSIONS!; x++) {
 
             board.push(
                 <BoardTileHolder
-                    coordinates={[j, i]}
-                    key={`${j}, ${i}`}
+                    coordinates={[x, y]}
+                    key={`${x}, ${y}`}
                     {...[] as any}
                 /> as {} as typeof BoardTileHolder
             );

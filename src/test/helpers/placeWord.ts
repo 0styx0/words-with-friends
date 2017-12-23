@@ -26,9 +26,9 @@ export default function placeWord(
 
     if (boardCopy.size === 0) {
 
-        for (let i = 0; i < +process.env.REACT_APP_BOARD_DIMENSIONS!; i++) {
-            for (let j = 0; j < +process.env.REACT_APP_BOARD_DIMENSIONS!; j++) {
-                boardCopy.set([j, i], new TileInfo());
+        for (let y = 0; y < +process.env.REACT_APP_BOARD_DIMENSIONS!; y++) {
+            for (let x = 0; x < +process.env.REACT_APP_BOARD_DIMENSIONS!; x++) {
+                boardCopy.set([x, y], new TileInfo());
             }
         }
     }

@@ -28,9 +28,9 @@ function initializeBoard() {
 
     const boardMap = new BoardClass();
 
-    for (let i = 0; i < +process.env.REACT_APP_BOARD_DIMENSIONS!; i++) {
+    for (let y = 0; y < +process.env.REACT_APP_BOARD_DIMENSIONS!; y++) {
 
-        for (let j = 0; j < +process.env.REACT_APP_BOARD_DIMENSIONS!; j++) {
+        for (let x = 0; x < +process.env.REACT_APP_BOARD_DIMENSIONS!; x++) {
 
             const tileInfo = new TileInfo();
 
@@ -38,7 +38,7 @@ function initializeBoard() {
                 tileInfo.powerup = setPowerup();
             }
 
-            boardMap.set([j, i], tileInfo);
+            boardMap.set([x, y], tileInfo);
         }
     }
 
