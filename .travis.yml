@@ -3,9 +3,9 @@ language: node_js
 
 services:
   - docker
-cache:
-  directories:
-    - node_modules
+# cache:
+#   directories:
+#     - node_modules
 node_js:
   # LTS version
   - "8.0"
