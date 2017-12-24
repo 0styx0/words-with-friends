@@ -1,0 +1,10 @@
+words-with-friends:
+  # image: words-with-friends:latest
+  build: .
+  ports:
+    - 3000:3000
+  volumes: # For webpack dev server to use our local files
+    - .:/usr/src/app
+
+    # https://unix.stackexchange.com/questions/79751/is-there-a-faster-alternative-to-cp-for-copying-large-files-20-gb
+
