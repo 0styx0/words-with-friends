@@ -17,7 +17,6 @@
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
-    "dotenv-safe": "^4.0.4",
     "@types/dotenv-safe": "^4.0.1",
     "@types/jest": "^21.1.1",
     "@types/node": "^8.0.31",
@@ -25,7 +24,9 @@
     "@types/react-dom": "^16.0.3",
     "@types/react-redux": "^5.0.14",
     "@types/sinon": "^4.1.2",
+    "@types/word-list-json": "^0.2.0",
     "casual": "^1.5.19",
+    "dotenv-safe": "^4.0.4",
     "sinon": "^4.1.3",
     "typescript": "^2.6.2"
   }
