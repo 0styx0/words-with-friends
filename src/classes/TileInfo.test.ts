@@ -1,10 +1,5 @@
-import placeWord from '../test/helpers/placeWord';
-import getWord from '../test/helpers/getWord';
-import Validate from './Validate';
 import TileInfo from './TileInfo';
-import * as sinon from 'sinon';
 import * as casual from 'casual';
-import Board from './Board';
 import Tilebag from './Tilebag';
 import store, { defaultState } from '../store';
 import Tile from '../interfaces/Tile';
@@ -62,28 +57,28 @@ describe('TileInfo', () => {
 
         test('filled = true', () => {
 
-            const { tile, tileInfo } = setTileInfoToRandomTile();
+            const { tileInfo } = setTileInfoToRandomTile();
 
             expect(tileInfo.filled).toBeTruthy();
         });
 
         test('recent = true', () => {
 
-            const { tile, tileInfo } = setTileInfoToRandomTile();
+            const { tileInfo } = setTileInfoToRandomTile();
 
             expect(tileInfo.recent).toBeTruthy();
         });
 
         test('.canDrag = true', () => {
 
-            const { tile, tileInfo } = setTileInfoToRandomTile();
+            const { tileInfo } = setTileInfoToRandomTile();
 
             expect(tileInfo.canDrag).toBeTruthy();
         });
 
         test('.Player is current Player', () => {
 
-            const { tile, tileInfo } = setTileInfoToRandomTile();
+            const { tileInfo } = setTileInfoToRandomTile();
             const storeState = (store.getState() as typeof defaultState);
 
             expect(tileInfo.Player).toEqual(storeState.Players.find(Player => Player.turn));
