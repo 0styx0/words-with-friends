@@ -15,3 +15,5 @@ notifications:
   email:
     on_success: change # only if status change from fail to success
     on_failure: always # if there is a fail
+script:
+- npm test
