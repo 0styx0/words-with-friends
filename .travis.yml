@@ -15,9 +15,8 @@ notifications:
   email:
     on_success: change # only if status change from fail to success
     on_failure: always # if there is a fail
-env:
-  - CI=true
 script:
-  - docker-compose run words-with-friends npm test
+  - docker-compose run words-with-friends bash
+  - CI=true npm test
 after_script:
   - docker-compose down
