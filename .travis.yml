@@ -10,7 +10,6 @@ node_js:
   # LTS version
   - "9.3"
 install:
-  - npm install
   - docker-compose up --build -d
 notifications:
   email:
