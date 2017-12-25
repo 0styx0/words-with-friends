@@ -1,11 +1,10 @@
-FROM node:9
+FROM node:9.3
 
 ENV NPM_CONFIG_LOGLEVEL warn
 
 WORKDIR /tmp
 
 COPY package.json .
-COPY package-lock.json .
 RUN npm install
 
 WORKDIR /usr/src/app
