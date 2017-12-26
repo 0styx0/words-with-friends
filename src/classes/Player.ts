@@ -20,6 +20,9 @@ export default class Player {
         return this._tiles;
     }
 
+    /**
+     * Ensures player has 7 tiles (7 is b/c rules of the game)
+     */
     generateHand() {
 
         while (this._tiles.length < 7 && (store.getState() as typeof defaultState).Tilebag.tiles.length > 0) {
