@@ -16,6 +16,6 @@ notifications:
     on_success: change # only if status change from fail to success
     on_failure: always # if there is a fail
 script:
-  - docker-compose run words-with-friends bash -c "npm install && CI=true npm test"
+  - docker-compose run words-with-friends bash -c "npm i -D ts-jest &&CI=true npm test"
 after_script:
   - docker-compose down
