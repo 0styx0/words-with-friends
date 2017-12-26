@@ -1,6 +1,14 @@
-import { Turn } from '../actions/interfaces';
+import { ResetTilebag } from '../actions/interfaces';
+import types from '../actions/types';
+import TilebagClass from '../classes/Tilebag';
 
-export default function Tilebag(tilebag: any = {}, action: Turn) {
+export default function Tilebag(tilebag: any = {}, action: ResetTilebag) {
 
-    return tilebag;
+    switch (action.type) {
+
+        case types.RESET_TILEBAG:
+            return new TilebagClass();
+        default:
+            return tilebag;
+    }
 }
