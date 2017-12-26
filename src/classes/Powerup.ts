@@ -10,10 +10,9 @@ export default class Powerup {
         this.multiplyBy = multiplyBy;
 
         this.name = this.setPowerup();
-
     }
 
-    setPowerup() {
+    private setPowerup() {
 
         switch (this.target) {
             case 'letter':
