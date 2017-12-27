@@ -1,4 +1,3 @@
-import Board from './Board';
 import * as casual from 'casual';
 import TileInfo from './TileInfo';
 import store, { defaultState } from '../store';
