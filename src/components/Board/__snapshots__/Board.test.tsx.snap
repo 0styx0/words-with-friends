@@ -1,0 +1,2033 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Board renders correctly 1`] = `
+<div
+  className="wrapper"
+>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+</div>
+`;
