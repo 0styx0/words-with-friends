@@ -1,8 +1,8 @@
 sudo: required
 language: node_js
 
-services:
-  - docker
+# services:
+#   - docker
 cache:
   directories:
     - node_modules
@@ -10,12 +10,13 @@ node_js:
   # LTS version
   - "9.3"
 install:
-  - docker-compose up --build -d
+  # - docker-compose up --build -d
+  - npm install
 notifications:
   email:
     on_success: change # only if status change from fail to success
     on_failure: always # if there is a fail
-script:
-  - docker-compose run words-with-friends bash -c "CI=true npm test"
-after_script:
-  - docker-compose down
+# script:
+#   - docker-compose run words-with-friends bash -c "CI=true npm test"
+# after_script:
+#   - docker-compose down
