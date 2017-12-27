@@ -9,9 +9,8 @@ cache:
 node_js:
   # LTS version
   - "9.3"
-install:
+# install:
   # - docker-compose up --build -d
-  - sudo npm install
 notifications:
   email:
     on_success: change # only if status change from fail to success
