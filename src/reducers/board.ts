@@ -4,7 +4,6 @@ import TileInfo from '../classes/TileInfo';
 import Powerup from '../classes/Powerup';
 import Tile from '../interfaces/Tile';
 import BoardClass from '../classes/Board';
-import visualizeBoard from '../test/helpers/board.visualize';
 
 export default function board(
     currentBoard: BoardClass = new BoardClass(), action: Board | PlaceTileOnBoard | RemoveTileFromBoard
@@ -41,8 +40,6 @@ function initializeBoard() {
             boardMap.set([x, y], tileInfo);
         }
     }
-
-    visualizeBoard(boardMap);
 
     return boardMap;
 }
