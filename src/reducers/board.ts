@@ -55,7 +55,7 @@ function setPowerup(): Powerup | undefined {
 function placeTile(boardMap: BoardClass, coordinates: number[], tile: Tile) {
 
     const boardCopy = new BoardClass(boardMap);
-    const tileInfo = boardCopy.get(coordinates)!;
+    const tileInfo = boardCopy.get(coordinates) || new TileInfo();
     tileInfo.place(tile);
     boardCopy.set(coordinates, tileInfo);
     return boardCopy;
