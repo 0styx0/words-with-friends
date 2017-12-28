@@ -98,7 +98,7 @@ export default class Validate {
                 if (tileInfo.recent) {
 
                     const recentCoordinateIdx = coordinatesNotTouched.findIndex((coordinate) =>
-                      coordinate[0] === currentCoordinate[0] && coordinate[1] === firstCoordinate[1]);
+                      firstCoordinate[0] === currentCoordinate[0] && coordinate[1] === currentCoordinate[1]);
 
                     if (recentCoordinateIdx !== -1) {
                         coordinatesNotTouched.splice(recentCoordinateIdx, 1);
@@ -128,7 +128,7 @@ export default class Validate {
                 if (tileInfo.recent) {
 
                     const recentCoordinateIdx = coordinatesNotTouched.findIndex((coordinate) =>
-                        coordinate[1] === currentCoordinate[1] && coordinate[0] === firstCoordinate[0]);
+                        firstCoordinate[1] === currentCoordinate[1] && coordinate[0] === currentCoordinate[0]);
 
                     if (recentCoordinateIdx !== -1) {
                         coordinatesNotTouched.splice(recentCoordinateIdx, 1);
