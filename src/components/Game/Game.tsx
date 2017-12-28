@@ -45,8 +45,15 @@ class Game extends React.Component<Props, State> {
         this.props.initializePlayers();
     }
 
-    turn() {
+    render() {
+        return <GameComponent turn={this.turn} />;
+    }
 
+    /**
+     * If tiles were placed, checks their validity (@see Validate),
+     *  gives player points (@see #tallyPoints) and changes turn
+     */
+    private turn() {
 
         const recentlyPlacedCoordinates = this.getTilesPlaced();
         const validate = new Validate(this.props.board);
@@ -70,15 +77,13 @@ class Game extends React.Component<Props, State> {
             this.tallyPoints(recentlyPlacedCoordinates);
 
             this.props.incrementTurn(this.props.turn);
-
-            // this.setHands();
         }
     }
 
     /**
      * Adds up points that a word is worth and adds that to the current user's total
      */
-    tallyPoints(recentlyPlacedCoordinates: number[][]) {
+    private tallyPoints(recentlyPlacedCoordinates: number[][]) {
 
         const validate = new Validate(this.props.board);
         const words = validate.getWords(recentlyPlacedCoordinates);
@@ -117,7 +122,7 @@ class Game extends React.Component<Props, State> {
     /**
      * @return tiles placed during most recent turn
      */
-    getTilesPlaced() {
+    private getTilesPlaced() {
 
         const recentlyPlacedCoordinates: number[][] = [];
 
@@ -130,10 +135,6 @@ class Game extends React.Component<Props, State> {
         });
 
         return recentlyPlacedCoordinates;
-    }
-
-    render() {
-        return <GameComponent turn={this.turn} />;
     }
 }
 
