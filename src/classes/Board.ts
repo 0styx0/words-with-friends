@@ -2,7 +2,7 @@ import TileInfo from './TileInfo';
 
 export default class Board extends Map {
 
-    constructor(board?: Board) {
+    constructor(board?: Readonly<Board>) {
         super();
 
         // copies board
@@ -11,11 +11,11 @@ export default class Board extends Map {
         }
     }
 
-    set(coordinates: number[], value: TileInfo) {
+    set(coordinates: ReadonlyArray<number>, value: Readonly<TileInfo>) {
         return super.set(`${coordinates[0]}, ${coordinates[1]}`, value);
     }
 
-    get(coordinates: number[]): TileInfo | undefined {
+    get(coordinates: ReadonlyArray<number>): Readonly<TileInfo> | undefined {
         return coordinates ? super.get(`${coordinates[0]}, ${coordinates[1]}`) : undefined;
     }
 }
