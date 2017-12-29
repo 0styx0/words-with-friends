@@ -45,14 +45,14 @@ export default class Validate {
      *
      * @param startCoordinate - coordinate to start from
      * @param callback - gets called on every coordinate
-     * @param up - whether to travel up-down or down-up
+     * @param down - whether to travel up-down or down-up
      *
      * @return last coordinate callback returned `true` on
      */
 
     travelVertically(startCoordinate: number[],
-                     callback: (tileInfo: TileInfo, currentCoordinate: number[]) => boolean,
-                     up: boolean = true): typeof startCoordinate {
+                     callback: (tileInfo: Readonly<TileInfo>, currentCoordinate: number[]) => boolean,
+                     down: boolean = true): typeof startCoordinate {
 
         let x = startCoordinate[0];
         let y = startCoordinate[1];
@@ -63,7 +63,7 @@ export default class Validate {
                 break;
             }
 
-            up ? y++ : y--;
+            down ? y++ : y--;
         }
 
         return [x, y + 1];
@@ -169,16 +169,16 @@ export default class Validate {
     getWords(coordinates: number[][]): TileInfo[][] {
 
         /**
-         * @return the y coordinate of the highest tile that connect to coordinateToCheck
+         * @return the leftmost coordinate that's filled that connects to `coordinateToCheck`
          */
         const getHighestX = (coordinateToCheck: typeof coordinates[0]) => {
 
-            const rightmostCoordinate = this.travelHorizontally(coordinateToCheck, tileInfo => tileInfo.filled, false);
-            return rightmostCoordinate;
+            const leftmostCoordinate = this.travelHorizontally(coordinateToCheck, tileInfo => tileInfo.filled, false);
+            return leftmostCoordinate;
         };
 
         /**
-         * @return the y coordinate of the highest tile that connect to coordinateToCheck
+         * @return the highest coordinate that's filled that connects to `coordinateToCheck`
          */
         const getHighestY = (coordinateToCheck: typeof coordinates[0]) => {
 
@@ -303,7 +303,7 @@ export default class Validate {
         return checkTileTree(currentCoordinates);
     }
 
-    getTileInfo(coordinates: number[]) {
+    getTileInfo(coordinates: ReadonlyArray<number>) {
         return this.board.get(coordinates) || new TileInfo();
     }
 
