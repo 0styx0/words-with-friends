@@ -1,7 +1,7 @@
 import types from './types';
 import Tile from '../interfaces/Tile';
 
-export default function putTileOnBoard(tile: Tile, coordinates: number[]) {
+export default function putTileOnBoard(tile: Tile, coordinates: ReadonlyArray<number>) {
     return {
         type: types.PLACE_TILE_ON_BOARD,
         tile,
