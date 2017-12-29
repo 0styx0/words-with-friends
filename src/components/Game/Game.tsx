@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux';
 import { connect, Dispatch } from 'react-redux';
 import actionCreators from '../../actions';
 import { defaultState } from '../../store';
+import TileInfo from '../../classes/TileInfo';
+import Board from '../../classes/Board';
 
 
 function mapStateToProps(state: typeof defaultState) {
@@ -27,7 +29,7 @@ interface State {
 
 type Props = typeof actionCreators & typeof defaultState;
 
-class Game extends React.Component<Props, State> {
+export class Game extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
@@ -45,6 +47,43 @@ class Game extends React.Component<Props, State> {
         this.props.initializePlayers();
     }
 
+    /**
+     * Adds up points that a word is worth
+     */
+    tallyPoints(board: Board, recentlyPlacedCoordinates: number[][]) {
+
+        const validate = new Validate(board);
+        const words = validate.getWords(recentlyPlacedCoordinates);
+
+        function calculateTileMultipliers(tileInfoWords: TileInfo[][]) {
+
+            return tileInfoWords.reduce((accum: number, word) => {
+
+                const wordMultipliers: number[] = [];
+
+                const individualTilePoints = word.map(tile => {
+
+                    if (tile.powerup && tile.powerup.target === 'word') {
+                        wordMultipliers.push(tile.powerup.multiplyBy);
+                    }
+
+                    return tile.calculateValue();
+
+                }).reduce((addedPoints, points) => addedPoints + points, 0);
+
+                const total = wordMultipliers.reduce((multiplied, multiplier) =>
+                    multiplier * multiplied, individualTilePoints);
+
+                return accum + total;
+            }, 0);
+        }
+
+        const totalPoints = calculateTileMultipliers(words);
+
+        console.log('points earned', totalPoints);
+        return totalPoints;
+    }
+
     render() {
         return <GameComponent turn={this.turn} />;
     }
@@ -56,6 +95,7 @@ class Game extends React.Component<Props, State> {
     private turn() {
 
         const recentlyPlacedCoordinates = this.getTilesPlaced();
+
         const validate = new Validate(this.props.board);
 
         if (recentlyPlacedCoordinates.length > 0 &&
@@ -67,56 +107,18 @@ class Game extends React.Component<Props, State> {
                 recentlyPlacedCoordinates.forEach(coordinate => {
 
                     const value = self.props.board.get(coordinate)!;
-                    console.log(value);
+
                     value.recent = false;
 
                     self.props.board.set(coordinate, value);
                 });
             }(this));
 
-            this.tallyPoints(recentlyPlacedCoordinates);
+            this.props.Players[this.props.turn % 2].score +=
+                this.tallyPoints(this.props.board, recentlyPlacedCoordinates);
 
             this.props.incrementTurn(this.props.turn);
         }
-    }
-
-    /**
-     * Adds up points that a word is worth and adds that to the current user's total
-     */
-    private tallyPoints(recentlyPlacedCoordinates: number[][]) {
-
-        const validate = new Validate(this.props.board);
-        const words = validate.getWords(recentlyPlacedCoordinates);
-
-        function calculateTileMultipliers() {
-
-            return words.reduce((accum: number, word) => {
-
-                const wordMultipliers: number[] = [1];
-
-                const individualTilePoints = word.
-                    map(tile => {
-
-                        if (tile.powerup && tile.powerup.target === 'word') {
-                            wordMultipliers.push(tile.powerup.multiplyBy);
-                        }
-
-                        return tile.calculateValue();
-                    })
-                    .reduce((addedPoints, points) => addedPoints + points, 0);
-
-                const total = wordMultipliers.reduce((multiplied, multiplier) =>
-                    multiplier * multiplied, individualTilePoints);
-
-                return accum + total;
-            }, 0);
-        }
-
-        const totalPoints = calculateTileMultipliers();
-
-        this.props.Players[this.props.turn % 2].score += totalPoints;
-
-        console.log('points earned', totalPoints, 'new total', this.props.Players[this.props.turn % 2].score);
     }
 
     /**
@@ -126,11 +128,11 @@ class Game extends React.Component<Props, State> {
 
         const recentlyPlacedCoordinates: number[][] = [];
 
-        this.props.board.forEach((value, key) => {
+        this.props.board.forEach((value, key: string) => {
 
             if (value.recent) {
-
-                recentlyPlacedCoordinates.push(key);
+                const numbers = key.match(/\d+/g)!;
+                recentlyPlacedCoordinates.push([+numbers[0], +numbers[1]]);
             }
         });
 
