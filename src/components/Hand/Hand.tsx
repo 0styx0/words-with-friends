@@ -29,7 +29,7 @@ type Props = typeof actionCreators & typeof defaultState & {
     turn: number
 };
 
-function HandContainer(props: Props) {
+function HandContainer(props: Readonly<Props>) {
 
     const tiles = props.tiles;
 
