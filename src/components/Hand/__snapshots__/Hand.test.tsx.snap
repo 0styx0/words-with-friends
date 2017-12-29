@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Hand /> renders 7 <HandTileHolder when Player has 7 (max) tiles 1`] = `
+<div
+  className="tileHand"
+>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+</div>
+`;
+
+exports[`<Hand /> renders 7 <HandTileHolder when Player has less than 7 (max) tiles 1`] = `
+<div
+  className="tileHand"
+>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+  <div
+    className="tileHolder"
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <span>
+      
+    </span>
+  </div>
+</div>
+`;
