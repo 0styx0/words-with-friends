@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TileContainer /> renders correctly for current player 1`] = `
+<div
+  className="tileContainer"
+  draggable={true}
+  onDragEnd={[Function]}
+  onDragStart={[Function]}
+>
+  <div
+    className="tile"
+  >
+    <span
+      className="points"
+    >
+      2
+    </span>
+    <span
+      className="letter"
+    >
+      L
+    </span>
+  </div>
+</div>
+`;
+
+exports[`<TileContainer /> renders correctly for non-current player 1`] = `
+<div
+  className="tileContainer"
+  draggable={false}
+  onDragEnd={[Function]}
+  onDragStart={[Function]}
+>
+  <div
+    className="tile"
+  >
+    <span
+      className="points"
+    >
+      5
+    </span>
+    <span
+      className="letter"
+    >
+      K
+    </span>
+  </div>
+</div>
+`;

@@ -31,7 +31,7 @@ type Props = typeof actionCreators & typeof defaultState & {
 };
 
 
-class TileContainer extends React.Component<Readonly<Props>, {}> {
+export class TileContainer extends React.Component<Readonly<Props>, {}> {
 
     constructor(props: Readonly<Props>) {
         super(props);
@@ -57,6 +57,7 @@ class TileContainer extends React.Component<Readonly<Props>, {}> {
         const tileWasMoved = e.dataTransfer.dropEffect !== 'none';
 
         if (tileWasMoved) {
+
             this.props.removeTile();
         }
     }
