@@ -14,8 +14,8 @@ import Board from '../../classes/Board';
  * @return { board: boardWithWord, tileInfos: arrayOfInfoAboutLetters }
  */
 export default function placeWord(
-    word: string, startCoordinate: [number, number], horizontal: boolean = true,
-    board: Board = new Board(),
+    word: string, startCoordinate: ReadonlyArray<number>, horizontal: boolean = true,
+    board: Readonly<Board> = new Board(),
     turn: number = 1
 ) {
 
