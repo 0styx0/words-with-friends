@@ -31,20 +31,27 @@ type Props = typeof actionCreators & typeof defaultState & {
 };
 
 
-class TileContainer extends React.Component<Props, {}> {
+class TileContainer extends React.Component<Readonly<Props>, {}> {
 
-    constructor(props: Props) {
+    constructor(props: Readonly<Props>) {
         super(props);
 
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragEnd = this.onDragEnd.bind(this);
     }
 
+    /**
+     * Sets event drop data to stringified `this.props.tile`
+     */
     onDragStart(e: DragEvent<HTMLDivElement>) {
         e.dataTransfer.dropEffect = 'move';
         e.dataTransfer.setData('tile', JSON.stringify(this.props.tile));
     }
 
+    /**
+     * If tile was dropped somewhere else (checked using `dropEffect`), removes tile from this TileContainer
+     *  (so the tile doesn't get duplicated, just moved)
+     */
     onDragEnd(e: DragEvent<HTMLDivElement>) {
 
         const tileWasMoved = e.dataTransfer.dropEffect !== 'none';
@@ -54,17 +61,22 @@ class TileContainer extends React.Component<Props, {}> {
         }
     }
 
-  canDrag() {
+    /**
+     * @return true if tile is already on board and was placed on current turn,
+     *  or tile is in current player's hand. Else false
+     */
+    canDrag() {
 
-      const data = this.props.board.get(this.props.coordinates);
+        const data = this.props.board.get(this.props.coordinates);
 
-      const tileIsAlreadyOnBoard = data && !!data!.tile;
+        const tileIsAlreadyOnBoard = data && !!data!.tile;
 
-      const tileInCurrentPlayersHand = !tileIsAlreadyOnBoard  && this.props.Players[this.props.tile.playerIndex!].turn;
-      const draggableTileOnBoard = tileIsAlreadyOnBoard && data!.canDrag;
+        const tileInCurrentPlayersHand =
+            !tileIsAlreadyOnBoard && this.props.Players[this.props.tile.playerIndex!].turn;
+        const draggableTileOnBoard = tileIsAlreadyOnBoard && data!.canDrag;
 
-      return tileInCurrentPlayersHand || draggableTileOnBoard;
-  }
+        return !!(tileInCurrentPlayersHand || draggableTileOnBoard);
+    }
 
     render() {
 
