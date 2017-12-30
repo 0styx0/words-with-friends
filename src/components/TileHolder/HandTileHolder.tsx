@@ -33,7 +33,7 @@ type Props = typeof actionCreators & typeof defaultState & {
 };
 
 
-class HandTileHolderContainer extends AbstractTileHolder<Props> {
+export class HandTileHolderContainer extends AbstractTileHolder<Props> {
 
     /**
      * Puts tile down (@see tileTarget.drop)
