@@ -17,4 +17,6 @@ export const defaultState = {
 
 const store = createStore(reducers, defaultState, enhancers);
 
+export const getState = () => store.getState() as typeof defaultState;
+
 export default store;
