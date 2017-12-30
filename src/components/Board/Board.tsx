@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './index.css';
 
-import BoardTileHolder from '../TileHolder/TileHolder';
+import BoardTileHolder from '../TileHolder/BoardTileHolder';
 
 export default function Board() {
 
