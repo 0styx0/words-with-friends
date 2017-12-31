@@ -9,13 +9,14 @@ import { defaultState } from '../../store';
 import Player from '../../classes/Player';
 import AbstractTileHolder from './AbstractTileHolder';
 import Board from '../../classes/Board';
+import TileInfo from '../../classes/TileInfo';
 
 
 function mapStateToProps(state: typeof defaultState, props: Props) {
 
     return {
         coordinates: props.coordinates,
-        tile: state.board.get(props.coordinates)!.tile,
+        tile: state.board.get(props.coordinates) ? state.board.get(props.coordinates)!.tile : undefined,
         currentPlayer: state.Players.find(player => player.turn)!,
         board: state.board,
         turn: state.turn
@@ -35,7 +36,7 @@ type Props = typeof actionCreators & typeof defaultState & {
     turn: number
 };
 
-class BoardTileHolderContainer extends AbstractTileHolder<Props> {
+export class BoardTileHolderContainer extends AbstractTileHolder<Props> {
 
     /**
      * Puts tile down (@see tileTarget.drop)

@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BoardTileHolder /> renders correctly for current player's tile 1`] = `
+<div
+  className="tileHolder"
+  onDragOver={[Function]}
+  onDrop={[Function]}
+>
+  <span>
+    
+  </span>
+</div>
+`;
+
+exports[`<BoardTileHolder /> renders correctly for other player's tile 1`] = `
+<div
+  className="tileHolder"
+  onDragOver={[Function]}
+  onDrop={[Function]}
+>
+  <span>
+    
+  </span>
+</div>
+`;
