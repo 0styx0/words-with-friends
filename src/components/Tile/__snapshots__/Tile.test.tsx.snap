@@ -37,12 +37,12 @@ exports[`<TileContainer /> renders correctly for non-current player 1`] = `
     <span
       className="points"
     >
-      5
+      2
     </span>
     <span
       className="letter"
     >
-      K
+      L
     </span>
   </div>
 </div>

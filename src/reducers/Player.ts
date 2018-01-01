@@ -1,14 +1,13 @@
 import types from '../actions/types';
 import * as actionTypes from '../actions/interfaces';
-import { defaultState } from '../store';
 import PlayerClass from '../classes/Player';
 import Tile from '../interfaces/Tile';
 import { cloneClassInstance } from './helpers';
 
 export default function Player(
-    state = {} as typeof defaultState,
+    state: PlayerClass = {} as PlayerClass,
     action: actionTypes.PlaceTileInHand | actionTypes.RemoveTileFromHand
-) {
+): PlayerClass {
 
     switch (action.type) {
 

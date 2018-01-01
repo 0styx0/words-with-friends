@@ -1,6 +1,6 @@
 import types from '../actions/types';
 import * as actionTypes from '../actions/interfaces';
-import { defaultState } from '../store';
+import { defaultState, getState } from '../store';
 import { cloneClassInstance } from './helpers';
 
 export default function Players(
@@ -19,7 +19,7 @@ export default function Players(
         case types.INIT_PLAYERS:
 
             return PlayersCopy.map((player, i) => {
-                player.generateHand();
+                player.generateHand(getState().Tilebag);
                 return player;
             });
         default:

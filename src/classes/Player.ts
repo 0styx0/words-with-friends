@@ -1,6 +1,6 @@
 import HandContainer from '../components/Hand/Hand';
 import Tile from '../interfaces/Tile';
-import store, { defaultState } from '../store';
+import Tilebag from './Tilebag';
 
 export default class Player {
 
@@ -23,11 +23,11 @@ export default class Player {
     /**
      * Ensures player has 7 tiles (7 is b/c rules of the game)
      */
-    generateHand() {
+    generateHand(tilebag: Tilebag) {
 
-        while (this._tiles.length < 7 && (store.getState() as typeof defaultState).Tilebag.tiles.length > 0) {
+        while (this._tiles.length < 7 && tilebag.tiles.length > 0) {
 
-            const tile = (store.getState() as typeof defaultState).Tilebag.getRandomTile(this._playerIndex);
+            const tile = tilebag.getRandomTile(this._playerIndex);
             tile.playerIndex = this._playerIndex;
             this._tiles.push(tile);
         }

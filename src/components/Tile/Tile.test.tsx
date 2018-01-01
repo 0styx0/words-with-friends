@@ -2,17 +2,15 @@ import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 import * as casual from 'casual';
 import * as sinon from 'sinon';
-import store, { defaultState } from '../../store';
+import store, { defaultState, getState } from '../../store';
 import { Provider } from 'react-redux';
 import ConnectedTileContainer, { TileContainer } from './Tile';
 import mathMock from '../../test/mocks/Math';
 import { mount } from 'enzyme';
-import placeWord from '../../test/helpers/placeWord';
-import getWord from '../../test/helpers/getWord';
 import putTileInHand from '../../actions/putTileInHand';
-import turn from '../../reducers/turn';
-import types from '../../actions/types';
 import incrementTurn from '../../actions/incrementTurn';
+import Tilebag from '../../classes/Tilebag';
+
 mathMock();
 
 describe('<TileContainer />', () => {
@@ -21,13 +19,13 @@ describe('<TileContainer />', () => {
 
         function snap(playerIndex: number) {
 
-            const state = store.getState() as typeof defaultState;
+            const state = getState() as typeof defaultState;
 
             const tree = renderer.create(
                 <Provider store={store}>
                     <ConnectedTileContainer
                         coordinates={[casual.integer, casual.integer]}
-                        tile={state.Tilebag.getRandomTile(playerIndex)}
+                        tile={(new Tilebag()).getRandomTile(playerIndex)}
                         removeTile={sinon.mock}
                         {...state as any}
                     />
