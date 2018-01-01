@@ -21,7 +21,9 @@ export interface Board {
 export interface PlaceTileOnBoard {
     readonly type: types.PLACE_TILE_ON_BOARD;
     readonly tile: Tile;
+    readonly currentPlayer: PlayerClass;
     readonly coordinates: number[];
+    readonly currentTurn: number;
 }
 
 export interface RemoveTileFromBoard {

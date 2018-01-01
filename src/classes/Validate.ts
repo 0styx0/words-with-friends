@@ -74,7 +74,7 @@ export default class Validate {
      *
      * @param coordinates - 2d array of coordinates of tiles. Must be left to right
      */
-    checkTilePlacementValidity(coordinates: number[][]) {
+    checkTilePlacementValidity(coordinates: number[][], currentTurn: number) {
 
         if (!this.checkForCenterTile(coordinates[0])) {
             console.log('no center');
@@ -95,7 +95,7 @@ export default class Validate {
 
             this.travelVertically(firstCoordinate, (tileInfo, currentCoordinate) => {
 
-                if (tileInfo.recent) {
+                if (tileInfo.recent(currentTurn)) {
 
                     const recentCoordinateIdx = coordinatesNotTouched.findIndex((coordinate) =>
                       firstCoordinate[0] === currentCoordinate[0] && coordinate[1] === currentCoordinate[1]);
@@ -125,7 +125,7 @@ export default class Validate {
 
             this.travelHorizontally(firstCoordinate, (tileInfo, currentCoordinate) => {
 
-                if (tileInfo.recent) {
+                if (tileInfo.recent(currentTurn)) {
 
                     const recentCoordinateIdx = coordinatesNotTouched.findIndex((coordinate) =>
                         firstCoordinate[1] === currentCoordinate[1] && coordinate[0] === currentCoordinate[0]);

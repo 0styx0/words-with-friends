@@ -1,6 +1,6 @@
-import { Board } from './interfaces';
 import types from './types';
 import BoardMap from '../classes/Board';
+import { Board } from './interfaces';
 
 export default function initializeBoard(): Board {
     return {

@@ -4,6 +4,7 @@ import TileInfo from '../classes/TileInfo';
 import Powerup from '../classes/Powerup';
 import Tile from '../interfaces/Tile';
 import BoardClass from '../classes/Board';
+import Player from '../classes/Player';
 
 export default function board(
     currentBoard: BoardClass = new BoardClass(), action: Board | PlaceTileOnBoard | RemoveTileFromBoard
@@ -14,7 +15,7 @@ export default function board(
         case types.INIT_BOARD:
             return initializeBoard();
         case types.PLACE_TILE_ON_BOARD:
-            return placeTile(currentBoard, action.coordinates, action.tile);
+            return placeTile(currentBoard, action.coordinates, action.tile, action.currentPlayer, action.currentTurn);
         case types.REMOVE_TILE_FROM_BOARD:
             return removeTile(currentBoard, action.coordinates);
 
@@ -52,11 +53,13 @@ function setPowerup(): Powerup | undefined {
     return new Powerup(Math.random() > 0.5 ? 'letter' : 'word', Math.random() > 0.5 ? 2 : 3);
 }
 
-function placeTile(boardMap: BoardClass, coordinates: number[], tile: Tile) {
+function placeTile(
+    boardMap: BoardClass, coordinates: number[], tile: Tile, currentPlayer: Player, currentTurn: number
+) {
 
     const boardCopy = new BoardClass(boardMap);
     const tileInfo = boardCopy.get(coordinates) || new TileInfo();
-    tileInfo.place(tile);
+    tileInfo.place(tile, currentPlayer, currentTurn);
     boardCopy.set(coordinates, tileInfo);
     return boardCopy;
 }

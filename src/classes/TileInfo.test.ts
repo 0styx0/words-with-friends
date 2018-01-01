@@ -1,7 +1,7 @@
 import TileInfo from './TileInfo';
 import * as casual from 'casual';
 import Tilebag from './Tilebag';
-import store, { defaultState } from '../store';
+import store, { getState, defaultState } from '../store';
 import Tile from '../interfaces/Tile';
 import Powerup from './Powerup';
 import incrementTurn from '../actions/incrementTurn';
@@ -12,11 +12,11 @@ describe('TileInfo', () => {
     // putting out here since don't want to create every tile needed for entire game on every test
     const tileBag = new Tilebag();
 
-    function setTileInfoToRandomTile() {
+    function setTileInfoToRandomTile(turn: number = casual.integer()) {
 
         const tileInfo = new TileInfo();
         const tile: Tile = casual.random_element(tileBag.tiles);
-        tileInfo.place(tile);
+        tileInfo.place(tile, getState().Players[0], turn);
 
         return {
             tileInfo,
@@ -49,7 +49,9 @@ describe('TileInfo', () => {
 
         it('cannot be dragged', () => {
 
-            expect((new TileInfo()).canDrag).toBeFalsy();
+            const currentTurn = getState().turn;
+
+            expect((new TileInfo()).canDrag(currentTurn)).toBeFalsy();
         });
     });
 
@@ -71,9 +73,11 @@ describe('TileInfo', () => {
 
         test('.canDrag = true', () => {
 
-            const { tileInfo } = setTileInfoToRandomTile();
+            const currentTurn = casual.integer();
 
-            expect(tileInfo.canDrag).toBeTruthy();
+            const { tileInfo } = setTileInfoToRandomTile(currentTurn);
+
+            expect(tileInfo.canDrag(currentTurn)).toBeTruthy();
         });
 
         test('.Player is current Player', () => {
@@ -143,14 +147,17 @@ describe('TileInfo', () => {
 
             const tileInfo = setTileAndIncrementTurn();
 
-            expect(tileInfo.canDrag).toBeFalsy();
+            const currentTurn = getState().turn;
+
+            expect(tileInfo.canDrag(currentTurn)).toBeFalsy();
         });
 
         it('recent = false', () => {
 
+            const turn = getState().turn;
             const tileInfo = setTileAndIncrementTurn();
 
-            expect(tileInfo.recent).toBeFalsy();
+            expect(tileInfo.recent(turn)).toBeFalsy();
         });
     });
 

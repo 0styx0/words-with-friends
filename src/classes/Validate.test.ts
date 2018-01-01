@@ -5,6 +5,7 @@ import TileInfo from './TileInfo';
 import * as sinon from 'sinon';
 import * as casual from 'casual';
 import Board from './Board';
+import { getState } from '../store';
 
 casual.define('upperLetter', () => casual.letter.toUpperCase());
 
@@ -279,7 +280,7 @@ describe('Validate', () => {
 
                 const validate = new Validate(secondLetter.board);
 
-                expect(validate.checkTilePlacementValidity(wordCoordinates)).toBeFalsy();
+                expect(validate.checkTilePlacementValidity(wordCoordinates, getState().turn)).toBeFalsy();
             });
 
             // can't have one tile attached to one word and another tile from that same turn attached
@@ -296,7 +297,7 @@ describe('Validate', () => {
                 );
 
                 const validate = new Validate(thirdPlacement.board);
-                expect(validate.checkTilePlacementValidity(coordinatesToTest)).toBeFalsy();
+                expect(validate.checkTilePlacementValidity(coordinatesToTest, getState().turn)).toBeFalsy();
             });
         });
     });

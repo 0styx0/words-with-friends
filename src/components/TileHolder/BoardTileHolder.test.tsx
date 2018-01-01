@@ -73,7 +73,11 @@ describe('<BoardTileHolder />', () => {
             const { component, coordinates } = setup();
 
             const initialTile = { points: -1, letter: 'invalid letter', playerIndex: 0 };
-            store.dispatch(putTileOnBoard(initialTile, coordinates));
+
+            const state = getState();
+            store.dispatch(
+                putTileOnBoard(initialTile, coordinates, state.Players.find(player => player.turn)!, state.turn)
+            );
 
             const currentCoordinateTile = getState().board.get(coordinates);
 

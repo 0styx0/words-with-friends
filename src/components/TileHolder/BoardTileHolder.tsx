@@ -43,7 +43,7 @@ export class BoardTileHolderContainer extends AbstractTileHolder<Props> {
      */
     putTile(tile: TileType) {
 
-        this.props.putTileOnBoard(tile, this.props.coordinates);
+        this.props.putTileOnBoard(tile, this.props.coordinates, this.props.currentPlayer, this.props.turn);
     }
 
     /**

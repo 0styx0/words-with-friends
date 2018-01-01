@@ -99,7 +99,7 @@ export class Game extends React.Component<Props, State> {
         const validate = new Validate(this.props.board);
 
         if (recentlyPlacedCoordinates.length > 0 &&
-            validate.checkTilePlacementValidity(recentlyPlacedCoordinates) &&
+            validate.checkTilePlacementValidity(recentlyPlacedCoordinates, this.props.turn) &&
             validate.validateWords(recentlyPlacedCoordinates)) {
 
             (function unmarkRecentTiles(self: Game) {
@@ -107,8 +107,6 @@ export class Game extends React.Component<Props, State> {
                 recentlyPlacedCoordinates.forEach(coordinate => {
 
                     const value = self.props.board.get(coordinate)!;
-
-                    value.recent = false;
 
                     self.props.board.set(coordinate, value);
                 });
@@ -130,7 +128,7 @@ export class Game extends React.Component<Props, State> {
 
         this.props.board.forEach((value, key: string) => {
 
-            if (value.recent) {
+            if (value.recent(this.props.turn)) {
                 const numbers = key.match(/\d+/g)!;
                 recentlyPlacedCoordinates.push([+numbers[0], +numbers[1]]);
             }

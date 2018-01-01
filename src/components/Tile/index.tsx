@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './index.css';
 import TileType from '../../interfaces/Tile';
-import store, { defaultState } from '../../store';
+import store, { defaultState, getState } from '../../store';
 import { ChangeEvent } from 'react';
 
 interface Props {
@@ -16,10 +16,10 @@ function onWildcardChange(event: ChangeEvent<HTMLSelectElement>, coordinates?: n
         return;
     }
 
-    const board = (store.getState() as typeof defaultState).board;
+    const board = getState().board;
     const tileInfo = board.get(coordinates)!;
 
-    if (tileInfo.tile!.points > 0 || !tileInfo.recent) {
+    if (tileInfo.tile!.points > 0 || !tileInfo.recent(getState().turn)) {
 
         if (tileInfo) {
             event.target.value = tileInfo.tile!.letter;

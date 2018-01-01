@@ -1,6 +1,6 @@
 import TileInfo from '../../classes/TileInfo';
 import Tilebag from '../../classes/Tilebag';
-import store, { defaultState } from '../../store';
+import store, { getState, defaultState } from '../../store';
 import Board from '../../classes/Board';
 
 
@@ -47,11 +47,10 @@ export default function placeWord(
         const tile = {
             letter: currentLetter,
             points: Array.from(Tilebag.alphabet).find(letter => letter.letter === currentLetter)!.points,
-            playerIndex: (store.getState() as typeof defaultState).Players.findIndex(player => player.turn),
-            turn
+            playerIndex: (store.getState() as typeof defaultState).Players.findIndex(player => player.turn)
         };
 
-        tileInfo.place(tile);
+        tileInfo.place(tile, getState().Players[0], turn);
         tileInfos.push(tileInfo);
 
         return tileInfo;

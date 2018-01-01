@@ -1,7 +1,7 @@
 import Powerup from './Powerup';
 import Tile from '../interfaces/Tile';
 import Player from '../classes/Player';
-import store, { defaultState } from '../store';
+// import store, { defaultState } from '../store';
 
 export default class TileInfo {
 
@@ -19,16 +19,12 @@ export default class TileInfo {
         return this._tile;
     }
 
-    get canDrag() {
-        return this.turnTileWasPlaced === (store.getState() as typeof defaultState).turn;
+    canDrag(currentTurn: number) {
+        return this.turnTileWasPlaced === currentTurn;
     }
 
-    get recent() {
-        return this.turnTileWasPlaced === (store.getState() as typeof defaultState).turn;
-    }
-
-    set recent(value: boolean) {
-        return;
+    recent(currentTurn: number) {
+        return this.turnTileWasPlaced === currentTurn;
     }
 
     calculateValue() {
@@ -42,19 +38,15 @@ export default class TileInfo {
 
         this.filled = false;
         this.turnTileWasPlaced = -1;
-        this.recent = false;
         this._tile = undefined;
         this.Player = undefined;
     }
 
-    place(tile: Tile) {
-
-        const storeState = (store.getState() as typeof defaultState);
+    place(tile: Tile, player: Player, currentTurn: number) {
 
         this.filled = true;
-        this.turnTileWasPlaced = storeState.turn;
-        this.recent = true;
+        this.turnTileWasPlaced = currentTurn;
         this._tile = tile;
-        this.Player = storeState.Players.find(player => player.turn)!;
+        this.Player = player;
     }
 }

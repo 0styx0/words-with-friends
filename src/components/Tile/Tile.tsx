@@ -71,10 +71,10 @@ export class TileContainer extends React.Component<Readonly<Props>, {}> {
         const data = this.props.board.get(this.props.coordinates);
 
         const tileIsAlreadyOnBoard = data && !!data!.tile;
-        
+
         const tileInCurrentPlayersHand =
             !tileIsAlreadyOnBoard && this.props.Players[this.props.tile.playerIndex!].turn;
-        const draggableTileOnBoard = tileIsAlreadyOnBoard && data!.canDrag;
+        const draggableTileOnBoard = tileIsAlreadyOnBoard && data!.canDrag(this.props.turn);
 
         return !!(tileInCurrentPlayersHand || draggableTileOnBoard);
     }

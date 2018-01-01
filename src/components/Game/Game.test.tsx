@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 import ConnectedGame, { Game } from './Game';
-import store, { defaultState } from '../../store';
+import store, { defaultState, getState } from '../../store';
 import { Provider } from 'react-redux';
 import mockMath from '../../test/mocks/Math';
 import putTileOnBoard from '../../actions/putTileOnBoard';
@@ -40,7 +40,14 @@ describe('<Game />', () => {
     function addCoordinatesToStore(tileInfos: ReadonlyArray<TileInfo>, coordinates: number[][]) {
 
         for (let i = 0; i < tileInfos.length; i++) {
-            store.dispatch(putTileOnBoard(tileInfos[i].tile!, coordinates[i]));
+
+            const state = getState();
+
+            store.dispatch(
+                putTileOnBoard(
+                    tileInfos[i].tile!, coordinates[i], state.Players.find(player => player.turn)!, state.turn
+                )
+            );
         }
     }
 
