@@ -1,7 +1,7 @@
-import turn from "./turn";
+import turn from './turn';
 import types from '../actions/types';
-import Tilebag from "../classes/Tilebag";
-import Board from "../classes/Board";
+import Tilebag from '../classes/Tilebag';
+import Board from '../classes/Board';
 
 describe('turn', () => {
 
