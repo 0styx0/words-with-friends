@@ -1,6 +1,5 @@
 import types from './types';
 import store, { defaultState } from '../store';
-import * as casual from 'casual';
 import removeTileFromHand from './removeTileFromHand';
 
 describe('removeTileFromHand', () => {

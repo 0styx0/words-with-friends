@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import store, { defaultState, getState } from '../../store';
+import store, { getState } from '../../store';
 import { Provider } from 'react-redux';
 import HandTileHolder, { HandTileHolderContainer } from './HandTileHolder';
 import mockMath from '../../test/mocks/Math';

@@ -9,7 +9,6 @@ import { defaultState } from '../../store';
 import Player from '../../classes/Player';
 import AbstractTileHolder from './AbstractTileHolder';
 import Board from '../../classes/Board';
-import TileInfo from '../../classes/TileInfo';
 
 
 function mapStateToProps(state: typeof defaultState, props: Props) {

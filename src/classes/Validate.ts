@@ -21,7 +21,7 @@ export default class Validate {
      * @return last coordinate callback returned `true` on
      */
     travelHorizontally(startCoordinate: number[],
-                       callback: (tileInfo: TileInfo, currentCoordinate: number[]) => boolean,
+                       callback: (tileInfo: Readonly<TileInfo>, currentCoordinate: number[]) => boolean,
                        forwards: boolean = true): typeof startCoordinate {
 
         let x = startCoordinate[0];
@@ -200,7 +200,7 @@ export default class Validate {
                     return false;
                 }
 
-                word.push(tileInfo);
+                word.push(tileInfo as TileInfo);
 
                 return true;
             });
@@ -221,7 +221,7 @@ export default class Validate {
                     return false;
                 }
 
-                word.push(tileInfo);
+                word.push(tileInfo as TileInfo);
 
                 return true;
             });

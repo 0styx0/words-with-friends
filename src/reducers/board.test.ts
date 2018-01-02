@@ -3,8 +3,6 @@ import BoardClass from '../classes/Board';
 import types from '../actions/types';
 import { getState } from '../store';
 import * as casual from 'casual';
-import Tile from '../interfaces/Tile';
-import Player from '../classes/Player';
 import TileInfo from '../classes/TileInfo';
 
 describe('board', () => {
