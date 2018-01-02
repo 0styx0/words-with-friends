@@ -49,3 +49,9 @@ export interface RemoveTileFromHand {
 export interface ResetTilebag {
     readonly type: types.RESET_TILEBAG;
 }
+
+export interface SetScore {
+    readonly type: types.SET_SCORE;
+    readonly Player: Readonly<PlayerClass>;
+    readonly score: number;
+}
