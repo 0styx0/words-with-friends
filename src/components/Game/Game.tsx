@@ -14,7 +14,8 @@ function mapStateToProps(state: typeof defaultState) {
     return {
         turn: state.turn,
         Players: state.Players,
-        board: state.board
+        board: state.board,
+        Tilebag: state.Tilebag
     };
 }
 
@@ -44,7 +45,7 @@ export class Game extends React.Component<Props, State> {
 
     componentWillMount() {
         this.props.initializeBoard();
-        this.props.initializePlayers();
+        this.props.initializePlayers(this.props.Tilebag);
     }
 
     /**
@@ -115,7 +116,7 @@ export class Game extends React.Component<Props, State> {
             this.props.Players[this.props.turn % 2].score +=
                 this.tallyPoints(this.props.board, recentlyPlacedCoordinates);
 
-            this.props.incrementTurn(this.props.turn);
+            this.props.incrementTurn(this.props.turn, this.props.Tilebag);
         }
     }
 

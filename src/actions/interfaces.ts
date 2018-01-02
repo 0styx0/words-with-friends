@@ -2,15 +2,18 @@ import types from './types';
 import PlayerClass from '../classes/Player';
 import Tile from '../interfaces/Tile';
 import BoardClass from '../classes/Board';
+import Tilebag from '../classes/Tilebag';
 
 export interface Turn {
     readonly type: types.INCREMENT_TURN;
     readonly turn: number;
+    readonly Tilebag: Tilebag;
 }
 
 export interface Players {
     readonly type: types.INIT_PLAYERS;
     readonly Players: PlayerClass[];
+    readonly Tilebag: Tilebag;
 }
 
 export interface Board {

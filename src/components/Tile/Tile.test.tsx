@@ -167,7 +167,7 @@ describe('<TileContainer />', () => {
 
                 const { wrapper } = setup(sinon.mock(), coordinates);
 
-                store.dispatch(incrementTurn(state.turn));
+                store.dispatch(incrementTurn(state.turn, state.Tilebag));
 
                 const component = wrapper.find(TileContainer).instance() as TileContainer;
 

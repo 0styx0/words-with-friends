@@ -1,14 +1,15 @@
 import types from '../actions/types';
 import * as actionTypes from '../actions/interfaces';
-import { defaultState, getState } from '../store';
+import { defaultState } from '../store';
 import { cloneClassInstance } from './helpers';
+import Player from '../classes/Player';
 
 export default function Players(
     Players = {} as typeof defaultState.Players,
     action: actionTypes.Turn | actionTypes.Players
 ) {
 
-    let PlayersCopy = Array.isArray(Players) ? [...Players].map(cloneClassInstance) : [];
+    let PlayersCopy: Player[] = Array.isArray(Players) ? [...Players].map(cloneClassInstance) : [];
 
     switch (action.type) {
 
@@ -19,7 +20,7 @@ export default function Players(
         case types.INIT_PLAYERS:
 
             return PlayersCopy.map((player, i) => {
-                player.generateHand(getState().Tilebag);
+                player.generateHand(action.Tilebag);
                 return player;
             });
         default:
