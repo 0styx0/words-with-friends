@@ -1,5 +1,5 @@
 import types from '../actions/types';
-import { Board, PlaceTileOnBoard, RemoveTileFromBoard } from '../actions/interfaces';
+import { Board, PlaceTileOnBoard, RemoveTileFromBoard, ClearRecentStatusFromTiles } from '../actions/interfaces';
 import TileInfo from '../classes/TileInfo';
 import Powerup from '../classes/Powerup';
 import Tile from '../interfaces/Tile';
@@ -7,7 +7,8 @@ import BoardClass from '../classes/Board';
 import Player from '../classes/Player';
 
 export default function board(
-    currentBoard: BoardClass = new BoardClass(), action: Board | PlaceTileOnBoard | RemoveTileFromBoard
+    currentBoard: BoardClass = new BoardClass(),
+    action: Board | PlaceTileOnBoard | RemoveTileFromBoard | ClearRecentStatusFromTiles
 ) {
 
     switch (action.type) {
@@ -18,7 +19,8 @@ export default function board(
             return placeTile(currentBoard, action.coordinates, action.tile, action.currentPlayer, action.currentTurn);
         case types.REMOVE_TILE_FROM_BOARD:
             return removeTile(currentBoard, action.coordinates);
-
+        case types.CLEAR_RECENT_STATUS_FROM_BOARD:
+            return clearRecentStatus(currentBoard, action.recentlyPlacedCoordinates);
         default:
             return currentBoard;
     }
@@ -72,6 +74,23 @@ function removeTile(boardMap: BoardClass, coordinates: number[]) {
     tileInfo.reset();
 
     boardCopy.set(coordinates, tileInfo);
+
+    return boardCopy;
+}
+
+function clearRecentStatus(
+    boardMap: Readonly<BoardClass>,
+    recentlyPlacedCoordinates: ReadonlyArray<ReadonlyArray<number>>
+) {
+
+    const boardCopy = new BoardClass(boardMap);
+
+    recentlyPlacedCoordinates.forEach(coordinate => {
+
+        const value = boardCopy.get(coordinate)!;
+
+        boardCopy.set(coordinate, value);
+    });
 
     return boardCopy;
 }

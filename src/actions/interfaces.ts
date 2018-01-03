@@ -34,6 +34,11 @@ export interface RemoveTileFromBoard {
     readonly coordinates: number[];
 }
 
+export interface ClearRecentStatusFromTiles {
+    readonly type: types.CLEAR_RECENT_STATUS_FROM_BOARD;
+    readonly recentlyPlacedCoordinates: ReadonlyArray<ReadonlyArray<number>>;
+}
+
 export interface PlaceTileInHand {
     readonly type: types.PLACE_TILE_IN_HAND;
     readonly tile: Tile;
