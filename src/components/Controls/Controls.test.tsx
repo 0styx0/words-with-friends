@@ -1,29 +1,19 @@
 import * as React from 'react';
 import Controls from './Controls';
 import * as renderer from 'react-test-renderer';
-import * as sinon from 'sinon';
-import { mount } from 'enzyme';
+import { Provider } from 'react-redux';
+import store from '../../store';
 
 describe('<Controls />', () => {
 
     it('renders correctly', () => {
 
-        const turn = sinon.mock();
-
         const tree = renderer.create(
-            <Controls turn={turn} />
+            <Provider store={store}>
+                <Controls />
+            </Provider>
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
-    });
-
-    it('called props.turn when clicked', () => {
-
-        const turn = sinon.spy();
-
-        const wrapper = mount(<Controls turn={turn} />);
-        wrapper.find('#controls').simulate('click');
-
-        expect(turn.called).toBeTruthy();
     });
 });

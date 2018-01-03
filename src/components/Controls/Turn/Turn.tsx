@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Turn from './';
 import Validate from '../../../classes/Validate';
 import TileInfo from '../../../classes/TileInfo';
 import Board from '../../../classes/Board';
@@ -22,7 +23,13 @@ function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
 
 type Props = typeof actionCreators & typeof defaultState;
 
-class Turn extends React.Component<Props, {}> {
+export class TurnContainer extends React.Component<Props, {}> {
+
+    constructor(props: Props) {
+        super(props);
+
+        this.turn = this.turn.bind(this);
+    }
 
     /**
      * Adds up points that a word is worth
@@ -61,6 +68,11 @@ class Turn extends React.Component<Props, {}> {
         return totalPoints;
     }
 
+    render() {
+
+        return <Turn turn={this.turn} />;
+    }
+
     /**
      * If tiles were placed, checks their validity (@see Validate),
      *  gives player points (@see #tallyPoints) and changes turn
@@ -75,15 +87,7 @@ class Turn extends React.Component<Props, {}> {
             validate.checkTilePlacementValidity(recentlyPlacedCoordinates, this.props.turn) &&
             validate.validateWords(recentlyPlacedCoordinates)) {
 
-            (function unmarkRecentTiles(self: Turn) {
-
-                recentlyPlacedCoordinates.forEach(coordinate => {
-
-                    const value = self.props.board.get(coordinate)!;
-
-                    self.props.board.set(coordinate, value);
-                });
-            }(this));
+            this.props.clearRecentStatusFromBoard(recentlyPlacedCoordinates);
 
             this.props.setScore(
                 this.props.Players[this.props.turn % 2],
@@ -114,4 +118,4 @@ class Turn extends React.Component<Props, {}> {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Turn as any);
+export default connect(mapStateToProps, mapDispatchToProps)(TurnContainer as any);

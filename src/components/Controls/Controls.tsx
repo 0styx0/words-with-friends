@@ -1,14 +1,10 @@
 import * as React from 'react';
 import Controls from './';
 
-interface Props {
-    turn: Function;
-}
-
-export default class ControlsContainer extends React.Component<Props, {}> {
+export default class ControlsContainer extends React.Component<{}, {}> {
 
     render() {
-        return <Controls play={this.props.turn} />;
+        return <Controls />;
     }
 
 }

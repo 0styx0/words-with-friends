@@ -2419,12 +2419,14 @@ exports[`<Game /> renders properly 1`] = `
       </div>
     </div>
   </div>
-  <button
-    id="controls"
-    onClick={[Function]}
-    type="button"
-  >
-    Play
-  </button>
+  <div>
+    <button
+      id="controls"
+      onClick={[Function]}
+      type="button"
+    >
+      Play
+    </button>
+  </div>
 </div>
 `;

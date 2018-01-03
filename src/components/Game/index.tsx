@@ -4,11 +4,7 @@ import BoardContainer from '../Board/Board';
 import ControlsContainer from '../Controls/Controls';
 import './index.css';
 
-interface Props {
-    turn: Function;
-}
-
-export default function Game(props: Props) {
+export default function Game() {
 
     return (
         <div id="gameContainer">
@@ -23,7 +19,7 @@ export default function Game(props: Props) {
                 playerIndex={1}
                 {...[] as any}
             />}
-            <ControlsContainer turn={props.turn} />
+            <ControlsContainer />
         </div>
     );
 }
