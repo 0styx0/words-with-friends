@@ -2,7 +2,6 @@
 
 exports[`<Turn /> render renders properly 1`] = `
 <button
-  id="controls"
   onClick={[Function]}
   type="button"
 >

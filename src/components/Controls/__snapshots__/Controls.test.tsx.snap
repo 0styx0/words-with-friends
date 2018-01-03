@@ -1,13 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Controls /> renders correctly 1`] = `
-<div>
+<section
+  id="controls"
+>
   <button
-    id="controls"
     onClick={[Function]}
     type="button"
   >
     Play
   </button>
-</div>
+</section>
 `;

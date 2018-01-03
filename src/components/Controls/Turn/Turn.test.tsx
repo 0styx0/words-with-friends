@@ -62,7 +62,7 @@ describe('<Turn />', () => {
 
             const previousTurn = (store.getState() as typeof defaultState).turn;
 
-            wrapper.find('#controls').simulate('click');
+            wrapper.find('button').simulate('click');
 
             const currentTurn = (store.getState() as typeof defaultState).turn;
 
