@@ -115,4 +115,40 @@ describe('Player', () => {
             expect(player.tiles[0].playerIndex).toBe(playerIndex);
         });
     });
+
+    describe('#clone', () => {
+
+        function helpClone() {
+
+            const parent = new Player(!!casual.coin_flip, casual.integer());
+            parent.generateHand(getState().Tilebag);
+
+            const clone = parent.clone();
+
+            return {
+                parent,
+                clone
+            };
+        }
+
+        it('deep copies Player', () => {
+
+            const { parent, clone } = helpClone();
+
+            expect(clone).toEqual(parent);
+
+            clone.removeTile(clone.tiles[0]);
+
+            expect(clone.tiles).not.toEqual(parent.tiles);
+        });
+
+        test('if change child, parent does not change', () => {
+
+            const { parent, clone } = helpClone();
+
+            clone.removeTile(clone.tiles[0]);
+
+            expect(clone.tiles).not.toEqual(parent.tiles);
+        });
+    });
 });
