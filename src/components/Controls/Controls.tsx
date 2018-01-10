@@ -3,8 +3,7 @@ import Controls from './';
 
 export default class ControlsContainer extends React.Component<{}, {}> {
 
-    render() {
+    render(): any {
         return <Controls />;
     }
-
 }

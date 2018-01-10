@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { defaultState } from '../../../store';
 import actionCreators from '../../../actions';
 
+
 function mapStateToProps(state: typeof defaultState) {
     return {
         turn: state.turn,
@@ -90,11 +91,11 @@ export class TurnContainer extends React.Component<Props, {}> {
             this.props.clearRecentStatusFromBoard(recentlyPlacedCoordinates);
 
             this.props.setScore(
-                this.props.Players[this.props.turn % 2],
+                this.props.Players,
                 this.tallyPoints(this.props.board, recentlyPlacedCoordinates)
             );
 
-            this.props.incrementTurn(this.props.turn, this.props.Tilebag);
+            this.props.incrementTurn(this.props.turn, this.props.Tilebag, this.props.Players);
         }
     }
 

@@ -2419,6 +2419,12 @@ exports[`<Game /> renders properly 1`] = `
       </div>
     </div>
   </div>
+  <section>
+    Turn: 
+    Yes
+    , Points: 
+    0
+  </section>
   <section
     id="controls"
   >
@@ -2428,6 +2434,12 @@ exports[`<Game /> renders properly 1`] = `
     >
       Play
     </button>
+  </section>
+  <section>
+    Turn: 
+    No
+    , Points: 
+    0
   </section>
 </div>
 `;
