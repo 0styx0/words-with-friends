@@ -8,6 +8,7 @@ export interface Turn {
     readonly type: types.INCREMENT_TURN;
     readonly turn: number;
     readonly Tilebag: Tilebag;
+    readonly Players: PlayerClass[];
 }
 
 export interface Players {
@@ -41,14 +42,14 @@ export interface ClearRecentStatusFromTiles {
 
 export interface PlaceTileInHand {
     readonly type: types.PLACE_TILE_IN_HAND;
-    readonly tile: Tile;
-    readonly Player: PlayerClass;
+    readonly tile: Readonly<Tile>;
+    readonly Players: ReadonlyArray<Readonly<PlayerClass>>;
 }
 
 export interface RemoveTileFromHand {
     readonly type: types.REMOVE_TILE_FROM_HAND;
     readonly tile: Tile;
-    readonly Player: PlayerClass;
+    readonly Players: ReadonlyArray<Readonly<PlayerClass>>;
 }
 
 export interface ResetTilebag {
@@ -57,6 +58,6 @@ export interface ResetTilebag {
 
 export interface SetScore {
     readonly type: types.SET_SCORE;
-    readonly Player: Readonly<PlayerClass>;
+    readonly Players: ReadonlyArray<Readonly<PlayerClass>>;
     readonly score: number;
 }

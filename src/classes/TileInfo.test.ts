@@ -138,7 +138,7 @@ describe('TileInfo', () => {
             const { tileInfo } = setTileInfoToRandomTile();
 
             const storeState = (store.getState() as typeof defaultState);
-            store.dispatch(incrementTurn(storeState.turn, storeState.Tilebag));
+            store.dispatch(incrementTurn(storeState.turn, storeState.Tilebag, storeState.Players));
 
             return tileInfo;
         }

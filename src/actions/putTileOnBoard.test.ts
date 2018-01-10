@@ -12,14 +12,13 @@ describe('putTileOnBoard', () => {
 
         const coordinates = [casual.integer(), casual.integer()];
         const tile = state.Tilebag.getRandomTile(0);
-        const Player = state.Players.find(player => player.turn)!;
         const turn = state.turn;
 
-        expect(putTileOnBoard(tile, coordinates, Player, turn)).toEqual({
+        expect(putTileOnBoard(tile, coordinates, state.Players, turn)).toEqual({
             type: types.PLACE_TILE_ON_BOARD,
             tile,
             coordinates,
-            currentPlayer: Player,
+            Players: state.Players,
             currentTurn: turn
         });
     });

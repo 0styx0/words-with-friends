@@ -7,12 +7,11 @@ describe('removeTileFromHand', () => {
     it('returns player, tile', () => {
 
         const state = (store.getState() as typeof defaultState);
-        const player = state.Players[0];
         const tile = state.Tilebag.getRandomTile(0);
 
-        expect(removeTileFromHand(player, tile)).toEqual({
+        expect(removeTileFromHand(state.Players, tile)).toEqual({
             type: types.REMOVE_TILE_FROM_HAND,
-            Player: player,
+            Players: state.Players,
             tile
         });
 

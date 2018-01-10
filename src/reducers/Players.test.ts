@@ -9,10 +9,13 @@ describe('Players', () => {
 
         it('correctly', () => {
 
-            const newPlayers = Players([new Player(true, 0), new Player(false, 1)], {
+            const players = [new Player(true, 0), new Player(false, 1)];
+
+            const newPlayers = Players([], {
                 type: types.INCREMENT_TURN,
                 turn: 0,
-                Tilebag: new Tilebag()
+                Tilebag: new Tilebag(),
+                Players: players
             });
 
             expect(newPlayers[0].turn).toBeFalsy();

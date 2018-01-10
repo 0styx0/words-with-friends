@@ -16,7 +16,7 @@ function mapStateToProps(state: typeof defaultState, props: Props) {
     return {
         coordinates: props.coordinates,
         tile: state.board.get(props.coordinates) ? state.board.get(props.coordinates)!.tile : undefined,
-        currentPlayer: state.Players.find(player => player.turn)!,
+        currentPlayer: state.Players.find(player => player.turn),
         board: state.board,
         turn: state.turn
     };
@@ -42,7 +42,7 @@ export class BoardTileHolderContainer extends AbstractTileHolder<Props> {
      */
     putTile(tile: TileType) {
 
-        this.props.putTileOnBoard(tile, this.props.coordinates, this.props.currentPlayer, this.props.turn);
+        this.props.putTileOnBoard(tile, this.props.coordinates, this.props.Players, this.props.turn);
     }
 
     /**

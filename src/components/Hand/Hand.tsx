@@ -10,6 +10,7 @@ import Board from '../../classes/Board';
 
 
 function mapStateToProps(state: typeof defaultState, props: {playerIndex: number}) {
+
     return {
         tiles: state.Players[props.playerIndex].tiles,
         board: state.board,

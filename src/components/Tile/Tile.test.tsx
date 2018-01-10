@@ -148,18 +148,6 @@ describe('<TileContainer />', () => {
 
         describe('return false if', () => {
 
-            it(`tile in non-current player's hand`, () => {
-
-                const { wrapper } = setup(sinon.mock(), undefined);
-                const state = store.getState() as typeof defaultState;
-
-                const component = wrapper.find(TileContainer).instance() as TileContainer;
-
-                store.dispatch(putTileInHand(state.Players[1], component.props.tile));
-
-                expect(component.canDrag()).toBeFalsy();
-            });
-
             it('tile is on board and placed there during different turn', () => {
 
                 const state = store.getState() as typeof defaultState;
@@ -167,7 +155,7 @@ describe('<TileContainer />', () => {
 
                 const { wrapper } = setup(sinon.mock(), coordinates);
 
-                store.dispatch(incrementTurn(state.turn, state.Tilebag));
+                store.dispatch(incrementTurn(state.turn, state.Tilebag, state.Players));
 
                 const component = wrapper.find(TileContainer).instance() as TileContainer;
 

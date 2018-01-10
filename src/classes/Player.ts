@@ -6,17 +6,17 @@ export default class Player {
     name = '';
     turn = false;
     score = 0;
+    readonly playerIndex: number;
     private _tiles: Tile[] = [];
-    private _playerIndex: number;
 
     constructor(turn: boolean, playerIndex: number) {
         this.turn = turn;
-        this._playerIndex = playerIndex;
+        this.playerIndex = playerIndex;
     }
 
     clone() {
 
-        const playerClone = new Player(this.turn, this._playerIndex);
+        const playerClone = new Player(this.turn, this.playerIndex);
 
         return Object.assign(playerClone, {
             name: this.name,
@@ -36,8 +36,8 @@ export default class Player {
 
         while (this._tiles.length < 7 && tilebag.tiles.length > 0) {
 
-            const tile = tilebag.getRandomTile(this._playerIndex);
-            tile.playerIndex = this._playerIndex;
+            const tile = tilebag.getRandomTile(this.playerIndex);
+            tile.playerIndex = this.playerIndex;
             this._tiles.push(tile);
         }
     }
@@ -52,7 +52,7 @@ export default class Player {
     }
 
     addTile(tile: Tile) {
-        tile.playerIndex = this._playerIndex;
+        tile.playerIndex = this.playerIndex;
         this._tiles.push(tile);
     }
 }

@@ -1,15 +1,24 @@
 import types from '../actions/types';
 import * as actionTypes from '../actions/interfaces';
 import { defaultState } from '../store';
-import { cloneClassInstance } from './helpers';
 import Player from '../classes/Player';
+import Tile from '../interfaces/Tile';
 
 export default function Players(
-    Players = {} as typeof defaultState.Players,
-    action: actionTypes.Turn | actionTypes.Players
-) {
+    Players = [] as typeof defaultState.Players,
+    action: actionTypes.Turn | actionTypes.Players | actionTypes.PlaceTileInHand | actionTypes.RemoveTileFromHand |
+        actionTypes.SetScore | actionTypes.Turn
 
-    let PlayersCopy: Player[] = Array.isArray(Players) ? [...Players].map(cloneClassInstance) : [];
+): ReadonlyArray<Readonly<Player>> {
+
+    let PlayersCopy: Player[] = Players;
+    let currentPlayer: Player = Players[0];
+
+    if (Array.isArray(action.Players)) {
+
+        PlayersCopy = [...action.Players].map(player => player.clone());
+        currentPlayer = PlayersCopy.find(player => player.turn)!;
+    }
 
     switch (action.type) {
 
@@ -23,7 +32,53 @@ export default function Players(
                 player.generateHand(action.Tilebag);
                 return player;
             });
+
+        case types.PLACE_TILE_IN_HAND:
+            return combinePlayers(PlayersCopy, addTile(currentPlayer, action.tile));
+        case types.REMOVE_TILE_FROM_HAND:
+            return combinePlayers(PlayersCopy, removeTile(currentPlayer, action.tile));
+        case types.SET_SCORE:
+            return combinePlayers(PlayersCopy, setScore(currentPlayer, action.score));
         default:
             return Players;
     }
+}
+
+/**
+ *
+ * @param players - Array of players, as in action.Players
+ * @param currentPlayer - the player whose turn it is
+ *
+ * @return array of [currentPlayer, notCurrentPlayer]
+ */
+function combinePlayers(players: ReadonlyArray<Readonly<Player>>, currentPlayer: Readonly<Player>) {
+
+    const combination = [];
+
+    const nonCurrentTurnPlayer = players.find(player => !player.turn)!;
+    combination[nonCurrentTurnPlayer.playerIndex] = nonCurrentTurnPlayer;
+    combination[currentPlayer.playerIndex] = currentPlayer;
+
+    return combination;
+}
+
+function addTile(PlayerInstance: Readonly<Player>, tile: Readonly<Tile>) {
+
+    const PlayerClone = PlayerInstance.clone();
+    PlayerClone.addTile(tile);
+    return PlayerClone;
+}
+
+function removeTile(PlayerInstance: Readonly<Player>, tile: Readonly<Tile>) {
+
+    const PlayerClone = PlayerInstance.clone();
+    PlayerClone.removeTile(tile);
+    return PlayerClone;
+}
+
+function setScore(PlayerInstance: Readonly<Player>, score: number) {
+
+    const PlayerClone = PlayerInstance.clone();
+    PlayerClone.score += score;
+    return PlayerClone as Readonly<Player>;
 }
