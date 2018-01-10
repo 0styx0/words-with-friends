@@ -25,7 +25,7 @@ describe('<Hand />', () => {
 
             const state = store.getState() as typeof defaultState;
 
-            store.dispatch(removeTileFromHand(state.Players[0], state.Players[0].tiles[0]));
+            store.dispatch(removeTileFromHand(state.Players, state.Players[0].tiles[0]));
 
             const tree = renderer.create(
                 <Provider store={store}>

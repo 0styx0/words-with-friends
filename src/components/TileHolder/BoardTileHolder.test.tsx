@@ -75,7 +75,7 @@ describe('<BoardTileHolder />', () => {
 
             const state = getState();
             store.dispatch(
-                putTileOnBoard(initialTile, coordinates, state.Players.find(player => player.turn)!, state.turn)
+                putTileOnBoard(initialTile, coordinates, state.Players, state.turn)
             );
 
             const currentCoordinateTile = getState().board.get(coordinates);

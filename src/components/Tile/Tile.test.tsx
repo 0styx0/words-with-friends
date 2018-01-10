@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import ConnectedTileContainer, { TileContainer } from './Tile';
 import mathMock from '../../test/mocks/Math';
 import { mount } from 'enzyme';
-import putTileInHand from '../../actions/putTileInHand';
 import incrementTurn from '../../actions/incrementTurn';
 import Tilebag from '../../classes/Tilebag';
 

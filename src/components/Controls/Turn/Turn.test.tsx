@@ -47,7 +47,7 @@ describe('<Turn />', () => {
 
             store.dispatch(
                 putTileOnBoard(
-                    tileInfos[i].tile!, coordinates[i], state.Players.find(player => player.turn)!, state.turn
+                    tileInfos[i].tile!, coordinates[i], state.Players, state.turn
                 )
             );
         }
