@@ -7,7 +7,7 @@ import Board from '../../classes/Board';
  */
 export default function visualizeBoard(board: Board) {
 
-    const copy = new Board(board);
+    const copy = board.clone();
 
     const boardArr = Array.from(copy).reduce((accum = [], twoD) => {
 

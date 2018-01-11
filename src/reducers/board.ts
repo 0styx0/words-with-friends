@@ -59,16 +59,17 @@ function placeTile(
     boardMap: BoardClass, coordinates: number[], tile: Tile, currentPlayer: Player, currentTurn: number
 ) {
 
-    const boardCopy = new BoardClass(boardMap);
+    const boardCopy = boardMap.clone();
     const tileInfo = boardCopy.get(coordinates) || new TileInfo();
     tileInfo.place(tile, currentPlayer, currentTurn);
     boardCopy.set(coordinates, tileInfo);
+
     return boardCopy;
 }
 
 function removeTile(boardMap: BoardClass, coordinates: number[]) {
 
-    const boardCopy = new BoardClass(boardMap);
+    const boardCopy = boardMap.clone();
 
     const tileInfo = boardCopy.get(coordinates)!;
     tileInfo.reset();
@@ -83,7 +84,7 @@ function clearRecentStatus(
     recentlyPlacedCoordinates: ReadonlyArray<ReadonlyArray<number>>
 ) {
 
-    const boardCopy = new BoardClass(boardMap);
+    const boardCopy = boardMap.clone();
 
     recentlyPlacedCoordinates.forEach(coordinate => {
 
