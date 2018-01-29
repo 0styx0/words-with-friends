@@ -87,7 +87,7 @@ export class TurnContainer extends React.Component<Props, {}> {
 
         if (!validate.checkTilePlacementValidity(recentlyPlacedCoordinates, this.props.turn)) {
 
-            notifyHelper({ body: 'Tiles must be in a straight line' });
+            notifyHelper({ body: 'Tiles must be in a straight line and connected to the center' });
 
         } else if (recentlyPlacedCoordinates.length === 0) {
 

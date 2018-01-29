@@ -1,6 +1,5 @@
 import TileInfo from '../classes/TileInfo';
 import Board from './Board';
-import notifyHelper from './notify.helper';
 
 const dictionary = require('word-list-json'); // no @types file
 
@@ -79,8 +78,6 @@ export default class Validate {
     checkTilePlacementValidity(coordinates: number[][], currentTurn: number) {
 
         if (!this.checkForCenterTile(coordinates[0])) {
-
-            notifyHelper({ body: 'Tile is not connected to the center' });
             return false;
         }
 
