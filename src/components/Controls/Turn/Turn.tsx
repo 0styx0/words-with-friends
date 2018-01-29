@@ -66,7 +66,6 @@ export class TurnContainer extends React.Component<Props, {}> {
 
         const totalPoints = calculateTileMultipliers(words);
 
-        console.log('points earned', totalPoints);
         return totalPoints;
     }
 
