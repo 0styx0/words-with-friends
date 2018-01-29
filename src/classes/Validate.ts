@@ -4,7 +4,6 @@ import notifyHelper from './notify.helper';
 
 const dictionary = require('word-list-json'); // no @types file
 
-const dictionary = require('word-list-json'); // no @types file
 export default class Validate {
 
     board: Board;
