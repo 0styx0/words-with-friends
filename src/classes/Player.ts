@@ -1,17 +1,31 @@
 import Tile from '../interfaces/Tile';
+import notify from './notify.helper';
 import Tilebag from './Tilebag';
 
 export default class Player {
 
     name = '';
     turn = false;
-    score = 0;
     readonly playerIndex: number;
+    private _score = 0;
     private _tiles: Tile[] = [];
 
     constructor(turn: boolean, playerIndex: number) {
         this.turn = turn;
         this.playerIndex = playerIndex;
+    }
+
+    get score() {
+        return this._score;
+    }
+
+    set score(score: number) {
+
+        if (score !== this._score) {
+            notify({body: `Earned ${score - this._score} points`});
+        }
+
+        this._score = score;
     }
 
     clone() {
@@ -20,7 +34,7 @@ export default class Player {
 
         return Object.assign(playerClone, {
             name: this.name,
-            score: this.score,
+            _score: this._score,
             _tiles: JSON.parse(JSON.stringify(this._tiles))
         });
     }

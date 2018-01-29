@@ -4,6 +4,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import actionCreators from '../../../actions';
 import Board from '../../../classes/Board';
+import notifyHelper from '../../../classes/notify.helper';
 import TileInfo from '../../../classes/TileInfo';
 import Validate from '../../../classes/Validate';
 import { defaultState } from '../../../store';
@@ -84,9 +85,19 @@ export class TurnContainer extends React.Component<Props, {}> {
 
         const validate = new Validate(this.props.board);
 
-        if (recentlyPlacedCoordinates.length > 0 &&
-            validate.checkTilePlacementValidity(recentlyPlacedCoordinates, this.props.turn) &&
-            validate.validateWords(recentlyPlacedCoordinates)) {
+        if (!validate.checkTilePlacementValidity(recentlyPlacedCoordinates, this.props.turn)) {
+
+            notifyHelper({ body: 'Tiles must be in a straight line' });
+
+        } else if (recentlyPlacedCoordinates.length === 0) {
+
+            notifyHelper({ body: 'No tiles have been placed' });
+
+        } else if (!validate.validateWords(recentlyPlacedCoordinates)) {
+
+            notifyHelper({ body: 'Invalid word(s)' });
+
+        } else {
 
             this.props.clearRecentStatusFromBoard(recentlyPlacedCoordinates);
 
