@@ -1,18 +1,18 @@
-import types from '../actions/types';
 import * as actionTypes from '../actions/interfaces';
-import { defaultState } from '../store';
+import types from '../actions/types';
 import Player from '../classes/Player';
 import Tile from '../interfaces/Tile';
+import { defaultState } from '../store';
 
 export default function Players(
-    Players = [] as typeof defaultState.Players,
+    PlayersClass: Player[] = [] as typeof defaultState.Players,
     action: actionTypes.Turn | actionTypes.Players | actionTypes.PlaceTileInHand | actionTypes.RemoveTileFromHand |
         actionTypes.SetScore | actionTypes.Turn
 
 ): ReadonlyArray<Readonly<Player>> {
 
-    let PlayersCopy: Player[] = Players;
-    let currentPlayer: Player = Players[0];
+    let PlayersCopy: Player[] = PlayersClass;
+    let currentPlayer: Player = PlayersClass[0];
 
     if (Array.isArray(action.Players)) {
 
@@ -40,7 +40,7 @@ export default function Players(
         case types.SET_SCORE:
             return combinePlayers(PlayersCopy, setScore(currentPlayer, action.score));
         default:
-            return Players;
+            return PlayersClass;
     }
 }
 
