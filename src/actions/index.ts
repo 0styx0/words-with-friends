@@ -6,6 +6,8 @@ import removeTileFromBoard from './removeTileFromBoard';
 import putTileInHand from './putTileInHand';
 import removeTileFromHand from './removeTileFromHand';
 import createTilebag from './createTilebag';
+import setScore from './setScore';
+import clearRecentStatusFromBoard from './clearRecentStatusFromBoard';
 
 export default {
     incrementTurn,
@@ -16,5 +18,7 @@ export default {
     removeTileFromHand,
     removeTileFromBoard,
     initializePlayers,
-    createTilebag
+    createTilebag,
+    setScore,
+    clearRecentStatusFromBoard
 };

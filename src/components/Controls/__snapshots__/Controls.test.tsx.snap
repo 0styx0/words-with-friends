@@ -1,11 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Controls /> renders correctly 1`] = `
-<button
-  id="controls"
-  onClick={[Function]}
-  type="button"
+Array [
+  <section>
+    Turn: 
+    Yes
+    , Points: 
+    0
+</section>,
+  <section
+    id="controls"
 >
-  Play
-</button>
+    <button
+        onClick={[Function]}
+        type="button"
+    >
+        Play
+    </button>
+</section>,
+  <section>
+    Turn: 
+    No
+    , Points: 
+    0
+</section>,
+]
 `;

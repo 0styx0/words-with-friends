@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import BoardTileHolder, { BoardTileHolderContainer } from './BoardTileHolder';
 import mockMath from '../../test/mocks/Math';
 import { mount } from 'enzyme';
-import Tile from '../../interfaces/Tile';
 import putTileOnBoard from '../../actions/putTileOnBoard';
 mockMath();
 
@@ -76,7 +75,7 @@ describe('<BoardTileHolder />', () => {
 
             const state = getState();
             store.dispatch(
-                putTileOnBoard(initialTile, coordinates, state.Players.find(player => player.turn)!, state.turn)
+                putTileOnBoard(initialTile, coordinates, state.Players, state.turn)
             );
 
             const currentCoordinateTile = getState().board.get(coordinates);

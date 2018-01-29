@@ -1,18 +1,16 @@
-import * as React from 'react';
-import * as renderer from 'react-test-renderer';
 import * as casual from 'casual';
-import * as sinon from 'sinon';
-import store, { defaultState } from '../../store';
-import { Provider } from 'react-redux';
-import ConnectedTileContainer, { TileContainer } from './Tile';
-import mathMock from '../../test/mocks/Math';
 import { mount } from 'enzyme';
-import placeWord from '../../test/helpers/placeWord';
-import getWord from '../../test/helpers/getWord';
-import putTileInHand from '../../actions/putTileInHand';
-import turn from '../../reducers/turn';
-import types from '../../actions/types';
+import * as React from 'react';
+import { Provider } from 'react-redux';
+import * as renderer from 'react-test-renderer';
+import * as sinon from 'sinon';
+
 import incrementTurn from '../../actions/incrementTurn';
+import Tilebag from '../../classes/Tilebag';
+import store, { defaultState, getState } from '../../store';
+import mathMock from '../../test/mocks/Math';
+import ConnectedTileContainer, { TileContainer } from './Tile';
+
 mathMock();
 
 describe('<TileContainer />', () => {
@@ -21,13 +19,13 @@ describe('<TileContainer />', () => {
 
         function snap(playerIndex: number) {
 
-            const state = store.getState() as typeof defaultState;
+            const state = getState() as typeof defaultState;
 
             const tree = renderer.create(
                 <Provider store={store}>
                     <ConnectedTileContainer
                         coordinates={[casual.integer, casual.integer]}
-                        tile={state.Tilebag.getRandomTile(playerIndex)}
+                        tile={(new Tilebag()).getRandomTile(playerIndex)}
                         removeTile={sinon.mock}
                         {...state as any}
                     />
@@ -150,18 +148,6 @@ describe('<TileContainer />', () => {
 
         describe('return false if', () => {
 
-            it(`tile in non-current player's hand`, () => {
-
-                const { wrapper } = setup(sinon.mock(), undefined);
-                const state = store.getState() as typeof defaultState;
-
-                const component = wrapper.find(TileContainer).instance() as TileContainer;
-
-                store.dispatch(putTileInHand(state.Players[1], component.props.tile));
-
-                expect(component.canDrag()).toBeFalsy();
-            });
-
             it('tile is on board and placed there during different turn', () => {
 
                 const state = store.getState() as typeof defaultState;
@@ -169,7 +155,7 @@ describe('<TileContainer />', () => {
 
                 const { wrapper } = setup(sinon.mock(), coordinates);
 
-                store.dispatch(incrementTurn(state.turn));
+                store.dispatch(incrementTurn(state.turn, state.Tilebag));
 
                 const component = wrapper.find(TileContainer).instance() as TileContainer;
 

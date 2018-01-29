@@ -19,7 +19,7 @@ export default function placeWord(
     turn: number = 1
 ) {
 
-    const boardCopy = new Board(board);
+    const boardCopy = board.clone();
 
     const initialCoordinates = [...startCoordinate];
     const coordinates: [number, number][] = [];

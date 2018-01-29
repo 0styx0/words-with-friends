@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Turn /> render renders properly 1`] = `
+<button
+  onClick={[Function]}
+  type="button"
+>
+  Play
+</button>
+`;

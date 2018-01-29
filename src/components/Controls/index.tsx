@@ -1,14 +1,19 @@
 import * as React from 'react';
 import './index.css';
+import Turn from './Turn/Turn';
+import PlayerContainer from '../Player/Player';
 
-interface Props {
-    play: Function;
-}
+export default function Controls(): any {
 
-export default function Controls(props: Props) {
-
-
-    return <button onClick={() => props.play()} id="controls" type="button">Play</button>;
+    return [
+        <PlayerContainer key={0} playerIndex={0} {...[] as any} />,
+        (
+            <section key="controls" id="controls">
+                <Turn {...[] as any} />
+            </section>
+        ),
+        <PlayerContainer key={1} playerIndex={1} {...[] as any} />
+    ];
 }
 
 

@@ -14,7 +14,7 @@ import Board from '../../classes/Board';
 function mapStateToProps(state: typeof defaultState, props: Props) {
     return {
         tile: props.tile,
-        currentPlayer: state.Players.find(player => player.turn),
+        Players: state.Players,
         board: state.board,
         turn: state.turn
     };
@@ -27,7 +27,7 @@ function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
 
 type Props = typeof actionCreators & typeof defaultState & {
     tile?: TileType;
-    currentPlayer: Player;
+    Players: Player;
     board: Board;
     turn: number;
 };
@@ -40,14 +40,14 @@ export class HandTileHolderContainer extends AbstractTileHolder<Props> {
      */
     putTile(tile: TileType) {
 
-        this.props.putTileInHand(this.props.currentPlayer, tile!);
+        this.props.putTileInHand(this.props.Players, tile!);
     }
 
     /**
      * Removes tile from TileHolder (@see Tile.tsx#source.endDrag)
      */
     removeTile() {
-        this.props.removeTileFromHand(this.props.currentPlayer, this.props.tile!);
+        this.props.removeTileFromHand(this.props.Players, this.props.tile!);
     }
 
     render() {

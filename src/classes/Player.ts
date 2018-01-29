@@ -1,19 +1,42 @@
-import HandContainer from '../components/Hand/Hand';
 import Tile from '../interfaces/Tile';
-import store, { defaultState } from '../store';
+import notify from './notify.helper';
+import Tilebag from './Tilebag';
 
 export default class Player {
 
     name = '';
     turn = false;
-    score = 0;
-    hand: typeof HandContainer;
+    readonly playerIndex: number;
+    private _score = 0;
     private _tiles: Tile[] = [];
-    private _playerIndex: number;
 
     constructor(turn: boolean, playerIndex: number) {
         this.turn = turn;
-        this._playerIndex = playerIndex;
+        this.playerIndex = playerIndex;
+    }
+
+    get score() {
+        return this._score;
+    }
+
+    set score(score: number) {
+
+        if (score !== this._score) {
+            notify({body: `Earned ${score - this._score} points`});
+        }
+
+        this._score = score;
+    }
+
+    clone() {
+
+        const playerClone = new Player(this.turn, this.playerIndex);
+
+        return Object.assign(playerClone, {
+            name: this.name,
+            _score: this._score,
+            _tiles: JSON.parse(JSON.stringify(this._tiles))
+        });
     }
 
     get tiles() {
@@ -23,19 +46,19 @@ export default class Player {
     /**
      * Ensures player has 7 tiles (7 is b/c rules of the game)
      */
-    generateHand() {
+    generateHand(tilebag: Tilebag) {
 
-        while (this._tiles.length < 7 && (store.getState() as typeof defaultState).Tilebag.tiles.length > 0) {
+        while (this._tiles.length < 7 && tilebag.tiles.length > 0) {
 
-            const tile = (store.getState() as typeof defaultState).Tilebag.getRandomTile(this._playerIndex);
-            tile.playerIndex = this._playerIndex;
+            const tile = tilebag.getRandomTile(this.playerIndex);
+            tile.playerIndex = this.playerIndex;
             this._tiles.push(tile);
         }
     }
 
     removeTile(tile: Tile) {
 
-        const positionOfTile = this._tiles.indexOf(tile);
+        const positionOfTile = this._tiles.findIndex(currentTile => currentTile.letter === tile.letter);
 
         if (positionOfTile !== -1) {
             this._tiles.splice(positionOfTile, 1);
@@ -43,7 +66,7 @@ export default class Player {
     }
 
     addTile(tile: Tile) {
-        tile.playerIndex = this._playerIndex;
+        tile.playerIndex = this.playerIndex;
         this._tiles.push(tile);
     }
 }

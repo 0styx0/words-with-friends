@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './index.css';
 import TileType from '../../interfaces/Tile';
-import store, { defaultState, getState } from '../../store';
+import store, { getState } from '../../store';
 import { ChangeEvent } from 'react';
 
 interface Props {

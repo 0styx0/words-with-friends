@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import store, { defaultState, getState } from '../../store';
+import store, { getState } from '../../store';
 import { Provider } from 'react-redux';
 import HandTileHolder, { HandTileHolderContainer } from './HandTileHolder';
 import mockMath from '../../test/mocks/Math';
@@ -9,6 +9,11 @@ import Tile from '../../interfaces/Tile';
 mockMath();
 
 describe('<HandTileHolder />', () => {
+
+    function getCurrentPlayer() {
+
+        return getState().Players.find(player => player.turn)!;
+    }
 
     describe('renders', () => {
 
@@ -52,7 +57,7 @@ describe('<HandTileHolder />', () => {
             const initialTile = { points: -1, letter: 'invalid letter', playerIndex: 0 };
             const { component } = setup(initialTile);
 
-            const currentPlayerTiles = getState().Players.find(player => player.turn)!.tiles;
+            const currentPlayerTiles = getCurrentPlayer().tiles;
 
             expect(currentPlayerTiles).toHaveLength(0);
             expect(component.props.tile).toEqual(initialTile);
@@ -61,7 +66,7 @@ describe('<HandTileHolder />', () => {
 
             component.putTile(newTile);
 
-            expect(currentPlayerTiles).toEqual([newTile]);
+            expect(getCurrentPlayer().tiles).toEqual([newTile]);
         });
     });
 
@@ -69,14 +74,15 @@ describe('<HandTileHolder />', () => {
 
         it('removes tile as a prop', () => {
 
-            const currentPlayerTiles = getState().Players.find(player => player.turn)!.tiles;
+            const currentPlayerTiles = getCurrentPlayer().tiles;
+
             expect(currentPlayerTiles).toHaveLength(1);
 
             const { component } = setup(currentPlayerTiles[0]);
 
             component.removeTile();
 
-            const currentPlayerUpdatedTiles = getState().Players.find(player => player.turn)!.tiles;
+            const currentPlayerUpdatedTiles = getCurrentPlayer().tiles;
             expect(currentPlayerUpdatedTiles).toHaveLength(0);
         });
     });

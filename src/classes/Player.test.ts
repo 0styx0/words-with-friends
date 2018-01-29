@@ -1,7 +1,8 @@
 import * as casual from 'casual';
-import store, { defaultState } from '../store';
-import Player from './Player';
+
 import Tile from '../interfaces/Tile';
+import store, { defaultState, getState } from '../store';
+import Player from './Player';
 
 const state = () => (store.getState() as typeof defaultState);
 
@@ -23,7 +24,7 @@ describe('Player', () => {
 
             const player = resetHand(state().Players[0]);
 
-            player.generateHand();
+            player.generateHand(getState().Tilebag);
 
             expect(player.tiles).toHaveLength(7);
         });
@@ -40,7 +41,7 @@ describe('Player', () => {
 
             expect(player.tiles).toHaveLength(initialTiles);
 
-            player.generateHand();
+            player.generateHand(getState().Tilebag);
 
             expect(player.tiles).toHaveLength(7);
         });
@@ -53,7 +54,7 @@ describe('Player', () => {
 
             const player = resetHand(state().Players[0]);
 
-            player.generateHand();
+            player.generateHand(getState().Tilebag);
 
             expect(player.tiles).toHaveLength(0);
         });
@@ -66,7 +67,7 @@ describe('Player', () => {
         it('takes away tile specified', () => {
 
             const player = state().Players[0];
-            player.generateHand();
+            player.generateHand(getState().Tilebag);
 
             expect(player.tiles).toHaveLength(7);
 
@@ -81,7 +82,7 @@ describe('Player', () => {
         it('does nothing if tile not in hand', () => {
 
             const player = state().Players[0];
-            player.generateHand();
+            player.generateHand(getState().Tilebag);
 
             player.removeTile({ points: -1, letter: '%' });
 
@@ -113,6 +114,42 @@ describe('Player', () => {
 
             player.addTile(newTile);
             expect(player.tiles[0].playerIndex).toBe(playerIndex);
+        });
+    });
+
+    describe('#clone', () => {
+
+        function helpClone() {
+
+            const parent = new Player(!!casual.coin_flip, casual.integer());
+            parent.generateHand(getState().Tilebag);
+
+            const clone = parent.clone();
+
+            return {
+                parent,
+                clone
+            };
+        }
+
+        it('deep copies Player', () => {
+
+            const { parent, clone } = helpClone();
+
+            expect(clone).toEqual(parent);
+
+            clone.removeTile(clone.tiles[0]);
+
+            expect(clone.tiles).not.toEqual(parent.tiles);
+        });
+
+        test('if change child, parent does not change', () => {
+
+            const { parent, clone } = helpClone();
+
+            clone.removeTile(clone.tiles[0]);
+
+            expect(clone.tiles).not.toEqual(parent.tiles);
         });
     });
 });

@@ -1,5 +1,8 @@
 import TileInfo from '../classes/TileInfo';
 import Board from './Board';
+import notifyHelper from './notify.helper';
+
+const dictionary = require('word-list-json'); // no @types file
 
 const dictionary = require('word-list-json'); // no @types file
 export default class Validate {
@@ -77,7 +80,8 @@ export default class Validate {
     checkTilePlacementValidity(coordinates: number[][], currentTurn: number) {
 
         if (!this.checkForCenterTile(coordinates[0])) {
-            console.log('no center');
+
+            notifyHelper({ body: 'Tile is not connected to the center' });
             return false;
         }
 
@@ -141,7 +145,6 @@ export default class Validate {
             return !coordinatesNotTouched.length;
         };
 
-        console.log('vertical', validateVertically(coordinates[0]), 'horizontal', validateHorizontally(coordinates[0]));
         return validateVertically(coordinates[0]) || validateHorizontally(coordinates[0]);
     }
 
@@ -200,7 +203,7 @@ export default class Validate {
                     return false;
                 }
 
-                word.push(tileInfo);
+                word.push(tileInfo as TileInfo);
 
                 return true;
             });
@@ -221,7 +224,7 @@ export default class Validate {
                     return false;
                 }
 
-                word.push(tileInfo);
+                word.push(tileInfo as TileInfo);
 
                 return true;
             });
@@ -266,7 +269,6 @@ export default class Validate {
         const centerIsFilled = this.board.get(centerCoordinates)!.filled;
 
         if (!centerIsFilled) {
-            console.log('center not filled');
             return false;
         }
 
@@ -283,7 +285,6 @@ export default class Validate {
             const space = this.board.get(coordinates);
 
             if (coordinates[0] === coordinates[1] && coordinates[0] === 7) {
-                console.log('center is here');
                 return true;
             }
 
