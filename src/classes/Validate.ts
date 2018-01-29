@@ -1,6 +1,7 @@
-const dictionary = require('word-list-json'); // no @types file
 import TileInfo from '../classes/TileInfo';
 import Board from './Board';
+
+const dictionary = require('word-list-json'); // no @types file
 
 export default class Validate {
 
@@ -77,6 +78,7 @@ export default class Validate {
     checkTilePlacementValidity(coordinates: number[][], currentTurn: number) {
 
         if (!this.checkForCenterTile(coordinates[0])) {
+            // tslint:disable-next-line:no-console
             console.log('no center');
             return false;
         }
