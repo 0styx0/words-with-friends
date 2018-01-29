@@ -1,19 +1,17 @@
-import types from './types';
-import PlayerClass from '../classes/Player';
-import Tile from '../interfaces/Tile';
 import BoardClass from '../classes/Board';
+import PlayerClass from '../classes/Player';
 import Tilebag from '../classes/Tilebag';
+import Tile from '../interfaces/Tile';
+import types from './types';
 
 export interface Turn {
     readonly type: types.INCREMENT_TURN;
     readonly turn: number;
     readonly Tilebag: Tilebag;
-    readonly Players: PlayerClass[];
 }
 
 export interface Players {
     readonly type: types.INIT_PLAYERS;
-    readonly Players: PlayerClass[];
     readonly Tilebag: Tilebag;
 }
 
@@ -43,13 +41,11 @@ export interface ClearRecentStatusFromTiles {
 export interface PlaceTileInHand {
     readonly type: types.PLACE_TILE_IN_HAND;
     readonly tile: Readonly<Tile>;
-    readonly Players: ReadonlyArray<Readonly<PlayerClass>>;
 }
 
 export interface RemoveTileFromHand {
     readonly type: types.REMOVE_TILE_FROM_HAND;
     readonly tile: Tile;
-    readonly Players: ReadonlyArray<Readonly<PlayerClass>>;
 }
 
 export interface ResetTilebag {
@@ -58,6 +54,5 @@ export interface ResetTilebag {
 
 export interface SetScore {
     readonly type: types.SET_SCORE;
-    readonly Players: ReadonlyArray<Readonly<PlayerClass>>;
     readonly score: number;
 }

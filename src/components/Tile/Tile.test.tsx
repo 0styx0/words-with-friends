@@ -1,14 +1,15 @@
-import * as React from 'react';
-import * as renderer from 'react-test-renderer';
 import * as casual from 'casual';
-import * as sinon from 'sinon';
-import store, { defaultState, getState } from '../../store';
-import { Provider } from 'react-redux';
-import ConnectedTileContainer, { TileContainer } from './Tile';
-import mathMock from '../../test/mocks/Math';
 import { mount } from 'enzyme';
+import * as React from 'react';
+import { Provider } from 'react-redux';
+import * as renderer from 'react-test-renderer';
+import * as sinon from 'sinon';
+
 import incrementTurn from '../../actions/incrementTurn';
 import Tilebag from '../../classes/Tilebag';
+import store, { defaultState, getState } from '../../store';
+import mathMock from '../../test/mocks/Math';
+import ConnectedTileContainer, { TileContainer } from './Tile';
 
 mathMock();
 
@@ -154,7 +155,7 @@ describe('<TileContainer />', () => {
 
                 const { wrapper } = setup(sinon.mock(), coordinates);
 
-                store.dispatch(incrementTurn(state.turn, state.Tilebag, state.Players));
+                store.dispatch(incrementTurn(state.turn, state.Tilebag));
 
                 const component = wrapper.find(TileContainer).instance() as TileContainer;
 

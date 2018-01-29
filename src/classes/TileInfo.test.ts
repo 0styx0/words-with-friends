@@ -1,10 +1,11 @@
-import TileInfo from './TileInfo';
 import * as casual from 'casual';
-import Tilebag from './Tilebag';
-import store, { getState, defaultState } from '../store';
-import Tile from '../interfaces/Tile';
-import Powerup from './Powerup';
+
 import incrementTurn from '../actions/incrementTurn';
+import Tile from '../interfaces/Tile';
+import store, { defaultState, getState } from '../store';
+import Powerup from './Powerup';
+import Tilebag from './Tilebag';
+import TileInfo from './TileInfo';
 
 
 describe('TileInfo', () => {
@@ -138,7 +139,7 @@ describe('TileInfo', () => {
             const { tileInfo } = setTileInfoToRandomTile();
 
             const storeState = (store.getState() as typeof defaultState);
-            store.dispatch(incrementTurn(storeState.turn, storeState.Tilebag, storeState.Players));
+            store.dispatch(incrementTurn(storeState.turn, storeState.Tilebag));
 
             return tileInfo;
         }

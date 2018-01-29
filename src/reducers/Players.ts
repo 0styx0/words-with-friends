@@ -7,16 +7,16 @@ import { defaultState } from '../store';
 export default function Players(
     PlayersClass: Player[] = [] as typeof defaultState.Players,
     action: actionTypes.Turn | actionTypes.Players | actionTypes.PlaceTileInHand | actionTypes.RemoveTileFromHand |
-        actionTypes.SetScore | actionTypes.Turn
+        actionTypes.SetScore
 
 ): ReadonlyArray<Readonly<Player>> {
 
     let PlayersCopy: Player[] = PlayersClass;
     let currentPlayer: Player = PlayersClass[0];
 
-    if (Array.isArray(action.Players)) {
+    if (Array.isArray(PlayersCopy)) {
 
-        PlayersCopy = [...action.Players].map(player => player.clone());
+        PlayersCopy = [...PlayersCopy].map(player => player.clone());
         currentPlayer = PlayersCopy.find(player => player.turn)!;
     }
 

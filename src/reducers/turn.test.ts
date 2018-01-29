@@ -1,8 +1,7 @@
-import turn from './turn';
 import types from '../actions/types';
-import Tilebag from '../classes/Tilebag';
 import Board from '../classes/Board';
-import { getState } from '../store';
+import Tilebag from '../classes/Tilebag';
+import turn from './turn';
 
 describe('turn', () => {
 
@@ -15,8 +14,7 @@ describe('turn', () => {
             const newTurn = turn(currentTurn, {
                 type: types.INCREMENT_TURN,
                 turn: currentTurn,
-                Tilebag: new Tilebag(),
-                Players: getState().Players
+                Tilebag: new Tilebag()
             });
 
             expect(newTurn).toBe(currentTurn + 1);

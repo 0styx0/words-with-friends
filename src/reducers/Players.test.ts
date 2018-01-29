@@ -1,7 +1,7 @@
-import Players from './Players';
-import Player from '../classes/Player';
 import types from '../actions/types';
+import Player from '../classes/Player';
 import Tilebag from '../classes/Tilebag';
+import Players from './Players';
 
 describe('Players', () => {
 
@@ -11,11 +11,10 @@ describe('Players', () => {
 
             const players = [new Player(true, 0), new Player(false, 1)];
 
-            const newPlayers = Players([], {
+            const newPlayers = Players(players, {
                 type: types.INCREMENT_TURN,
                 turn: 0,
-                Tilebag: new Tilebag(),
-                Players: players
+                Tilebag: new Tilebag()
             });
 
             expect(newPlayers[0].turn).toBeFalsy();
@@ -33,8 +32,7 @@ describe('Players', () => {
 
             const newPlayers = Players(players, {
                 type: types.INIT_PLAYERS,
-                Tilebag: new Tilebag(),
-                Players: players
+                Tilebag: new Tilebag()
             });
 
             expect(newPlayers.every(player => player.tiles.length === 7)).toBeTruthy();

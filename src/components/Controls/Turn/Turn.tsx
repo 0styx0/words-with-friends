@@ -1,12 +1,13 @@
 import * as React from 'react';
-import Turn from './';
-import Validate from '../../../classes/Validate';
-import TileInfo from '../../../classes/TileInfo';
-import Board from '../../../classes/Board';
-import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { defaultState } from '../../../store';
+import { bindActionCreators, Dispatch } from 'redux';
+
 import actionCreators from '../../../actions';
+import Board from '../../../classes/Board';
+import TileInfo from '../../../classes/TileInfo';
+import Validate from '../../../classes/Validate';
+import { defaultState } from '../../../store';
+import Turn from './';
 
 
 function mapStateToProps(state: typeof defaultState) {
@@ -91,11 +92,10 @@ export class TurnContainer extends React.Component<Props, {}> {
             this.props.clearRecentStatusFromBoard(recentlyPlacedCoordinates);
 
             this.props.setScore(
-                this.props.Players,
                 this.tallyPoints(this.props.board, recentlyPlacedCoordinates)
             );
 
-            this.props.incrementTurn(this.props.turn, this.props.Tilebag, this.props.Players);
+            this.props.incrementTurn(this.props.turn, this.props.Tilebag);
         }
     }
 

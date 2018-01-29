@@ -1,7 +1,8 @@
 import * as casual from 'casual';
+
+import Tile from '../interfaces/Tile';
 import store, { defaultState, getState } from '../store';
 import Player from './Player';
-import Tile from '../interfaces/Tile';
 
 const state = () => (store.getState() as typeof defaultState);
 

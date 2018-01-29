@@ -1,11 +1,9 @@
-import types from './types';
-import PlayerClass from '../classes/Player';
 import { SetScore } from './interfaces';
+import types from './types';
 
-export default function setScore(Players: ReadonlyArray<Readonly<PlayerClass>>, score: number): SetScore {
+export default function setScore(score: number): SetScore {
     return {
         type: types.SET_SCORE,
-        Players,
         score
     };
 }
