@@ -1,7 +1,7 @@
-const dictionary = require('word-list-json'); // no @types file
 import TileInfo from '../classes/TileInfo';
 import Board from './Board';
 
+const dictionary = require('word-list-json'); // no @types file
 export default class Validate {
 
     board: Board;
@@ -21,7 +21,7 @@ export default class Validate {
      * @return last coordinate callback returned `true` on
      */
     travelHorizontally(startCoordinate: number[],
-                       callback: (tileInfo: TileInfo, currentCoordinate: number[]) => boolean,
+                       callback: (tileInfo: Readonly<TileInfo>, currentCoordinate: number[]) => boolean,
                        forwards: boolean = true): typeof startCoordinate {
 
         let x = startCoordinate[0];
@@ -192,7 +192,7 @@ export default class Validate {
          */
         const getVerticalWord = (coordinate: number[]) => {
 
-            let word: TileInfo[] = [];
+            let word: Readonly<TileInfo>[] = [];
 
             this.travelVertically(coordinate, tileInfo => {
 
@@ -213,7 +213,7 @@ export default class Validate {
          */
         const getHorizontalWord = (coordinate: number[]) => {
 
-            let word: TileInfo[] = [];
+            let word: Readonly<TileInfo>[] = [];
 
             this.travelHorizontally(coordinate, tileInfo => {
 
@@ -229,7 +229,7 @@ export default class Validate {
             return word;
         };
 
-        type reductionParam = { previousX: number[], previousY: number[], words: TileInfo[][] };
+        type reductionParam = { previousX: number[], previousY: number[], words: Readonly<TileInfo>[][] };
 
         return coordinates.reduce((accum: reductionParam, coordinate) => {
 
