@@ -5,7 +5,7 @@ export default class Tilebag {
     // http://www.thewordfinder.com/wwf-point-values.php
     static readonly alphabet = new Set<(Tile & { amount: number })>([
         {
-            letter: '',
+            letter: 'A', // default is A even though can be changed
             points: 0,
             amount: 2
         },
