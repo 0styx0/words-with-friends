@@ -14,14 +14,14 @@ export default function visualizeBoard(board: Board) {
         const keys = twoD[0].split(/[^\d]\s/);
         const x = +keys[0], y = +keys[1];
 
-        if (!accum[x]) {
-            accum[x] = [];
+        if (!accum[y]) {
+            accum[y] = [];
         }
 
         if (twoD[1].filled) {
-            accum[x][y] = twoD[1]!.tile!.letter!;
+            accum[y][x] = twoD[1]!.tile!.letter!;
         } else {
-            accum[x][y] = '–';
+            accum[y][x] = '–';
         }
 
         return accum;
@@ -29,6 +29,6 @@ export default function visualizeBoard(board: Board) {
     }, [] as string[][]);
 
     console.log('\n');
-    console.dir(boardArr);
+    console.log(boardArr);
     console.log('\n');
 }
