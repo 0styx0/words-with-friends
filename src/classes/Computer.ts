@@ -27,15 +27,15 @@ class Computer extends Player {
         /**
          * Recursively checks all paths, finding coordinates of tiles in them
          *
-         * @return return value of @see #getAllTiles
+         * @return return value of @see #getAllFilledCoordinates
          */
         const checkTileTree = (coordinates: number[]): boolean => {
 
             const space = board.get(coordinates);
 
-            if (space && space.filled && !coordinatesTried.has(coordinates.toString())) {
+            if (space && space.filled && !coordinatesTried.has(JSON.stringify(coordinates))) {
 
-                coordinatesTried.add(coordinates.toString());
+                coordinatesTried.add(JSON.stringify(coordinates));
 
                 return checkTileTree([coordinates[0] + 1, coordinates[1]]) ||
                     checkTileTree([coordinates[0], coordinates[1] + 1]) ||
@@ -49,9 +49,12 @@ class Computer extends Player {
         const centerCoordinates = [7, 7];
         checkTileTree(centerCoordinates);
 
-        return coordinatesTried;
+        return new Set([...coordinatesTried].map(coordinate => JSON.parse(coordinate)));
     }
 
+    getMaximumWordLength(coordinate: number[]) {
+
+    }
 
     // findHighestWord(board: Board) {
 

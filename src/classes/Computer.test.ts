@@ -30,7 +30,14 @@ describe(`Computer`, () => {
             const allCoordinates = new Set(
                 firstPlacement.coordinates.
                     concat(secondPlacement.coordinates)
-                    .map(elt => elt.toString())
+                    .filter((coordinate, i, coordinates) => {
+
+                        const firstIndexOfCoordinate = coordinates.
+                            findIndex(currentCoordinate =>
+                                coordinate.toString() === currentCoordinate.toString());
+
+                        return firstIndexOfCoordinate === i;
+                    })
             );
 
             const coordinatesFoundByComputer = (new Computer(true, 1)).getAllFilledCoordinates(secondPlacement.board);
