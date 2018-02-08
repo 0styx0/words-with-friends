@@ -1,6 +1,7 @@
 import Board from './Board';
 import Player from './Player';
-
+import TileInfo from './TileInfo';
+import Validate from './Validate';
 
 
 
@@ -52,8 +53,20 @@ class Computer extends Player {
         return new Set([...coordinatesTried].map(coordinate => JSON.parse(coordinate)));
     }
 
-    getMaximumWordLength(coordinate: number[]) {
+    /**
+     * @return maximum horizontal length of word if it starts with letter at `coordinate`
+     */
+    getMaximumHorizontalWordLength(board: Board, coordinate: number[]) {
 
+        const validate = new Validate(board);
+        const lastFilledCoordinate = validate.travelHorizontally(coordinate,
+         (tileInfo: TileInfo, currentCoordinate) =>  !!currentCoordinate[0] && tileInfo.filled);
+
+        console.log('filled', board.get(lastFilledCoordinate)!.filled);
+
+        const offset = (board.get(lastFilledCoordinate)!.filled) ? -1 : 1; // if filled, don't include letter
+
+        return lastFilledCoordinate[0] + offset - coordinate[0];
     }
 
     // findHighestWord(board: Board) {
