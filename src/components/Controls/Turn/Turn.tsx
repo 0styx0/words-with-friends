@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import actionCreators from '../../../actions';
-import Board from '../../../classes/Board';
+// import Computer from '../../../classes/Computer';
 import notifyHelper from '../../../classes/notify.helper';
-import TileInfo from '../../../classes/TileInfo';
 import Validate from '../../../classes/Validate';
+import Word from '../../../classes/Word';
 import { defaultState } from '../../../store';
 import Turn from './';
 
@@ -34,42 +34,6 @@ export class TurnContainer extends React.Component<Props, {}> {
         this.turn = this.turn.bind(this);
     }
 
-    /**
-     * Adds up points that a word is worth
-     */
-    tallyPoints(board: Board, recentlyPlacedCoordinates: number[][]) {
-
-        const validate = new Validate(board);
-        const words = validate.getWords(recentlyPlacedCoordinates);
-
-        function calculateTileMultipliers(tileInfoWords: TileInfo[][]) {
-
-            return tileInfoWords.reduce((accum: number, word) => {
-
-                const wordMultipliers: number[] = [];
-
-                const individualTilePoints = word.map(tile => {
-
-                    if (tile.powerup && tile.powerup.target === 'word') {
-                        wordMultipliers.push(tile.powerup.multiplyBy);
-                    }
-
-                    return tile.calculateValue();
-
-                }).reduce((addedPoints, points) => addedPoints + points, 0);
-
-                const total = wordMultipliers.reduce((multiplied, multiplier) =>
-                    multiplier * multiplied, individualTilePoints);
-
-                return accum + total;
-            }, 0);
-        }
-
-        const totalPoints = calculateTileMultipliers(words);
-
-        return totalPoints;
-    }
-
     render() {
 
         return <Turn turn={this.turn} />;
@@ -77,11 +41,13 @@ export class TurnContainer extends React.Component<Props, {}> {
 
     /**
      * If tiles were placed, checks their validity (@see Validate),
-     *  gives player points (@see #tallyPoints) and changes turn
+     *  gives player points (@see Word#tallyPoints) and changes turn
      */
     private turn() {
 
         const recentlyPlacedCoordinates = this.getTilesPlaced();
+
+        // console.log((new Computer(true, 1).getAllTiles(this.props.board)));
 
         const validate = new Validate(this.props.board);
 
@@ -102,7 +68,7 @@ export class TurnContainer extends React.Component<Props, {}> {
             this.props.clearRecentStatusFromBoard(recentlyPlacedCoordinates);
 
             this.props.setScore(
-                this.tallyPoints(this.props.board, recentlyPlacedCoordinates)
+                Word.tallyPoints(this.props.board, recentlyPlacedCoordinates)
             );
 
             this.props.incrementTurn(this.props.turn, this.props.Tilebag);

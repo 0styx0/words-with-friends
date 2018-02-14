@@ -3,7 +3,8 @@ import Player from './Player';
 import TileInfo from './TileInfo';
 import Validate from './Validate';
 import * as wordList from 'word-list-json';
-
+import placeWord from '../test/helpers/placeWord';
+import Turn from '../components/Controls/Turn/Turn';
 
 
 /**
@@ -63,14 +64,10 @@ class Computer extends Player {
         const lastFilledCoordinate = validate.travelHorizontally(coordinate,
          (tileInfo: TileInfo, currentCoordinate) =>  !!currentCoordinate[0] && tileInfo.filled);
 
-        console.log('filled', board.get(lastFilledCoordinate)!.filled);
-
         const offset = (board.get(lastFilledCoordinate)!.filled) ? -1 : 1; // if filled, don't include letter
 
         return lastFilledCoordinate[0] + offset - coordinate[0];
     }
-
-    // length => firstLetter => [wordsOrderedByPoints]
 
     /**
      * @return wordList organized into a sort of hashtable where
@@ -87,7 +84,8 @@ class Computer extends Player {
 
         wordListLengthIndices.forEach((indexOfWordsOfLength: number, i: number) => {
 
-            const currentWordsOfLength = wordList.slice(indexOfWordsOfLength, wordListLengthIndices[i + 1]);
+            const currentWordsOfLength = (wordList as {} as string[])
+                .slice(indexOfWordsOfLength, wordListLengthIndices[i + 1]);
 
             currentWordsOfLength.forEach((currentWord: string, j: number) => {
 
@@ -108,16 +106,34 @@ class Computer extends Player {
         return lengthToLetterToWordDictionary;
     }
 
+    // TODO: need support for vertical words as well
+
     /**
      *
-     * @return all valid words of length `length` that start with `startingLetter`
      */
-    getAllWords(startingLetter: string, length: number) {
+    getHighestWord(possibleWords: Set<string>, board: Board, startCoordinate: number[], currentTurn: number) {
 
-        const wordsOfValidLength = wordList[wordList.lengths[length]] || [];
+        /*
+         * Copy current Board
+         * Put word into BoardCopy at starting coordinate (using perhaps what is currently src/test/placeWord
+         * Call Turn.tallyPoints
+         */
 
-        return wordsOfValidLength.reduce((accum: string[], word: string) =>
-            (word[0] === startingLetter) ? accum.concat([word]) : accum);
+        const startCoordinateShiftedLeft = [startCoordinate[0] + 1, startCoordinate[1]];
+
+        type highestScoringWord = {
+            points: number;
+            word: string
+        };
+
+        possibleWords.reduce((highestScoringWord: highestScoringWord, currentWord) => {
+
+            const boardCopy = board.clone();
+            const { possibleBoard } = placeWord(currentWord, startCoordinateShiftedLeft, true, boardCopy, currentTurn);
+
+            Turn.tallyPoints()
+        });
+
     }
 
     // findHighestWord(board: Board) {
