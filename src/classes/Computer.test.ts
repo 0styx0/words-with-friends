@@ -4,6 +4,7 @@ import Computer from './Computer';
 // import visualizeBoard from '../test/helpers/board.visualize';
 
 describe(`Computer`, () => {
+
     describe(`#findAllTiles`, () => {
 
         // put down random words
@@ -88,6 +89,45 @@ describe(`Computer`, () => {
                 getMaximumHorizontalWordLength(firstPlacement.board, coordinate);
 
             expect(maximumLength).toBe(0);
+        });
+    });
+
+    describe(`#orderDictionary`, () => {
+
+        /**
+         * Goes through the orderedDictionary calling `callback` on every word found
+         *
+         */
+        function travelThroughOrderedDictionary(
+            callback: (expectedLength: number, letter: string, word: string) => boolean
+        ) {
+
+            const orderedDictionary = (new Computer(true, 1)).orderDictionary();
+
+            expect([...orderedDictionary.entries()].every(([expectedLength, mapOfSetsOfWords]) =>
+
+                [...mapOfSetsOfWords.entries()].every(([letter, setOfWords]) =>
+
+                    [...setOfWords].every(word =>
+                        callback(expectedLength, letter, word)
+                    )
+                )
+            )).toBeTruthy();
+        }
+
+        it(`every word in Set starts with the letter that is its key`, () => {
+
+            travelThroughOrderedDictionary((expectedLength: number, letter: string, word: string) =>
+                word[0] === letter
+            );
+        });
+
+
+        test(`word length matches its key`, () => {
+
+            travelThroughOrderedDictionary((expectedLength: number, letter: string, word: string) =>
+                word.length === expectedLength
+            );
         });
     });
 });

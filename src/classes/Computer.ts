@@ -2,6 +2,7 @@ import Board from './Board';
 import Player from './Player';
 import TileInfo from './TileInfo';
 import Validate from './Validate';
+import * as wordList from 'word-list-json';
 
 
 
@@ -67,6 +68,56 @@ class Computer extends Player {
         const offset = (board.get(lastFilledCoordinate)!.filled) ? -1 : 1; // if filled, don't include letter
 
         return lastFilledCoordinate[0] + offset - coordinate[0];
+    }
+
+    // length => firstLetter => [wordsOrderedByPoints]
+
+    /**
+     * @return wordList organized into a sort of hashtable where
+     * results.get(lengthOfWordWanted).get(firstLetterOfWordWanted) is a Set
+     * of words of the desired length that start with the desired letter
+     */
+    orderDictionary() {
+
+        type dictionary = Map<number, Map<string, Set<string>>>;
+        let lengthToLetterToWordDictionary: dictionary = new Map();
+
+
+        const wordListLengthIndices = Object.values(wordList.lengths);
+
+        wordListLengthIndices.forEach((indexOfWordsOfLength: number, i: number) => {
+
+            const currentWordsOfLength = wordList.slice(indexOfWordsOfLength, wordListLengthIndices[i + 1]);
+
+            currentWordsOfLength.forEach((currentWord: string, j: number) => {
+
+                const wordLength = currentWord.length;
+
+                const currentWordSetsOfLength = lengthToLetterToWordDictionary.get(wordLength) ||
+                    new Map<string, Set<string>>();
+
+                const currentSet = currentWordSetsOfLength.get(currentWord[0]) || new Set<string>();
+                currentSet.add(currentWord);
+
+                currentWordSetsOfLength.set(currentWord[0], currentSet);
+
+                lengthToLetterToWordDictionary.set(wordLength, currentWordSetsOfLength);
+            });
+        });
+
+        return lengthToLetterToWordDictionary;
+    }
+
+    /**
+     *
+     * @return all valid words of length `length` that start with `startingLetter`
+     */
+    getAllWords(startingLetter: string, length: number) {
+
+        const wordsOfValidLength = wordList[wordList.lengths[length]] || [];
+
+        return wordsOfValidLength.reduce((accum: string[], word: string) =>
+            (word[0] === startingLetter) ? accum.concat([word]) : accum);
     }
 
     // findHighestWord(board: Board) {
