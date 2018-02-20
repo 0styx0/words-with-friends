@@ -4,7 +4,7 @@ import TileInfo from './TileInfo';
 import Validate from './Validate';
 import * as wordList from 'word-list-json';
 import placeWord from '../test/helpers/placeWord';
-import Turn from '../components/Controls/Turn/Turn';
+import Word from './Word';
 
 
 /**
@@ -110,30 +110,34 @@ class Computer extends Player {
 
     /**
      *
+     * @param possibleWords - Words that are valid if placed on `board` at `startCoordinate`
+     *
+     * @returns {object} containing `points` and `word` of the highest possible entry in `possibleWords`
+     *  if placed at `startCoordinate`
      */
     getHighestWord(possibleWords: Set<string>, board: Board, startCoordinate: number[], currentTurn: number) {
-
-        /*
-         * Copy current Board
-         * Put word into BoardCopy at starting coordinate (using perhaps what is currently src/test/placeWord
-         * Call Turn.tallyPoints
-         */
-
-        const startCoordinateShiftedLeft = [startCoordinate[0] + 1, startCoordinate[1]];
-
-        type highestScoringWord = {
+        type highestWordType = {
             points: number;
             word: string
         };
 
-        possibleWords.reduce((highestScoringWord: highestScoringWord, currentWord) => {
+        return [...possibleWords].reduce((highestScoringWord: highestWordType, currentWord: string) => {
 
             const boardCopy = board.clone();
-            const { possibleBoard } = placeWord(currentWord, startCoordinateShiftedLeft, true, boardCopy, currentTurn);
+            const wordInfo = placeWord(currentWord, startCoordinate, true, boardCopy, currentTurn);
+            const currentWordPoints = Word.tallyPoints(wordInfo.board, wordInfo.coordinates);
 
-            Turn.tallyPoints()
-        });
+            if (currentWordPoints > highestScoringWord.points) {
 
+                return {
+                    word: currentWord,
+                    points: currentWordPoints
+                };
+            }
+
+            return highestScoringWord;
+
+        }, { points: 0 } as highestWordType);
     }
 
     // findHighestWord(board: Board) {

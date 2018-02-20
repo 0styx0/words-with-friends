@@ -1,7 +1,12 @@
 import placeWord from '../test/helpers/placeWord';
 import getWord from '../test/helpers/getWord';
 import Computer from './Computer';
-// import visualizeBoard from '../test/helpers/board.visualize';
+import * as wordList from 'word-list-json';
+import * as casual from 'casual';
+import Word from './Word';
+import Board from './Board';
+import TileInfo from './TileInfo';
+import Powerup from './Powerup';
 
 describe(`Computer`, () => {
 
@@ -30,7 +35,7 @@ describe(`Computer`, () => {
             const allCoordinates = new Set(
                 firstPlacement.coordinates.
                     concat(secondPlacement.coordinates)
-                    .filter((coordinate, i, coordinates) => {
+                    .filter((coordinate: number[], i: number, coordinates: number[][]) => {
 
                         const firstIndexOfCoordinate = coordinates.
                             findIndex(currentCoordinate =>
@@ -128,6 +133,54 @@ describe(`Computer`, () => {
             travelThroughOrderedDictionary((expectedLength: number, letter: string, word: string) =>
                 word.length === expectedLength
             );
+        });
+    });
+
+    describe(`#getHighestWord`, () => {
+
+        it(`gets highest scoring when there's no powerups`, () => {
+
+            const words = new Set<string>();
+            const wordListArr = wordList as {} as string[];
+
+            for (let i = 0; i < casual.integer(1, 10); i++) { // 10 is random
+                words.add(wordListArr[i]);
+            }
+
+            const longestWord = wordListArr[wordListArr.length - 2].toUpperCase();
+            words.add(longestWord);
+
+            const longestWordPlaced = placeWord(longestWord, [0, 0]);
+            const longestWordPoints = Word.tallyPoints(longestWordPlaced.board, longestWordPlaced.coordinates);
+
+            const expectedHighestWord = {
+                word: longestWord,
+                points: longestWordPoints
+            };
+
+            const capitalizedWords = new Set<string>([...words].map(word => word.toUpperCase()));
+
+            const { coordinates, board } = placeWord(longestWord[0], [0, 0]);
+            const highestWord = (new Computer(true, 1))
+                .getHighestWord(capitalizedWords, board, coordinates[0], casual.integer());
+
+            expect(expectedHighestWord).toEqual(highestWord);
+        });
+
+        it(`gets highest scoring when there is powerups`, () => {
+
+            const words = new Set<string>(['KL', 'HK']); // [5, 2] => 7, 12 OR [3, 5] => 8, 11
+            const board = new Board();
+            const startCoordinate = [0, 1];
+
+            const tileInfo = new TileInfo();
+            const powerup = new Powerup('letter', 2);
+            tileInfo.powerup = powerup;
+            board.set(startCoordinate, tileInfo);
+
+            const highestWord = (new Computer(true, 1)).getHighestWord(words, board, startCoordinate, 1);
+
+            expect(highestWord.word).toBe('KL');
         });
     });
 });

@@ -24,6 +24,7 @@ class Word {
                         wordMultipliers.push(tile.powerup.multiplyBy);
                     }
 
+                    // console.log(tile.tile!.letter, tile.tile!.points, tile.powerup, tile.calculateValue());
                     return tile.calculateValue();
 
                 }).reduce((addedPoints, points) => addedPoints + points, 0);
