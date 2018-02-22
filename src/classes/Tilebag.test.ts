@@ -8,18 +8,22 @@ describe('Tilebag', () => {
         it('filled up .tiles with `alphabet`, adding each letter `alphabet.$letter.amount` times', () => {
 
             const tileBag = new Tilebag();
+            // must be letter + tile to account for wildcard tile
+            const getTileKey = (tile: typeof tileBag.tiles[0]) => tile.letter + tile.points;
 
             const tileAmounts = tileBag.tiles.reduce((
                 tileCounter: Map<string, number> = new Map<string, number>(), tile
             ) => {
 
-                const currentAmountOfTileFound = tileCounter.get(tile.letter) || 0;
+                const currentAmountOfTileFound = tileCounter.get(getTileKey(tile)) || 0;
 
-                return tileCounter.set(tile.letter, currentAmountOfTileFound + 1);
+                return tileCounter.set(getTileKey(tile), currentAmountOfTileFound + 1);
             }, new Map<string, number>())!;
 
             const tileAmountMatchesExpected =
-                Array.from(Tilebag.alphabet).every(tile => tile.amount === tileAmounts.get(tile.letter));
+                Array.from(Tilebag.alphabet).every(tile =>
+                    tile.amount === tileAmounts.get(getTileKey(tile))
+                );
 
             expect(tileAmountMatchesExpected).toBeTruthy();
         });
