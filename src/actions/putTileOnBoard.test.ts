@@ -19,7 +19,9 @@ describe('putTileOnBoard', () => {
             tile,
             coordinates,
             Players: state.Players,
+            currentPlayer: state.Players[turn % state.Players.length],
             currentTurn: turn
         });
     });
 });
+

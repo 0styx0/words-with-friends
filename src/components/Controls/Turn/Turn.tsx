@@ -46,7 +46,6 @@ export class TurnContainer extends React.Component<Props, {}> {
     private turn() {
 
         const recentlyPlacedCoordinates = this.getTilesPlaced();
-
         // console.log((new Computer(true, 1).getAllTiles(this.props.board)));
 
         const validate = new Validate(this.props.board);

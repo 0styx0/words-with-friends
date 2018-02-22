@@ -1,15 +1,15 @@
 import Powerup from './Powerup';
 import Tile from '../interfaces/Tile';
 import Player from '../classes/Player';
-// import store, { defaultState } from '../store';
+
 
 export default class TileInfo {
 
     filled: boolean;
     powerup?: Powerup | undefined;
     Player?: Player;
+    turnTileWasPlaced: number;
     private _tile?: Tile;
-    private turnTileWasPlaced: number;
 
     constructor() {
         this.reset();
@@ -50,3 +50,4 @@ export default class TileInfo {
         this.Player = player;
     }
 }
+

@@ -5,11 +5,14 @@ import Player from '../classes/Player';
 export default function putTileOnBoard(
     tile: Tile, coordinates: ReadonlyArray<number>, Players: ReadonlyArray<Readonly<Player>>, currentTurn: number
 ) {
+
     return {
         type: types.PLACE_TILE_ON_BOARD,
         tile,
         coordinates,
+        currentPlayer: Players[currentTurn % 2],
         Players,
         currentTurn
     };
 }
+

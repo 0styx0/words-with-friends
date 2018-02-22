@@ -19,7 +19,7 @@ describe('Validate', () => {
         tileInfos: TileInfo[];
         randomWord: string;
         startCoordinate: [number, number];
-        coordinates: [number, number][];
+        coordinates: number[][];
     };
 
     /**
@@ -309,9 +309,13 @@ describe('Validate', () => {
             let placement;
 
             do {
-                placement = setupRandomWord(true, firstPlacement.startCoordinate, firstPlacement.board);
+
+                const boardCopy = firstPlacement.board.clone();
+
+                placement = setupRandomWord(true, firstPlacement.startCoordinate, boardCopy);
             }
-            while (placement.tileInfos[0].tile!.letter !== firstPlacement.tileInfos[0].tile!.letter);
+            while (placement.randomWord[0] !== firstPlacement.tileInfos[0].tile!.letter);
+
 
             return placement;
         }
@@ -375,3 +379,4 @@ describe('Validate', () => {
         });
     });
 });
+

@@ -2,6 +2,7 @@ import TileInfo from '../../classes/TileInfo';
 import Tilebag from '../../classes/Tilebag';
 import store, { getState, defaultState } from '../../store';
 import Board from '../../classes/Board';
+// import visualizeBoard from './board.visualize';
 
 
 /**
@@ -22,7 +23,7 @@ export default function placeWord(
     const boardCopy = board.clone();
 
     const initialCoordinates = [...startCoordinate];
-    const coordinates: [number, number][] = [];
+    const coordinates: number[][] = [];
 
     if (boardCopy.size === 0) {
 
@@ -39,9 +40,9 @@ export default function placeWord(
     /**
      * @return TileInfo for first elt in wordArr
      */
-    function setTileInfos() {
+    function setTileInfos(coordinate: ReadonlyArray<number>) {
 
-        const tileInfo = new TileInfo();
+        const tileInfo = boardCopy.get(coordinate)! || new TileInfo();
         const currentLetter = wordArr.shift()!;
 
         const tile = {
@@ -51,7 +52,7 @@ export default function placeWord(
         };
 
         tileInfo.place(tile, getState().Players[0], turn);
-        tileInfos.push(tileInfo);
+        tileInfos.push(tileInfo as TileInfo);
 
         return tileInfo;
     }
@@ -62,8 +63,10 @@ export default function placeWord(
 
         while (wordArr.length > 0) {
 
-            boardCopy.set([currentX, initialCoordinates[1]], setTileInfos());
-            coordinates.push([currentX, initialCoordinates[1]]);
+            const currentCoordinate = [currentX, initialCoordinates[1]];
+
+            boardCopy.set(currentCoordinate, setTileInfos(currentCoordinate));
+            coordinates.push(currentCoordinate);
             currentX++;
         }
     } else {
@@ -72,11 +75,13 @@ export default function placeWord(
 
         while (wordArr.length > 0) {
 
-            boardCopy.set([initialCoordinates[0], currentY], setTileInfos());
-            coordinates.push([initialCoordinates[0], currentY]);
+            const currentCoordinate = [initialCoordinates[0], currentY];
+            boardCopy.set(currentCoordinate, setTileInfos(currentCoordinate));
+            coordinates.push(currentCoordinate);
             currentY++;
         }
     }
+
 
     return {
         tileInfos,
@@ -84,3 +89,4 @@ export default function placeWord(
         coordinates
     };
 }
+

@@ -18,8 +18,25 @@ export default class Board extends Map {
 
         const copy = new Board();
 
-        this.forEach((value: Readonly<TileInfo>, key: string) =>
-            copy.set(this.convertIntStringIntoArray(key), value));
+        this.forEach((value: Readonly<TileInfo>, key: string) => {
+
+            if (value.tile && value.Player) {
+
+                const tileInfoClone = new TileInfo();
+                const tileClone = JSON.parse(JSON.stringify(value.tile));
+
+                tileInfoClone.place(tileClone, value.Player.clone(), value.turnTileWasPlaced);
+
+                copy.set(this.convertIntStringIntoArray(key), tileInfoClone);
+
+            } else {
+
+                const tileInfo = new TileInfo();
+                tileInfo.powerup = value.powerup;
+
+                copy.set(this.convertIntStringIntoArray(key), tileInfo);
+            }
+        });
 
         return copy;
     }
@@ -36,3 +53,4 @@ export default class Board extends Map {
         return keys.map(key => +key);
     }
 }
+

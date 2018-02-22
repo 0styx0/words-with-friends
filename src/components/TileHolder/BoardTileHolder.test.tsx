@@ -34,7 +34,7 @@ describe('<BoardTileHolder />', () => {
         const wrapper = mount(
 
             <Provider store={store}>
-                <BoardTileHolder coordinates={coordinates} {...[] as any} />
+                <BoardTileHolder Players={getState().Players} coordinates={coordinates} {...[] as any} />
             </Provider>
         );
 
@@ -90,3 +90,4 @@ describe('<BoardTileHolder />', () => {
         });
     });
 });
+
