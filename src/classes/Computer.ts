@@ -6,6 +6,11 @@ import * as wordList from 'word-list-json';
 import placeWord from '../test/helpers/placeWord';
 import Word from './Word';
 
+type highestWordType = {
+    points: number;
+    word: string
+};
+
 
 /**
  *
@@ -20,6 +25,7 @@ import Word from './Word';
 class Computer extends Player {
 
     /**
+     * @private
      * @return {Set} of all coordinates that have tiles in them
      */
     getAllFilledCoordinates(board: Board) {
@@ -56,6 +62,7 @@ class Computer extends Player {
     }
 
     /**
+     * @private
      * @return maximum horizontal length of word if it starts with letter at `coordinate`
      */
     getMaximumHorizontalWordLength(board: Board, coordinate: number[]) {
@@ -70,6 +77,7 @@ class Computer extends Player {
     }
 
     /**
+     * @private
      * @return wordList organized into a sort of hashtable where
      * results.get(lengthOfWordWanted).get(firstLetterOfWordWanted) is a Set
      * of words of the desired length that start with the desired letter
@@ -109,28 +117,29 @@ class Computer extends Player {
     // TODO: need support for vertical words as well
 
     /**
+     * @private
+     *
+     * Finds highest word in `possibleWords`
      *
      * @param possibleWords - Words that are valid if placed on `board` at `startCoordinate`
      *
      * @returns {object} containing `points` and `word` of the highest possible entry in `possibleWords`
      *  if placed at `startCoordinate`
      */
-    getHighestWord(possibleWords: Set<string>, board: Board, startCoordinate: number[], currentTurn: number) {
-        type highestWordType = {
-            points: number;
-            word: string
-        };
+    getHighestWord(
+        possibleWords: Set<string>, board: Board, startCoordinate: number[], currentTurn: number
+    ) {
 
         return [...possibleWords].reduce((highestScoringWord: highestWordType, currentWord: string) => {
 
             const boardCopy = board.clone();
-            const wordInfo = placeWord(currentWord, startCoordinate, true, boardCopy, currentTurn);
+            const wordInfo = placeWord(currentWord.toUpperCase(), startCoordinate, true, boardCopy, currentTurn);
             const currentWordPoints = Word.tallyPoints(wordInfo.board, wordInfo.coordinates);
 
             if (currentWordPoints > highestScoringWord.points) {
 
                 return {
-                    word: currentWord,
+                    word: currentWord.toUpperCase(),
                     points: currentWordPoints
                 };
             }
@@ -140,9 +149,51 @@ class Computer extends Player {
         }, { points: 0 } as highestWordType);
     }
 
-    // findHighestWord(board: Board) {
+    /**
+     * Finds the highest scoring word in entire dictionary
+     */
+    public findHighestPossibleWord(board: Board, currentTurn: number) {
 
-    // }
+        const orderedDictionary = this.orderDictionary();
+        const allFilledCoordinates = this.getAllFilledCoordinates(board);
+
+        /**
+         * Iterates through all coordinates, goes through every possible word
+         * for every possible coordinate, and picks the one worth the most points
+         */
+        return [...allFilledCoordinates].reduce((highestWordInfo: highestWordType, coordinate) => {
+
+            const maximumLength = this.getMaximumHorizontalWordLength(board, coordinate);
+            const firstLetterOfPossibleWord = board.get(coordinate)!.tile!.letter.toLowerCase();
+
+            let currentHighestWord: highestWordType = highestWordInfo;
+
+            // check every length, since sometimes a shorter word might be worth more
+            for (let possibleLength = maximumLength; possibleLength >= maximumLength; possibleLength--) {
+
+                let possibleWords;
+
+                try {
+
+                    possibleWords = orderedDictionary
+                        .get(possibleLength)!
+                        .get(firstLetterOfPossibleWord);
+                } catch {/* do nothing. Easier than two if statements */}
+
+                if (possibleWords) {
+
+                    const highestWord = this.getHighestWord(possibleWords, board, coordinate, currentTurn);
+
+                    if (highestWord.points >= currentHighestWord.points) {
+                        currentHighestWord = highestWord;
+                    }
+                }
+            }
+
+            return currentHighestWord;
+
+        }, { points: 0, word: '' });
+    }
 }
 
 export default Computer;
