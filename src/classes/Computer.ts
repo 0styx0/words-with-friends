@@ -10,6 +10,9 @@ type highestWordType = {
     word: string
 };
 
+interface Coordinate {
+    [key: string]: number[]
+}
 
 /**
  *
@@ -118,13 +121,49 @@ class Computer extends Player {
         };
     }
 
+    /**
+     * @private
+     *
+     * @return maximum length of a word that contains letter at coordinate
+     */
+    getMaximumWordLength(board: Board, coordinate: ReadonlyArray<number>) {
+
+        const { leftmostFilledCoordinate, rightmostFilledCoordinate } =
+            this.getBorderingTileCoordinates(board, coordinate);
+        let spacesAfterBothBorders = 2;
+
+        const compareCoordinates = (border: ReadonlyArray<number>) =>
+          border.every((coord, i) => coordinate[i] === coord);
+
+        if (
+            compareCoordinates(leftmostFilledCoordinate) ||
+            compareCoordinates(rightmostFilledCoordinate)
+        ) {
+
+            spacesAfterBothBorders = 0;
+        }
+
+        return rightmostFilledCoordinate[0] - leftmostFilledCoordinate[0] - spacesAfterBothBorders - 1;
+    }
+
+    /**
+     * @private
+     *
+     * @return index of coordinate if it would be in a word of length `maximumLength`
+     */
+    getIndexOfCoordinate(xOrYCoordinate: number, maximumLength: number) {
+
+        // t|r|y --> find index of r --> maximumLength=3, xOrYCoordinate=1 --> 3-1-1=1
+        return maximumLength - xOrYCoordinate - 1; // -1 since 0 indexed
+    }
+
     /*
      * @param firstLetter - the letter of the tile that will connect the word being placed to the rest of the board
      * @param lengthWanted - How long the words should be
      *
      * @return all real words that exist in Computer.tiles
      */
-    getAllValidWords(firstLetter: string, lengthWanted: number) {
+    getAllValidWords(letter: string, indexOfLetter: number, lengthWanted: number) {
 
         let possibleWords = new Set<string>();
 

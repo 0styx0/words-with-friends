@@ -9,6 +9,29 @@ import TileInfo from './TileInfo';
 import Powerup from './Powerup';
 import visualizeBoard from '../test/helpers/board.visualize';
 
+/**
+ * Places each word on the board at coordinate whose index matches the word's
+ */
+function fillPlacements(words: string[], coordinates: number[][]) {
+
+    const placements: typeof placeWordType[] = [];
+    const placeWordType = placeWord('RANDOM', [0, 0]);
+
+    words.forEach((word, i) =>
+      placements.push(
+          placeWord(
+              words[i],
+              coordinates[i],
+              false,
+              i === 0 ? undefined : placements[i - 1].board
+          )
+      )
+    );
+
+    return placements;
+}
+
+
 describe(`Computer`, () => {
 
     describe(`#findAllTiles`, () => {
@@ -52,30 +75,8 @@ describe(`Computer`, () => {
         });
     });
 
-    fdescribe(`#getBorderingTileCoordinates`, () => {
+    describe(`#getBorderingTileCoordinates`, () => {
         // note: 3 is a magic number in getWord
-
-        /**
-         * Places each word on the board at coordinate whose index matches the word's
-         */
-        function fillPlacements(words: string[], coordinates: number[][]) {
-
-            const placements: typeof placeWordType[] = [];
-            const placeWordType = placeWord('RANDOM', [0, 0]);
-
-            words.forEach((word, i) =>
-              placements.push(
-                  placeWord(
-                      words[i],
-                      coordinates[i],
-                      false,
-                      i === 0 ? undefined : placements[i - 1].board
-                  )
-              )
-            );
-
-            return placements;
-        }
 
         it(`returns the first left and rightmost coordinates`, () => {
 
@@ -92,7 +93,7 @@ describe(`Computer`, () => {
             expect(borderInfo.rightmostFilledCoordinate).toEqual(coordinates[2]);
         });
 
-        it(`goes until the edge of screen if needed`, () => {
+        fit(`goes until the edge of screen if needed`, () => {
 
             const words = [getWord(3), getWord(3)];
             const coordinates = [[3, 0], [6, 0]];
@@ -120,7 +121,36 @@ describe(`Computer`, () => {
         });
     });
 
-    fdescribe(`#orderDictionary`, () => {
+    fdescribe(`#getMaximumWordLength`, () => {
+
+        it(`gets correct length when coordinate is between two other filled ones`, () => {
+
+            const words = [getWord(3), getWord(3), getWord(3)];
+            const coordinates = [[3, 7], [7, 7], [11, 7]];
+
+            const placements = fillPlacements(words, coordinates);
+
+            const maximumLength = (new Computer(true, 1))
+              .getMaximumWordLength(placements[2].board, coordinates[1]);
+
+            expect(maximumLength).toBe(5);
+        });
+
+        it(`gets correct length when coordinate is at the edge`, () => {
+
+            const words = [getWord(3), getWord(3)];
+            const coordinates = [[0, 0], [3, 0]];
+
+            const placements = fillPlacements(words, coordinates);
+
+            const maximumLength = (new Computer(true, 1))
+              .getMaximumWordLength(placements[1].board, coordinates[0]);
+
+            expect(maximumLength).toBe(2);
+        });
+    });
+
+    describe(`#orderDictionary`, () => {
 
         /**
          * Goes through the orderedDictionary calling `callback` on every word found
@@ -209,14 +239,18 @@ describe(`Computer`, () => {
         });
     });
 
-    describe(`#getPossibleWords`, () => {
+    describe(`#getAllValidWords`, () => {
 
         it(`finds all possible words that Computer.tiles can be`, () => {
 
             // TODO: write test
         });
 
-        it(`accounts for dulplicate letters`, () => {
+        it(`accounts for duplicate letters`, () => {
+
+        });
+
+        it(`can search for words with a letter at any index`, () => {
 
         });
     });
