@@ -1,6 +1,5 @@
 import Board from './Board';
 import Player from './Player';
-import TileInfo from './TileInfo';
 import Validate from './Validate';
 import * as wordList from 'word-list-json';
 import placeWord from '../test/helpers/placeWord';
@@ -20,9 +19,28 @@ type highestWordType = {
  *   In case smaller words might be worth more points, repeat for every length until 0
  *     if find word worth more than previous highest word, save current word coordinates
  * Place highest word found
+ *
+ * For every word in the dictionary equal or less than maximumLength
+ *  Check if (letters in word) are also in (this.tiles)
+ *    if yes, the word is in Computer's hand
+ */
+
+/**
+ * 1) I have a coordinate
+ * 2) Plug it in to see how many open spaces are on either side
+ * 3) Now that I know the length and index of the letter by adding borders and stuff
+ * 4) Do dictionary.get(length).get(letter).get(index)
+ * 5) Now I have all possible words that can be placed there
+ * 6) Iterate through those words, sorting them and comparing them against sorted Computer.tiles
+ * 7) Find the most valuable of those words that Computer has in his hand
+ * 8) Repeat from step 4, substituting length for length--
+ * 9) Now I have the real most valuable word (even if it's smaller than the lengthiest word)
+ * 10) Repeat again for every coordinate on the board
  */
 
 class Computer extends Player {
+
+    // private orderedDictionary = this.orderDictionary();
 
     /**
      * @private
@@ -63,28 +81,95 @@ class Computer extends Player {
 
     /**
      * @private
-     * @return maximum horizontal length of word if it starts with letter at `coordinate`
+     *
+     * @return left and rightmost first filled coordinates.
+     *  If coordinate is at the edge and filled, the *most will be that coordinate,
+     *   otherwise even if coordinate is filled it will not be counted
      */
-    getMaximumHorizontalWordLength(board: Board, coordinate: number[]) {
+    getBorderingTileCoordinates(board: Board, coordinate: ReadonlyArray<number>) {
 
         const validate = new Validate(board);
-        const lastFilledCoordinate = validate.travelHorizontally(coordinate,
-         (tileInfo: TileInfo, currentCoordinate) =>  !!currentCoordinate[0] && tileInfo.filled);
 
-        const offset = (board.get(lastFilledCoordinate)!.filled) ? -1 : 1; // if filled, don't include letter
+        const leftmostFilledCoordinate = (function getLeftmostCoordinate() {
 
-        return lastFilledCoordinate[0] + offset - coordinate[0];
+            const leftFirstFilledCoordinate = validate.travelHorizontally(
+              [Math.max(0, coordinate[0] - 1), coordinate[1]],
+              (tileInfo, currentCoordinate) => !!currentCoordinate[0] && !tileInfo.filled,
+              false
+            );
+
+            return [leftFirstFilledCoordinate[0] - 1, leftFirstFilledCoordinate[1]];
+        })();
+
+        const rightmostFilledCoordinate = (function getRightmostCoordinate() {
+
+            const rightFirstFilledCoordinate = validate.travelHorizontally(
+              [Math.min(coordinate[0] + 1, +process.env.REACT_APP_BOARD_DIMENSIONS!), coordinate[1]],
+              (tileInfo, currentCoordinate) => !!currentCoordinate[0] && !tileInfo.filled,
+              true
+            );
+
+            return [rightFirstFilledCoordinate[0] - 1, rightFirstFilledCoordinate[1]];
+        })();
+
+        return {
+            leftmostFilledCoordinate,
+            rightmostFilledCoordinate
+        };
+    }
+
+    /*
+     * @param firstLetter - the letter of the tile that will connect the word being placed to the rest of the board
+     * @param lengthWanted - How long the words should be
+     *
+     * @return all real words that exist in Computer.tiles
+     */
+    getAllValidWords(firstLetter: string, lengthWanted: number) {
+
+        let possibleWords = new Set<string>();
+
+        try {
+            // TODO: add back
+            // possibleWords = this.orderedDictionary.get(lengthWanted)!.get(firstLetter)!;
+        } finally {
+            if (!possibleWords || possibleWords.size < 1) {
+                return new Set<string>();
+            }
+        }
+
+        // TODO: need to include firstLetter in the calculation
+        // need to have firstLetter be anywhere in the word
+        // and need to account for it *not* being the first word which might change getMaximumHorizontalWordLength
+        const lettersInHand = this.tiles
+          .map(tile => tile.letter)
+          .sort()
+          .join('');
+
+        const allValidWords = [...possibleWords].reduce((validWords, word) => {
+
+            const sortedWord = word.split('').sort().join('');
+
+            if (lettersInHand.includes(sortedWord)) {
+                validWords.concat([word]);
+            }
+
+            return validWords;
+
+        }, [] as string[]);
+
+        return new Set<string>(allValidWords);
     }
 
     /**
      * @private
      * @return wordList organized into a sort of hashtable where
-     * results.get(lengthOfWordWanted).get(firstLetterOfWordWanted) is a Set
-     * of words of the desired length that start with the desired letter
+     * results.get(lengthOfWordWanted).get(letter).get(number) is a Set
+     * of words of the desired length that have letter at index of number
      */
     orderDictionary() {
 
-        type dictionary = Map<number, Map<string, Set<string>>>;
+        // dictionary.get(length).get(letter).get(indexOfLetter) = Set
+        type dictionary = Map<number, Map<string, Map<number, Set<string>>>>;
         let lengthToLetterToWordDictionary: dictionary = new Map();
 
 
@@ -99,15 +184,28 @@ class Computer extends Player {
 
                 const wordLength = currentWord.length;
 
-                const currentWordSetsOfLength = lengthToLetterToWordDictionary.get(wordLength) ||
-                    new Map<string, Set<string>>();
+                // go through each letter of word
+                for (let letterIndex = 0; letterIndex < wordLength; letterIndex++) {
 
-                const currentSet = currentWordSetsOfLength.get(currentWord[0]) || new Set<string>();
-                currentSet.add(currentWord);
+                    // think of the following as a sandwich: start from the end,
+                    // put something in the middle, then close it all up
 
-                currentWordSetsOfLength.set(currentWord[0], currentSet);
+                    const mapByLetter = lengthToLetterToWordDictionary.get(wordLength) ||
+                      new Map<string, Map<number, Set<string>>>();
 
-                lengthToLetterToWordDictionary.set(wordLength, currentWordSetsOfLength);
+                    const mapByIndex = mapByLetter.get(currentWord[letterIndex]) ||
+                        new Map<number, Set<string>>();
+
+                    const words = mapByIndex.get(letterIndex) ||
+                      new Set<string>();
+                    words.add(currentWord);
+
+                    mapByIndex.set(letterIndex, words);
+
+                    mapByLetter.set(currentWord[letterIndex], mapByIndex);
+
+                    lengthToLetterToWordDictionary.set(wordLength, mapByLetter);
+                }
             });
         });
 
@@ -152,7 +250,7 @@ class Computer extends Player {
     /**
      * Finds the highest scoring word in entire dictionary
      */
-    public findHighestPossibleWord(board: Board, currentTurn: number) {
+    /* public findHighestPossibleWord(board: Board, currentTurn: number) {
 
         const orderedDictionary = this.orderDictionary();
         const allFilledCoordinates = this.getAllFilledCoordinates(board);
@@ -160,7 +258,7 @@ class Computer extends Player {
         /**
          * Iterates through all coordinates, goes through every possible word
          * for every possible coordinate, and picks the one worth the most points
-         */
+         *
         return [...allFilledCoordinates].reduce((highestWordInfo: highestWordType, coordinate) => {
 
             const maximumLength = this.getMaximumHorizontalWordLength(board, coordinate);
@@ -178,11 +276,12 @@ class Computer extends Player {
                     possibleWords = orderedDictionary
                         .get(possibleLength)!
                         .get(firstLetterOfPossibleWord);
-                } catch {/* do nothing. Easier than two if statements */}
+                } catch {/* do nothing. Easier than two if statements *}
 
                 if (possibleWords) {
 
-                    const highestWord = this.getHighestWord(possibleWords, board, coordinate, currentTurn);
+                    const highestWord = this
+                      .getHighestWord(possibleWords, board, coordinate, currentTurn);
 
                     if (highestWord.points >= currentHighestWord.points) {
                         currentHighestWord = highestWord;
@@ -193,7 +292,7 @@ class Computer extends Player {
             return currentHighestWord;
 
         }, { points: 0, word: '' });
-    }
+    }*/
 }
 
 export default Computer;

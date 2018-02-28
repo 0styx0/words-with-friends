@@ -7,6 +7,7 @@ import Word from './Word';
 import Board from './Board';
 import TileInfo from './TileInfo';
 import Powerup from './Powerup';
+import visualizeBoard from '../test/helpers/board.visualize';
 
 describe(`Computer`, () => {
 
@@ -51,87 +52,111 @@ describe(`Computer`, () => {
         });
     });
 
-    describe(`#getMaximumHorizontalWordLength gets length of first coordinate + blank spaces`, () => {
+    fdescribe(`#getBorderingTileCoordinates`, () => {
+        // note: 3 is a magic number in getWord
 
-        it(`until the last blank (if there's a word after the last blank)`, () => {
+        /**
+         * Places each word on the board at coordinate whose index matches the word's
+         */
+        function fillPlacements(words: string[], coordinates: number[][]) {
 
-            const words = [getWord(3), getWord(3)];
-            const coordinate = [[0, 7], [3, 7]];
+            const placements: typeof placeWordType[] = [];
+            const placeWordType = placeWord('RANDOM', [0, 0]);
 
-            const firstPlacement = placeWord(words[0], coordinate[0], false);
-            const secondPlacement = placeWord(words[1], coordinate[1], false, firstPlacement.board);
+            words.forEach((word, i) =>
+              placements.push(
+                  placeWord(
+                      words[i],
+                      coordinates[i],
+                      false,
+                      i === 0 ? undefined : placements[i - 1].board
+                  )
+              )
+            );
 
-            const maximumLength = (new Computer(true, 1)).getMaximumHorizontalWordLength(secondPlacement.board, coordinate[0])
+            return placements;
+        }
 
+        it(`returns the first left and rightmost coordinates`, () => {
 
-            const inclusiveCoordinateLength = coordinate[1][0] - coordinate[0][0];
+            const words = [getWord(3), getWord(3), getWord(3), getWord(3)];
+            const coordinates = [[0, 7], [3, 7], [9, 7], [12, 7]];
 
-            expect(maximumLength).toBe(inclusiveCoordinateLength - 1);
+            const placements = fillPlacements(words, coordinates);
+
+            const borderInfo = (new Computer(true, 1))
+              .getBorderingTileCoordinates(placements[3].board, [6, 7]);
+
+            // 3|6|9
+            expect(borderInfo.leftmostFilledCoordinate).toEqual(coordinates[1]);
+            expect(borderInfo.rightmostFilledCoordinate).toEqual(coordinates[2]);
         });
 
         it(`goes until the edge of screen if needed`, () => {
 
-            const word = getWord(3);
-            const distanceFromEdge = 3;
-            const coordinate = [+process.env.REACT_APP_BOARD_DIMENSIONS! - distanceFromEdge, 0];
+            const words = [getWord(3), getWord(3)];
+            const coordinates = [[3, 0], [6, 0]];
 
-            const firstPlacement = placeWord(word, coordinate, false);
+            const placements = fillPlacements(words, coordinates);
 
-            const maximumLength = (new Computer(true, 1)).
-                getMaximumHorizontalWordLength(firstPlacement.board, coordinate);
+            const borderInfo = (new Computer(true, 1))
+              .getBorderingTileCoordinates(placements[1].board, coordinates[0]);
 
-            expect(maximumLength).toBe(distanceFromEdge);
+            expect(borderInfo.leftmostFilledCoordinate).toEqual([0, 0]);
+            expect(borderInfo.rightmostFilledCoordinate).toEqual(coordinates[1]);
         });
 
-        it(`returns 0 if there's no blank spaces after`, () => {
+        it(`*mostCoordinate *is* coordinate if *mostCoordinate is at the edge`, () => {
 
-            const word = getWord(3);
-            const coordinate = [0, 0];
+            const words = [getWord(3), getWord(3)];
+            const coordinates = [[0, 7], [3, 7]];
 
-            const firstPlacement = placeWord(word, coordinate, true);
+            const placements = fillPlacements(words, coordinates);
+            const borderInfo = (new Computer(true, 1))
+              .getBorderingTileCoordinates(placements[1].board, coordinates[0]);
 
-            const maximumLength = (new Computer(true, 1)).
-                getMaximumHorizontalWordLength(firstPlacement.board, coordinate);
-
-            expect(maximumLength).toBe(0);
+            expect(borderInfo.leftmostFilledCoordinate).toEqual(coordinates[0]);
+            expect(borderInfo.rightmostFilledCoordinate).toEqual(coordinates[1]);
         });
     });
 
-    describe(`#orderDictionary`, () => {
+    fdescribe(`#orderDictionary`, () => {
 
         /**
          * Goes through the orderedDictionary calling `callback` on every word found
          *
          */
         function travelThroughOrderedDictionary(
-            callback: (expectedLength: number, letter: string, word: string) => boolean
+            callback: (expectedLength: number, letter: string, index: number, word: string) => boolean
         ) {
 
             const orderedDictionary = (new Computer(true, 1)).orderDictionary();
 
-            expect([...orderedDictionary.entries()].every(([expectedLength, mapOfSetsOfWords]) =>
+            expect([...orderedDictionary.entries()].every(([expectedLength, mapByLetter]) =>
 
-                [...mapOfSetsOfWords.entries()].every(([letter, setOfWords]) =>
+                [...mapByLetter.entries()].every(([letter, mapByIndex]) =>
 
-                    [...setOfWords].every(word =>
-                        callback(expectedLength, letter, word)
+                    [...mapByIndex.entries()].every(([index, wordSet]) =>
+
+                        [...wordSet].every(word =>
+                            callback(expectedLength, letter, index, word)
+                        )
                     )
                 )
             )).toBeTruthy();
         }
 
-        it(`every word in Set starts with the letter that is its key`, () => {
+        test(`word length matches its key`, () => {
 
-            travelThroughOrderedDictionary((expectedLength: number, letter: string, word: string) =>
-                word[0] === letter
+            travelThroughOrderedDictionary((expectedLength: number, letter: string, index: number, word: string) =>
+                word.length === expectedLength
             );
         });
 
+        it(`every word in Set has letter at index`, () => {
 
-        test(`word length matches its key`, () => {
-
-            travelThroughOrderedDictionary((expectedLength: number, letter: string, word: string) =>
-                word.length === expectedLength
+            travelThroughOrderedDictionary((expectedLength: number, letter: string, index: number, word: string) =>
+                word[index] === letter
             );
         });
     });
@@ -181,6 +206,46 @@ describe(`Computer`, () => {
             const highestWord = (new Computer(true, 1)).getHighestWord(words, board, startCoordinate, 1);
 
             expect(highestWord.word).toBe('KL');
+        });
+    });
+
+    describe(`#getPossibleWords`, () => {
+
+        it(`finds all possible words that Computer.tiles can be`, () => {
+
+            // TODO: write test
+        });
+
+        it(`accounts for dulplicate letters`, () => {
+
+        });
+    });
+
+    describe(`#findHighestPossibleWord`, () => {
+
+        it(`finds highest word horizontally`, () => {
+
+            const coordinate = [7, 7];
+
+            const firstPlacement = placeWord('VOR', coordinate, false);
+            visualizeBoard(firstPlacement.board);
+
+            const highestWord = (new Computer(true, 1)).findHighestPossibleWord(firstPlacement.board, 1);
+
+            expect(highestWord).toEqual({
+                word: 'VEX',
+                points: 21
+            });
+        });
+
+        it(`finds highest word vertically`, () => {
+
+            // TODO: write test
+        });
+
+        it(`finds highest word when horizontal and vertical options`, () => {
+
+            // TODO: write test
         });
     });
 });
