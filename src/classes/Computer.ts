@@ -43,7 +43,7 @@ interface Coordinate {
 
 class Computer extends Player {
 
-    // private orderedDictionary = this.orderDictionary();
+    private orderedDictionary = this.orderDictionary();
 
     /**
      * @private
@@ -158,7 +158,8 @@ class Computer extends Player {
     }
 
     /*
-     * @param firstLetter - the letter of the tile that will connect the word being placed to the rest of the board
+     * @param letter - the letter of the tile that will connect the word being placed to the rest of the board
+     * @param indexOfLetter - where in the word `letter` is
      * @param lengthWanted - How long the words should be
      *
      * @return all real words that exist in Computer.tiles
@@ -168,28 +169,30 @@ class Computer extends Player {
         let possibleWords = new Set<string>();
 
         try {
-            // TODO: add back
-            // possibleWords = this.orderedDictionary.get(lengthWanted)!.get(firstLetter)!;
+            possibleWords = this.orderedDictionary
+              .get(lengthWanted)!
+              .get(letter.toLowerCase())!
+              .get(indexOfLetter);
+
         } finally {
             if (!possibleWords || possibleWords.size < 1) {
                 return new Set<string>();
             }
         }
 
-        // TODO: need to include firstLetter in the calculation
-        // need to have firstLetter be anywhere in the word
-        // and need to account for it *not* being the first word which might change getMaximumHorizontalWordLength
         const lettersInHand = this.tiles
           .map(tile => tile.letter)
+          .concat([letter])
           .sort()
-          .join('');
+          .join('')
+          .toLowerCase();
 
         const allValidWords = [...possibleWords].reduce((validWords, word) => {
 
             const sortedWord = word.split('').sort().join('');
 
             if (lettersInHand.includes(sortedWord)) {
-                validWords.concat([word]);
+                return validWords.concat([word]);
             }
 
             return validWords;

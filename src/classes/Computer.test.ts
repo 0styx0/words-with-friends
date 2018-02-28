@@ -8,6 +8,7 @@ import Board from './Board';
 import TileInfo from './TileInfo';
 import Powerup from './Powerup';
 import visualizeBoard from '../test/helpers/board.visualize';
+import Tilebag from './Tilebag';
 
 /**
  * Places each word on the board at coordinate whose index matches the word's
@@ -93,7 +94,7 @@ describe(`Computer`, () => {
             expect(borderInfo.rightmostFilledCoordinate).toEqual(coordinates[2]);
         });
 
-        fit(`goes until the edge of screen if needed`, () => {
+        it(`goes until the edge of screen if needed`, () => {
 
             const words = [getWord(3), getWord(3)];
             const coordinates = [[3, 0], [6, 0]];
@@ -121,7 +122,7 @@ describe(`Computer`, () => {
         });
     });
 
-    fdescribe(`#getMaximumWordLength`, () => {
+    describe(`#getMaximumWordLength`, () => {
 
         it(`gets correct length when coordinate is between two other filled ones`, () => {
 
@@ -239,19 +240,34 @@ describe(`Computer`, () => {
         });
     });
 
-    describe(`#getAllValidWords`, () => {
+    fdescribe(`#getAllValidWords`, () => {
 
         it(`finds all possible words that Computer.tiles can be`, () => {
 
-            // TODO: write test
-        });
+            const tilebag = new Tilebag();
+            // can't set computer.tiles, so just giving it a tilebag with only the tiles I want
+            tilebag.tiles = [{letter: 'T'}, {letter: 'R'}, {letter: 'E'}, {letter: 'E'}];
 
-        it(`accounts for duplicate letters`, () => {
+            const computer = (new Computer(true, 1));
+            computer.generateHand(tilebag);
 
+            const validWords = computer.getAllValidWords('T', 0, 4);
+
+            expect([...validWords].sort()).toEqual(['tree', 'tret', 'teer'].sort());
         });
 
         it(`can search for words with a letter at any index`, () => {
 
+            const tilebag = new Tilebag();
+            // can't set computer.tiles, so just giving it a tilebag with only the tiles I want
+            tilebag.tiles = [{letter: 'T'}, {letter: 'R'}, {letter: 'E'}, {letter: 'E'}];
+
+            const computer = (new Computer(true, 1));
+            computer.generateHand(tilebag);
+
+            const validWords = computer.getAllValidWords('T', 2, 4);
+
+            expect([...validWords].sort()).toEqual(['rete'].sort());
         });
     });
 
