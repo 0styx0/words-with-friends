@@ -120,6 +120,21 @@ describe(`Computer`, () => {
             expect(borderInfo.leftmostFilledCoordinate).toEqual(coordinates[0]);
             expect(borderInfo.rightmostFilledCoordinate).toEqual(coordinates[1]);
         });
+
+        it(`returns coordinate for both *most if there is no bordering coordinate`, () => {
+
+            const words = [getWord(3)];
+            const coordinates = [[3, 7]];
+
+            const placements = fillPlacements(words, coordinates);
+            const borderInfo = (new Computer(true, 1))
+              .getBorderingTileCoordinates(placements[0].board, coordinates[0]);
+
+            expect(borderInfo.leftmostFilledCoordinate).toEqual([0, 7]);
+            expect(borderInfo.rightmostFilledCoordinate).toEqual(
+                [+process.env.REACT_APP_BOARD_DIMENSIONS!, 7]
+            );
+        });
     });
 
     describe(`#getMaximumWordLength`, () => {
@@ -240,7 +255,7 @@ describe(`Computer`, () => {
         });
     });
 
-    fdescribe(`#getAllValidWords`, () => {
+    describe(`#getAllValidWords`, () => {
 
         it(`finds all possible words that Computer.tiles can be`, () => {
 

@@ -88,6 +88,7 @@ class Computer extends Player {
      * @return left and rightmost first filled coordinates.
      *  If coordinate is at the edge and filled, the *most will be that coordinate,
      *   otherwise even if coordinate is filled it will not be counted
+     *   If there are no filled bordering coordinates, then the farthest coordinates will be used
      */
     getBorderingTileCoordinates(board: Board, coordinate: ReadonlyArray<number>) {
 
@@ -108,7 +109,9 @@ class Computer extends Player {
 
             const rightFirstFilledCoordinate = validate.travelHorizontally(
               [Math.min(coordinate[0] + 1, +process.env.REACT_APP_BOARD_DIMENSIONS!), coordinate[1]],
-              (tileInfo, currentCoordinate) => !!currentCoordinate[0] && !tileInfo.filled,
+              (tileInfo, currentCoordinate) =>
+                currentCoordinate[0] < +process.env.REACT_APP_BOARD_DIMENSIONS! &&
+                !tileInfo.filled,
               true
             );
 
