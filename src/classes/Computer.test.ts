@@ -32,6 +32,18 @@ function fillPlacements(words: string[], coordinates: number[][]) {
     return placements;
 }
 
+function giveHandToComputer(tiles: {letter: string, points: number}[]) {
+
+    const tilebag = new Tilebag();
+    // can't set computer.tiles, so just giving it a tilebag with only the tiles I want
+    tilebag.tiles = tiles;
+
+    const computer = (new Computer(true, 1));
+    computer.generateHand(tilebag);
+
+    return computer;
+}
+
 
 describe(`Computer`, () => {
 
@@ -255,38 +267,58 @@ describe(`Computer`, () => {
         });
     });
 
-    describe(`#getAllValidWords`, () => {
+    fdescribe(`#getAllValidWords`, () => {
 
         it(`finds all possible words that Computer.tiles can be`, () => {
 
-            const tilebag = new Tilebag();
             // can't set computer.tiles, so just giving it a tilebag with only the tiles I want
-            tilebag.tiles = [{letter: 'T'}, {letter: 'R'}, {letter: 'E'}, {letter: 'E'}];
+            const tiles = [{letter: 'T'}, {letter: 'R'}, {letter: 'E'}, {letter: 'E'}];
 
-            const computer = (new Computer(true, 1));
-            computer.generateHand(tilebag);
+            const computer = giveHandToComputer(tiles.map(tile => Object.assign(tile, {points: 0})));
 
             const validWords = computer.getAllValidWords('T', 0, 4);
 
-            expect([...validWords].sort()).toEqual(['tree', 'tret', 'teer'].sort());
+            expect([...validWords].sort()).toEqual(['tree', 'tete', 'tret', 'teer'].sort());
         });
 
         it(`can search for words with a letter at any index`, () => {
 
-            const tilebag = new Tilebag();
-            // can't set computer.tiles, so just giving it a tilebag with only the tiles I want
-            tilebag.tiles = [{letter: 'T'}, {letter: 'R'}, {letter: 'E'}, {letter: 'E'}];
+            const tiles = [{letter: 'T'}, {letter: 'R'}, {letter: 'E'}, {letter: 'E'}];
 
-            const computer = (new Computer(true, 1));
-            computer.generateHand(tilebag);
-
+            const computer = giveHandToComputer(tiles.map(tile => Object.assign(tile, {points: 0})));
             const validWords = computer.getAllValidWords('T', 2, 4);
 
-            expect([...validWords].sort()).toEqual(['rete'].sort());
+            expect([...validWords].sort()).toEqual(['rete', 'tete'].sort());
         });
     });
 
-    describe(`#findHighestPossibleWord`, () => {
+    describe(`#getHighestPossibleWord`, () => {
+
+        fit(`gets best word`, () => {
+
+            // const tiles = [
+            //     {letter: 'G', points: 10},
+            //     {letter: 'A', points: 2},
+            //     {letter: 'B', points: 2},
+            //     {letter: 'S', points: 3}
+            // ];
+
+            const tiles = [
+                {letter: 'V', points: 10},
+                {letter: 'T', points: 2},
+                {letter: 'E', points: 2},
+                {letter: 'X', points: 3}
+            ];
+            const computer = giveHandToComputer(tiles);
+
+            const coordinate = [7, 7];
+
+            const firstPlacement = placeWord('VOR', coordinate, false);
+
+            const highestWord = computer.getHighestPossibleWord(firstPlacement.board, 1);
+
+            expect(highestWord).toBe('VEX');
+        });
 
         it(`finds highest word horizontally`, () => {
 

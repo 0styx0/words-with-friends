@@ -4,6 +4,7 @@ import Validate from './Validate';
 import * as wordList from 'word-list-json';
 import placeWord from '../test/helpers/placeWord';
 import Word from './Word';
+import visualizeBoard from '../test/helpers/board.visualize';
 
 type highestWordType = {
     points: number;
@@ -11,7 +12,7 @@ type highestWordType = {
 };
 
 interface Coordinate {
-    [key: string]: number[]
+    [key: string]: number[];
 }
 
 /**
@@ -79,7 +80,7 @@ class Computer extends Player {
         const centerCoordinates = [7, 7];
         checkTileTree(centerCoordinates);
 
-        return new Set([...coordinatesTried].map(coordinate => JSON.parse(coordinate)));
+        return new Set<number[]>([...coordinatesTried].map(coordinate => JSON.parse(coordinate)));
     }
 
     /**
@@ -154,13 +155,20 @@ class Computer extends Player {
      *
      * @return index of coordinate if it would be in a word of length `maximumLength`
      */
-    getIndexOfCoordinate(xOrYCoordinate: number, maximumLength: number) {
+    getIndexOfCoordinate(xOrYCoordinate: number, leftBorder: number) {
 
-        // t|r|y --> find index of r --> maximumLength=3, xOrYCoordinate=1 --> 3-1-1=1
-        return maximumLength - xOrYCoordinate - 1; // -1 since 0 indexed
+        // make a non-zero based array, where leftBorder is first index and it goes until maximumLength
+        // leftBorder=3,xOrYCoordinate=5,maximumLength=6 --> [3, 4, 5, 6, 7, 8] -->
+        // it would be the second coordinate out of 6 since 5-3
+
+        return xOrYCoordinate - (leftBorder);
     }
 
     /*
+     * @private
+     *
+     * Given a length, a letter, and the location where the letter should be, return all words that match
+     *
      * @param letter - the letter of the tile that will connect the word being placed to the rest of the board
      * @param indexOfLetter - where in the word `letter` is
      * @param lengthWanted - How long the words should be
@@ -169,16 +177,18 @@ class Computer extends Player {
      */
     getAllValidWords(letter: string, indexOfLetter: number, lengthWanted: number) {
 
+        // will be all words of `lengthWanted` with proper `letter` at `indexOfLetter`
         let possibleWords = new Set<string>();
 
         try {
             possibleWords = this.orderedDictionary
               .get(lengthWanted)!
               .get(letter.toLowerCase())!
-              .get(indexOfLetter);
+              .get(indexOfLetter)!;
 
         } finally {
             if (!possibleWords || possibleWords.size < 1) {
+                console.log('bad', 'idx', indexOfLetter, 'len', lengthWanted, letter);
                 return new Set<string>();
             }
         }
@@ -190,11 +200,34 @@ class Computer extends Player {
           .join('')
           .toLowerCase();
 
-        const allValidWords = [...possibleWords].reduce((validWords, word) => {
+        function checkIfWordIsInHand(word = 'vex') {
+
+            let testW = [...word.split('')];
+
+            let lettersSoFar = '';
+            [...lettersInHand].forEach(letter => {
+
+                if (testW.includes(letter)) {
+                     lettersSoFar += letter;
+                }
+            });
+
+            // console.log('BEFORE', lettersInHand, testW.sort().join(''), lettersSoFar);
+            const wordIsInHand = lettersSoFar.includes(testW.sort().join(''));
+
+            return wordIsInHand;
+        }
+
+          // console.log(indexOfLetter, letter, lengthWanted)
+          // console.log('indexOfLetter', indexOfLetter, 'letter', letter, 'length', lengthWanted)
+
+        const allValidWords = [...possibleWords].reduce((validWords, word, i) => {
 
             const sortedWord = word.split('').sort().join('');
 
-            if (lettersInHand.includes(sortedWord)) {
+
+            if (checkIfWordIsInHand(sortedWord)) {
+                console.log('FOUND', word);
                 return validWords.concat([word]);
             }
 
@@ -293,51 +326,88 @@ class Computer extends Player {
     }
 
     /**
-     * Finds the highest scoring word in entire dictionary
+     * Finds the best word that can made from tiles in hand
      */
-    /* public findHighestPossibleWord(board: Board, currentTurn: number) {
+    public getHighestPossibleWord(board: Board, currentTurn: number) {
 
-        const orderedDictionary = this.orderDictionary();
         const allFilledCoordinates = this.getAllFilledCoordinates(board);
+        console.log('hand', this.tiles);
+        visualizeBoard(board);
+        const t = [];
 
-        /**
-         * Iterates through all coordinates, goes through every possible word
-         * for every possible coordinate, and picks the one worth the most points
-         *
-        return [...allFilledCoordinates].reduce((highestWordInfo: highestWordType, coordinate) => {
+        allFilledCoordinates.forEach(coordinate => {
 
-            const maximumLength = this.getMaximumHorizontalWordLength(board, coordinate);
-            const firstLetterOfPossibleWord = board.get(coordinate)!.tile!.letter.toLowerCase();
 
-            let currentHighestWord: highestWordType = highestWordInfo;
+            // index is where in the possible word will coordinate be
+            // maximumLength uses only originalIndex
+            // maximumLength-1 starts 1 position less than originalIndex and goes 1 position more
+            // maximumLength-2 starts 2 position less than originalIndex and goes 2 position more
+            // maximumLength-3 starts 3 position less than originalIndex and goes 3 position more
 
-            // check every length, since sometimes a shorter word might be worth more
-            for (let possibleLength = maximumLength; possibleLength >= maximumLength; possibleLength--) {
+            /*
+             * Word: table, coordinate: [7, 7], left border is [2, 7], right border is [10, 7]
+             * First time around it starts at [4, 7], with length of 5 (since 10-1=9, so 9-4=5)
+             *  Index will then be 3, since 7-4=3
+             *  Extra space will be 5-5=0 (5 is maximumLength, other 5 is current length)
+             *  Start at 4-(2+2)=0
+               (2 is left border,
+                other 2 is accounting for the space that must be between words, and the 4 is where it starts at.
+                The 0 is how much "wiggle room there is)
+             * Second time around it starts at [5, 7], with length of 4 (since 10-1=9, so 9-5=4)
+               * Index will then be 2, since 7-5=2
+               * Extra space will be 5-4=1 (5 is maximumLength, other 4 is current length)
+               * Start at 5-(2+2)=1, so [4, 7] and has 1 wiggle room
+                 so with the same length it can also use [5, 7]
+             * Fourth time around it starts at [7, 7], with a length of 2 (since 10-1=9, so 9-7=2)
+               * Index will then be 0, since 7-7=0
+               * Extra space will be 5-2=3 (5 is maximumLength, other 2 is current length)
+               * Start at 7-(2+2)=3, so [6, 7] has 3 wiggle room
+             * Fifth time around it starts at [8, 7], with a length of 1 (since 10-1=9, so 9-8=1)
+               * Index will then be -1 since 7-8=-1
+               * Error: Undefined index. Must stop before coordinate=originalCoordinate
+             */
 
-                let possibleWords;
+            // const word = 'table';
+            // const testCoordinate = [7, 7], leftBorder = [2, 7], rightBorder = [10, 7];
+            // const initialStart = [4, 7];
+            // const testMaxLength = word.length;
 
-                try {
+            this.getAllValidWords('v', 0, 3);
+            return;
+            const maximumLength = this.getMaximumWordLength(board, coordinate);
 
-                    possibleWords = orderedDictionary
-                        .get(possibleLength)!
-                        .get(firstLetterOfPossibleWord);
-                } catch {/* do nothing. Easier than two if statements *}
+            const { leftmostFilledCoordinate, rightmostFilledCoordinate } = this.getBorderingTileCoordinates(board, coordinate);
+            const originalIndex =
+              this.getIndexOfCoordinate(coordinate[0], leftmostFilledCoordinate[0]);
 
-                if (possibleWords) {
+            for (let i = leftmostFilledCoordinate[0]; i === i; i++) {
 
-                    const highestWord = this
-                      .getHighestWord(possibleWords, board, coordinate, currentTurn);
+                const start = [i, 7];
+                // const index = coordinate[0] - start[0]; // 3
+                const index = this.getIndexOfCoordinate(coordinate[0], start[0]);
 
-                    if (highestWord.points >= currentHighestWord.points) {
-                        currentHighestWord = highestWord;
-                    }
+                const length = (rightmostFilledCoordinate[0] - 1) - start[0];
+
+
+                if (index < 0 || length < 1) {
+
+                    console.log('BREAK', 'length:', length, 'index', index);
+                    break;
                 }
+
+                const extraSpace = maximumLength - length;
+                const mandatorySpaceBetweenWords = 2;
+                const wiggleRoom = start[0] - (leftmostFilledCoordinate[0] + mandatorySpaceBetweenWords);
+                const word = board.get(coordinate)!.tile!.letter;
+
+                console.log('length:', length, 'letter', word, 'index', index, 'extraSpace', extraSpace, 'wiggle', wiggleRoom);
+                console.log(this.getAllValidWords(word, index, length));
+
             }
+        });
 
-            return currentHighestWord;
-
-        }, { points: 0, word: '' });
-    }*/
+        console.log('words', t);
+    }
 }
 
 export default Computer;
