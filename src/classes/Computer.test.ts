@@ -267,7 +267,7 @@ describe(`Computer`, () => {
         });
     });
 
-    fdescribe(`#getAllValidWords`, () => {
+    describe(`#getAllValidWords`, () => {
 
         it(`finds all possible words that Computer.tiles can be`, () => {
 
@@ -294,14 +294,7 @@ describe(`Computer`, () => {
 
     describe(`#getHighestPossibleWord`, () => {
 
-        fit(`gets best word`, () => {
-
-            // const tiles = [
-            //     {letter: 'G', points: 10},
-            //     {letter: 'A', points: 2},
-            //     {letter: 'B', points: 2},
-            //     {letter: 'S', points: 3}
-            // ];
+        it(`gets best word`, () => {
 
             const tiles = [
                 {letter: 'V', points: 10},
@@ -317,7 +310,7 @@ describe(`Computer`, () => {
 
             const highestWord = computer.getHighestPossibleWord(firstPlacement.board, 1);
 
-            expect(highestWord).toBe('VEX');
+            expect(highestWord.has('VEX')).toBeTruthy();
         });
 
         it(`finds highest word horizontally`, () => {
