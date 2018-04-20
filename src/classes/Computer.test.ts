@@ -221,6 +221,16 @@ describe(`Computer`, () => {
 
     describe(`#getHighestWord`, () => {
 
+        function setupWords(words: Set<String>, startCoordinate: number[]) {
+
+            return new Set<{word: string, startCoordinate: number[]}>(
+                [...words].map(word => ({
+                    word: word.toUpperCase(),
+                    startCoordinate
+                }))
+            );
+        }
+
         it(`gets highest scoring when there's no powerups`, () => {
 
             const words = new Set<string>();
@@ -238,32 +248,37 @@ describe(`Computer`, () => {
 
             const expectedHighestWord = {
                 word: longestWord,
-                points: longestWordPoints
+                points: longestWordPoints,
+                startCoordinate: [7, 7]
             };
 
-            const capitalizedWords = new Set<string>([...words].map(word => word.toUpperCase()));
+            const { coordinates, board } = placeWord(longestWord[0], [7, 7]);
 
-            const { coordinates, board } = placeWord(longestWord[0], [0, 0]);
+            const capitalizedWords = setupWords(words, coordinates[0]);
+
             const highestWord = (new Computer(true, 1))
-                .getHighestWord(capitalizedWords, board, coordinates[0], casual.integer());
+                .getHighestWord(capitalizedWords, board, casual.integer());
 
-            expect(expectedHighestWord).toEqual(highestWord);
+            expect(highestWord).toEqual(expectedHighestWord);
         });
 
         it(`gets highest scoring when there is powerups`, () => {
 
-            const words = new Set<string>(['KL', 'HK']); // [5, 2] => 7, 12 OR [3, 5] => 8, 11
+            const startCoordinate = [7, 7];
+            const words = new Set<string>(['HO', 'OB']); // [3, 1], [1, 4] => [6, 1], [2, 4]
+            const capitalizedWords = setupWords(words, startCoordinate);
+
             const board = new Board();
-            const startCoordinate = [0, 1];
 
             const tileInfo = new TileInfo();
             const powerup = new Powerup('letter', 2);
             tileInfo.powerup = powerup;
             board.set(startCoordinate, tileInfo);
+            console.log(board, capitalizedWords);
 
-            const highestWord = (new Computer(true, 1)).getHighestWord(words, board, startCoordinate, 1);
+            const highestWord = (new Computer(true, 1)).getHighestWord(capitalizedWords, board, 1);
 
-            expect(highestWord.word).toBe('KL');
+            expect(highestWord.word).toBe('HO');
         });
     });
 
@@ -278,7 +293,7 @@ describe(`Computer`, () => {
 
             const validWords = computer.getAllValidWords('T', 0, 4);
 
-            expect([...validWords].sort()).toEqual(['tree', 'tete', 'tret', 'teer'].sort());
+            expect([...validWords].sort()).toEqual(['TREE', 'TETE', 'TRET', 'TEER'].sort());
         });
 
         it(`can search for words with a letter at any index`, () => {
@@ -288,52 +303,74 @@ describe(`Computer`, () => {
             const computer = giveHandToComputer(tiles.map(tile => Object.assign(tile, {points: 0})));
             const validWords = computer.getAllValidWords('T', 2, 4);
 
-            expect([...validWords].sort()).toEqual(['rete', 'tete'].sort());
+            expect([...validWords].sort()).toEqual(['RETE', 'TETE'].sort());
         });
     });
 
+
     describe(`#getHighestPossibleWord`, () => {
 
-        it(`gets best word`, () => {
+        function fillHand() {
 
-            const tiles = [
+             const tiles = [
                 {letter: 'V', points: 10},
                 {letter: 'T', points: 2},
                 {letter: 'E', points: 2},
                 {letter: 'X', points: 3}
             ];
-            const computer = giveHandToComputer(tiles);
+             const computer = giveHandToComputer(tiles);
 
-            const coordinate = [7, 7];
+             const coordinate = [7, 7];
 
-            const firstPlacement = placeWord('VOR', coordinate, false);
+             return {
+                 computer,
+                 coordinate
+             };
+        }
 
-            const highestWord = computer.getHighestPossibleWord(firstPlacement.board, 1);
+        function placeWordOnBoard(horizontally: boolean) {
 
-            expect(highestWord.has('VEX')).toBeTruthy();
-        });
+            const { computer, coordinate } = fillHand();
 
-        it(`finds highest word horizontally`, () => {
+            const firstPlacement = placeWord('VOR', coordinate, horizontally);
 
-            const coordinate = [7, 7];
+            const highestWord = computer.getHighestWord(
+                 computer.getPossibleWords(firstPlacement.board, 1), firstPlacement.board, 1
+             );
 
-            const firstPlacement = placeWord('VOR', coordinate, false);
-            visualizeBoard(firstPlacement.board);
+            return {
+                 highestWord,
+                 expectedHighestWord: 'VEXT'
+             };
+        }
 
-            const highestWord = (new Computer(true, 1)).findHighestPossibleWord(firstPlacement.board, 1);
+        it(`gets best word horizontally`, () => {
 
-            expect(highestWord).toEqual({
-                word: 'VEX',
-                points: 21
-            });
+            const { highestWord, expectedHighestWord } = placeWordOnBoard(true);
+
+            expect(highestWord.word).toEqual(expectedHighestWord);
         });
 
         it(`finds highest word vertically`, () => {
 
-            // TODO: write test
+            const { highestWord, expectedHighestWord } = placeWordOnBoard(false);
+
+            expect(highestWord.word).toEqual(expectedHighestWord);
         });
 
         it(`finds highest word when horizontal and vertical options`, () => {
+
+            const { computer, coordinate } = fillHand();
+            const firstPlacement = placeWord('ITEM', coordinate, true);
+            const secondPlacement = placeWord('VY', [coordinate[0], coordinate[1] + 1], false, firstPlacement.board);
+
+            const highestWord = computer.getHighestWord(
+                computer.getPossibleWords(secondPlacement.board, 1), secondPlacement.board, 1
+            );
+            console.log(highestWord);
+
+            expect(highestWord.word).toEqual('VEX');
+
 
             // TODO: write test
         });

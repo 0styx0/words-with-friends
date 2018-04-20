@@ -8,7 +8,8 @@ import visualizeBoard from '../test/helpers/board.visualize';
 
 type highestWordType = {
     points: number;
-    word: string
+    word: string;
+    startCoordinate: number[];
 };
 
 
@@ -173,7 +174,7 @@ class Computer extends Player {
      *
      * @return all real words that exist in Computer.tiles
      */
-    getAllValidWords(letter: string, indexOfLetter: number, lengthWanted: number) {
+    getAllValidWords(letter: string, indexOfLetter: number, lengthWanted: number, board: Board) {
 
         // will be all words of `lengthWanted` with proper `letter` at `indexOfLetter`
         let possibleWords = new Set<string>();
@@ -186,7 +187,6 @@ class Computer extends Player {
 
         } finally {
             if (!possibleWords || possibleWords.size < 1) {
-                console.log('bad', 'idx', indexOfLetter, 'len', lengthWanted, letter);
                 return new Set<string>();
             }
         }
@@ -216,15 +216,12 @@ class Computer extends Player {
             return wordIsInHand;
         }
 
-          // console.log(indexOfLetter, letter, lengthWanted)
-          // console.log('indexOfLetter', indexOfLetter, 'letter', letter, 'length', lengthWanted)
 
         const allValidWords = [...possibleWords].reduce((validWords: string[], word, i) => {
 
             const sortedWord = word.split('').sort().join('');
 
             if (checkIfWordIsInHand(sortedWord)) {
-                console.log('FOUND', word);
                 return validWords.concat([word.toUpperCase()]);
             }
 
@@ -287,12 +284,11 @@ class Computer extends Player {
         return lengthToLetterToWordDictionary;
     }
 
-    // TODO: need support for vertical words as well
 
     /**
      * @private
      *
-     * Finds highest word in `possibleWords`
+     * Finds highest word in `possibleWords` that has valid tile placement on board
      *
      * @param possibleWords - Words that are valid if placed on `board` at `startCoordinate`
      *
@@ -300,20 +296,38 @@ class Computer extends Player {
      *  if placed at `startCoordinate`
      */
     getHighestWord(
-        possibleWords: Set<string>, board: Board, startCoordinate: number[], currentTurn: number
+        possibleWords: Set<{startCoordinate: number[], word: string}>,
+        board: Board,
+        currentTurn: number
     ) {
 
-        return [...possibleWords].reduce((highestScoringWord: highestWordType, currentWord: string) => {
+        return [...possibleWords].reduce((highestScoringWord: highestWordType, currentWord) => {
 
             const boardCopy = board.clone();
-            const wordInfo = placeWord(currentWord.toUpperCase(), startCoordinate, true, boardCopy, currentTurn);
+            const wordInfo = placeWord(
+                currentWord.word.toUpperCase(), currentWord.startCoordinate, true, boardCopy, currentTurn
+            );
+
+            const validate = new Validate(wordInfo.board);
+            if (
+                !validate.checkTilePlacementValidity(wordInfo.coordinates, currentTurn) ||
+                !validate.validateWords(wordInfo.coordinates)
+               ) {
+                console.log(validate.checkTilePlacementValidity(wordInfo.coordinates, currentTurn) ,
+                validate.validateWords(wordInfo.coordinates));
+
+                visualizeBoard(wordInfo.board);
+                return highestScoringWord;
+            }
+
             const currentWordPoints = Word.tallyPoints(wordInfo.board, wordInfo.coordinates);
 
             if (currentWordPoints > highestScoringWord.points) {
 
                 return {
-                    word: currentWord.toUpperCase(),
-                    points: currentWordPoints
+                    word: currentWord.word.toUpperCase(),
+                    points: currentWordPoints,
+                    startCoordinate: currentWord.startCoordinate
                 };
             }
 
@@ -352,25 +366,18 @@ class Computer extends Player {
                * Error: Undefined index. Must stop before coordinate=originalCoordinate
              */
 
-            // const word = 'table';
-            // const testCoordinate = [7, 7], leftBorder = [2, 7], rightBorder = [10, 7];
-            // const initialStart = [4, 7];
-            // const testMaxLength = word.length;
-
-            // this.getAllValidWords('v', 0, 3);
-            // return;
     /**
      * Finds the best word that can made from tiles in hand
      */
-    public getHighestPossibleWord(board: Board, currentTurn: number) {
+    public getPossibleWords(board: Board, currentTurn: number) {
 
         const allFilledCoordinates = this.getAllFilledCoordinates(board);
-        console.log('hand', this.tiles);
-        visualizeBoard(board);
-        const validWords: string[] = [];
+        const validWords: {startCoordinate: number[], word: string}[] = [];
 
         // switch back when get it working to allFilledCoordinates
-        return [[...allFilledCoordinates][0]].reduce((allValidWordsInHand, coordinate) => {
+        return [
+            ...allFilledCoordinates
+        ].reduce((allValidWordsInHand, coordinate) => {
 
             const maximumLength = this.getMaximumWordLength(board, coordinate);
 
@@ -382,43 +389,18 @@ class Computer extends Player {
 
             for (let length = 2; length < maximumLength; length++) {
                 const wordsFound = this.getAllValidWords(word, 0, length);
-                validWords.push(...wordsFound);
+
+                const wordInfo = [...wordsFound].map(currentWord => ({
+                    startCoordinate: coordinate,
+                    word: currentWord
+                }));
+
+                validWords.push(...wordInfo);
             }
-/*
-            // for (let i = leftmostFilledCoordinate[0]; i === i; i++) {
-            for (let i = originalIndex; i === i; i++) {
 
-                const start = [i, 7];
-                // const index = coordinate[0] - start[0]; // 3
-                const index = this.getIndexOfCoordinate(coordinate[0], start[0]);
-
-                const length = (rightmostFilledCoordinate[0] - 1) - start[0];
-
-
-                if (index < 0 || length < 1) {
-
-                    console.log('BREAK', 'length:', length, 'index', index);
-                    break;
-                }
-
-                const extraSpace = maximumLength - length;
-                const mandatorySpaceBetweenWords = 2;
-                const wiggleRoom = start[0] - (leftmostFilledCoordinate[0] + mandatorySpaceBetweenWords);
-                const word = board.get(coordinate)!.tile!.letter;
-
-                console.log('length:', length, 'letter', word,
-                            'index', index, 'extraSpace', 'leftmostFilledCoordinate',
-                            leftmostFilledCoordinate, 'rightmostFilledCoordinate',
-                            rightmostFilledCoordinate, extraSpace, 'wiggle', wiggleRoom);
-                console.log(this.getAllValidWords(word, index, length));
-
-            }
-        });
-
-        */
             console.log('words', validWords);
             return new Set([...allValidWordsInHand].concat(...validWords));
-        }, new Set<string>());
+        }, new Set<{startCoordinate: number[], word: string}>());
     }
 }
 
