@@ -18,7 +18,8 @@ function mapStateToProps(state: typeof defaultState, props: Props) {
         tile: state.board.get(props.coordinates) ? state.board.get(props.coordinates)!.tile : undefined,
         currentPlayer: state.Players.find(player => player.turn),
         board: state.board,
-        turn: state.turn
+        turn: state.turn,
+        Players: state.Players
     };
 }
 
