@@ -7,7 +7,6 @@ import Word from './Word';
 import Board from './Board';
 import TileInfo from './TileInfo';
 import Powerup from './Powerup';
-import visualizeBoard from '../test/helpers/board.visualize';
 import Tilebag from './Tilebag';
 
 /**
@@ -15,8 +14,8 @@ import Tilebag from './Tilebag';
  */
 function fillPlacements(words: string[], coordinates: number[][]) {
 
-    const placements: typeof placeWordType[] = [];
     const placeWordType = placeWord('RANDOM', [0, 0]);
+    const placements: typeof placeWordType[] = [];
 
     words.forEach((word, i) =>
       placements.push(
@@ -274,7 +273,6 @@ describe(`Computer`, () => {
             const powerup = new Powerup('letter', 2);
             tileInfo.powerup = powerup;
             board.set(startCoordinate, tileInfo);
-            console.log(board, capitalizedWords);
 
             const highestWord = (new Computer(true, 1)).getHighestWord(capitalizedWords, board, 1);
 
@@ -344,14 +342,16 @@ describe(`Computer`, () => {
              };
         }
 
-        it(`gets best word horizontally`, () => {
+        it(`gets best word vertically`, () => {
 
             const { highestWord, expectedHighestWord } = placeWordOnBoard(true);
 
+            // if word is horizontal, computer must put vertical word
+            // must change borderingCoordinates, then can tell in other functions whether x or y is changed
             expect(highestWord.word).toEqual(expectedHighestWord);
         });
 
-        it(`finds highest word vertically`, () => {
+        it(`finds highest word horizontally`, () => {
 
             const { highestWord, expectedHighestWord } = placeWordOnBoard(false);
 
@@ -367,12 +367,8 @@ describe(`Computer`, () => {
             const highestWord = computer.getHighestWord(
                 computer.getPossibleWords(secondPlacement.board, 1), secondPlacement.board, 1
             );
-            console.log(highestWord);
 
             expect(highestWord.word).toEqual('VEX');
-
-
-            // TODO: write test
         });
     });
 });
