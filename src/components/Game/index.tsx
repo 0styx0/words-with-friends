@@ -4,6 +4,7 @@ import BoardContainer from '../Board/Board';
 import ControlsContainer from '../Controls/Controls';
 import './index.css';
 
+
 export default function Game() {
 
     return (

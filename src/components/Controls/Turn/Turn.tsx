@@ -71,6 +71,14 @@ export class TurnContainer extends React.Component<Props, {}> {
             );
 
             this.props.incrementTurn(this.props.turn, this.props.Tilebag);
+
+            const computer: any = this.props.Players.find(player => 'orderedDictionary' in player)!;
+            console.log(computer);
+
+            if (computer && !computer.turn) {
+                computer.play();
+                this.turn();
+            }
         }
     }
 

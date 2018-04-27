@@ -6,5 +6,9 @@ interface Props {
 
 export default function Turn(props: Props) {
 
-    return <button onClick={() => props.turn()} type="button">Play</button>;
+    return (
+        <>
+            <button onClick={() => props.turn()} type="button">Play</button>
+        </>
+   );
 }

@@ -7,8 +7,8 @@ export default class Player {
     name = '';
     turn = false;
     readonly playerIndex: number;
-    private _score = 0;
-    private _tiles: Tile[] = [];
+    protected _score = 0;
+    protected _tiles: Tile[] = [];
 
     constructor(turn: boolean, playerIndex: number) {
         this.turn = turn;

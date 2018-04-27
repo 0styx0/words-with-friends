@@ -5,10 +5,15 @@ import * as wordList from 'word-list-json';
 import placeWord from '../test/helpers/placeWord';
 import Word from './Word';
 
+import store, { getState } from '../store';
+import actions from '../actions/';
+
+
 type highestWordType = {
     points: number;
     word: string;
     startCoordinate: number[];
+    horizontal: boolean;
 };
 
 
@@ -41,7 +46,28 @@ type highestWordType = {
 
 class Computer extends Player {
 
-    private orderedDictionary = this.orderDictionary();
+    private orderedDictionary: Map<number, Map<string, Map<number, Set<string>>>>;
+
+    constructor(turn: boolean, playerIndex: number, cloning?: boolean) {
+        super(turn, playerIndex);
+
+        if (!cloning) {
+            console.log('no order', this.orderedDictionary);
+            this.orderedDictionary = this.orderDictionary();
+        }
+    }
+
+    clone() {
+
+        const playerClone = new Computer(this.turn, this.playerIndex, true);
+
+        return Object.assign(playerClone, {
+            name: this.name,
+            _score: this._score,
+            _tiles: JSON.parse(JSON.stringify(this._tiles)),
+            orderedDictionary: this.orderedDictionary
+        });
+    }
 
     /**
      * @private
@@ -279,6 +305,7 @@ class Computer extends Player {
      * of words of the desired length that have letter at index of number
      */
     orderDictionary() {
+        console.log('ordering');
 
         // dictionary.get(length).get(letter).get(indexOfLetter) = Set
         type dictionary = Map<number, Map<string, Map<number, Set<string>>>>;
@@ -364,7 +391,8 @@ class Computer extends Player {
                 return {
                     word: currentWord.word.toUpperCase(),
                     points: currentWordPoints,
-                    startCoordinate: currentWord.startCoordinate
+                    startCoordinate: currentWord.startCoordinate,
+                    horizontal: this.isCoordinateOnHorizontal(board, currentWord.startCoordinate)
                 };
             }
 
@@ -429,6 +457,7 @@ class Computer extends Player {
 
                 const wordsFound = this.getAllValidWords(word, 0, length);
 
+                console.log(coordinate);
                 const wordInfo = [...wordsFound].map(currentWord => ({
                     startCoordinate: coordinate,
                     word: currentWord
@@ -439,6 +468,35 @@ class Computer extends Player {
 
             return new Set([...allValidWordsInHand].concat(...validWords));
         }, new Set<{startCoordinate: number[], word: string}>());
+    }
+
+    public play() {
+
+        const state = getState();
+
+        const highestWord = this.getHighestWord(
+             this.getPossibleWords(state.board, state.turn), state.board, state.turn
+        );
+
+        // the highestWord.startCoordinate + 1 is b/c first letter is already on board
+        for (
+            let i = highestWord.startCoordinate[0] + 1;
+            i < highestWord.startCoordinate[0] + highestWord.word.length;
+            i++
+        ) {
+
+            const currentCoordinate =
+                [highestWord.startCoordinate[0] + i, highestWord.startCoordinate[1]];
+            const tile = this.tiles.find(currentTile =>
+              currentTile.letter === highestWord.word[i])!;
+            console.log(tile, currentCoordinate, highestWord.word[i]);
+
+            store.dispatch(
+                actions.putTileOnBoard(tile, currentCoordinate, state.Players, state.turn)
+            );
+
+            store.dispatch(actions.removeTileFromHand(state.Players, tile));
+        }
     }
 }
 

@@ -8,6 +8,7 @@ import { connect, Dispatch } from 'react-redux';
 import actionCreators from '../../actions';
 import { defaultState } from '../../store';
 import Player from '../../classes/Player';
+// import Computer from '../../classes/Computer';
 import Board from '../../classes/Board';
 
 
@@ -34,6 +35,26 @@ type Props = typeof actionCreators & typeof defaultState & {
 
 
 export class HandTileHolderContainer extends AbstractTileHolder<Props> {
+
+    /*
+    placeWord(computer: Computer) {
+        
+        const highestWord = computer.getHighestWord(
+             computer.getPossibleWords(this.props.board, this.props.turn), this.props.board, this.props.turn
+         );
+
+        if (highestWord.horizontal) {
+
+            for (
+                let i = highestWord.startCoordinate[0];
+                i < highestWord.startCoordinate[0] + highestWord.length;
+                i++
+            ) {
+                this.putTile(computer.tiles.find(tile => tile.letter === highestWord.word[i])!);
+            }
+        }
+    }
+    */
 
     /**
      * Puts tile down (@see tileTarget.drop)

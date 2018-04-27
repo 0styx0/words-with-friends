@@ -3,6 +3,7 @@ import types from '../actions/types';
 import Player from '../classes/Player';
 import Tile from '../interfaces/Tile';
 import { defaultState } from '../store';
+import Computer from '../classes/Computer';
 
 export default function Players(
     PlayersClass: Player[] = [] as typeof defaultState.Players,
@@ -27,6 +28,12 @@ export default function Players(
             PlayersCopy.forEach(player => player.turn = !player.turn);
         // tslint:disable-next-line:no-switch-case-fall-through
         case types.INIT_PLAYERS:
+
+            console.log(action);
+            if (PlayersCopy[0].score < 1 && confirm('PvC?')) {
+                PlayersCopy[1] = new Computer(false, 1);
+                console.log(PlayersCopy);
+            }
 
             return PlayersCopy.map((player, i) => {
                 player.generateHand(action.Tilebag);
