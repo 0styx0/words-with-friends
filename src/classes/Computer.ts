@@ -266,18 +266,19 @@ class Computer extends Player {
 
         function checkIfWordIsInHand(word: string) {
 
-            let wordArr = [...word.split('')];
+            let unusedLettersOfWord = [...word.split('')];
 
-            let lettersSoFar = '';
+            let lettersInHandAndInWord = '';
             [...lettersInHand].forEach(letterInHand => {
 
-                if (wordArr.includes(letterInHand)) {
-                     lettersSoFar += letterInHand;
-                     wordArr.splice(wordArr.indexOf(letterInHand), 1);
+                if (unusedLettersOfWord.includes(letterInHand)) {
+
+                     lettersInHandAndInWord += letterInHand;
+                     unusedLettersOfWord.splice(unusedLettersOfWord.indexOf(letterInHand), 1);
                 }
             });
 
-            const wordIsInHand = lettersSoFar.includes(wordArr.sort().join(''));
+            const wordIsInHand = lettersInHandAndInWord.split('').sort().join('') === word;
 
             return wordIsInHand;
         }
@@ -398,7 +399,7 @@ class Computer extends Player {
 
             return highestScoringWord;
 
-        }, { points: 0 } as highestWordType);
+        }, { points: 0 } as highestWordType) as highestWordType;
     }
 /*
 
@@ -457,7 +458,7 @@ class Computer extends Player {
 
                 const wordsFound = this.getAllValidWords(word, 0, length);
 
-                console.log(coordinate);
+                // console.log(coordinate);
                 const wordInfo = [...wordsFound].map(currentWord => ({
                     startCoordinate: coordinate,
                     word: currentWord
@@ -478,6 +479,40 @@ class Computer extends Player {
              this.getPossibleWords(state.board, state.turn), state.board, state.turn
         );
 
+        console.log('highestowrd', highestWord);
+
+        // TODO: neaten this duplication
+        // BUG: adds on to words, making it not a real word
+            // example: LEND --> finds "dim" --> LENDIM, invalid
+        if (highestWord.horizontal) {
+
+            for (
+                let i = highestWord.startCoordinate[1] + 1;
+                i < highestWord.startCoordinate[1] + highestWord.word.length;
+                i++
+            ) {
+
+                const currentCoordinate =
+                    [highestWord.startCoordinate[0], i];
+                const tile = this.tiles.find(currentTile =>
+                    currentTile.letter === highestWord.word[i - highestWord.startCoordinate[1]]);
+
+                if (!tile) {
+                    break;
+                }
+
+                console.log(494, i, tile, currentCoordinate, highestWord.word[i]);
+
+                store.dispatch(
+                    actions.putTileOnBoard(tile, currentCoordinate, state.Players, state.turn)
+                );
+
+                store.dispatch(actions.removeTileFromHand(state.Players, tile));
+            }
+
+            return;
+        }
+
         // the highestWord.startCoordinate + 1 is b/c first letter is already on board
         for (
             let i = highestWord.startCoordinate[0] + 1;
@@ -486,10 +521,15 @@ class Computer extends Player {
         ) {
 
             const currentCoordinate =
-                [highestWord.startCoordinate[0] + i, highestWord.startCoordinate[1]];
+                [i, highestWord.startCoordinate[1]];
             const tile = this.tiles.find(currentTile =>
-              currentTile.letter === highestWord.word[i])!;
-            console.log(tile, currentCoordinate, highestWord.word[i]);
+              currentTile.letter === highestWord.word[i - highestWord.startCoordinate[0]]);
+
+            if (!tile) {
+                break;
+            }
+
+            console.log(494, i, tile, currentCoordinate, highestWord.word[i]);
 
             store.dispatch(
                 actions.putTileOnBoard(tile, currentCoordinate, state.Players, state.turn)

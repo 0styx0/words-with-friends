@@ -248,7 +248,8 @@ describe(`Computer`, () => {
             const expectedHighestWord = {
                 word: longestWord,
                 points: longestWordPoints,
-                startCoordinate: [7, 7]
+                startCoordinate: [7, 7],
+                horizontal: false
             };
 
             const { coordinates, board } = placeWord(longestWord[0], [7, 7]);
@@ -308,14 +309,15 @@ describe(`Computer`, () => {
 
     describe(`#getHighestPossibleWord`, () => {
 
-        function fillHand() {
-
-             const tiles = [
+        function fillHand(
+            tiles: {letter: string, points: number}[] = [
                 {letter: 'V', points: 10},
                 {letter: 'T', points: 2},
                 {letter: 'E', points: 2},
                 {letter: 'X', points: 3}
-            ];
+            ]
+        ) {
+
              const computer = giveHandToComputer(tiles);
 
              const coordinate = [7, 7];
@@ -341,6 +343,27 @@ describe(`Computer`, () => {
                  expectedHighestWord: 'VEXT'
              };
         }
+
+
+        // fit(`does not extend a word in a way which would create a misspelled word`, () => {
+        it(`does not use same letters in hand over`, () => {
+
+            const computerTiles = [
+                { letter: 'I', points: 100 },
+                { letter: 'M', points: 100 },
+                { letter: 'T', points: 1 },
+            ];
+
+            const { computer, coordinate } = fillHand(computerTiles);
+
+            const firstPlacement = placeWord('LEND', coordinate, false);
+
+            const highestWord = computer.getHighestWord(
+                 computer.getPossibleWords(firstPlacement.board, 1), firstPlacement.board, 1
+             );
+
+            expect(highestWord.word).toBe('EMIT'); // it was picking "EMMET" before I fixed it
+        });
 
         it(`gets best word vertically`, () => {
 
