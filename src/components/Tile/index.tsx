@@ -16,7 +16,8 @@ function onWildcardChange(event: ChangeEvent<HTMLSelectElement>, coordinates?: n
         return;
     }
 
-    const board = getState().board;
+    const state = getState();
+    const board = state.board;
     const tileInfo = board.get(coordinates)!;
 
     if (tileInfo.tile!.points > 0 || !tileInfo.recent(getState().turn)) {
@@ -35,7 +36,10 @@ function onWildcardChange(event: ChangeEvent<HTMLSelectElement>, coordinates?: n
             points: 0,
             playerIndex: tileInfo.tile!.playerIndex
         },
-        coordinates
+        coordinates,
+        currentTurn: state.turn,
+        Players: state.Players,
+        currentPlayer: state.Players[state.turn % 1],
     });
 }
 

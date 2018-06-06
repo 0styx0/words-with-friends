@@ -344,8 +344,48 @@ describe(`Computer`, () => {
              };
         }
 
+        it(`doesn't overwrite words`, () => {
 
-        // fit(`does not extend a word in a way which would create a misspelled word`, () => {
+            const computerTiles = [
+                { letter: 'D', points: 1 },
+                { letter: 'O', points: 1 },
+            ];
+
+            const { computer, coordinate } = fillHand(computerTiles);
+
+            const firstPlacement = placeWord('ROW', coordinate, false);
+            const secondPlacement = placeWord('MITS', [8, 8], true, firstPlacement.board, 3);
+            const thirdPlacement = placeWord('ONISH', [8, 9], false, secondPlacement.board, 3);
+
+            const highestWord = computer.getHighestWord(
+                 computer.getPossibleWords(thirdPlacement.board, 2), thirdPlacement.board, 2
+             );
+
+            // it was picking "MOD" and overwriting "MONISH" with "MODISH" before fixed
+            expect(highestWord.word).toBe('HOD');
+        });
+
+        it(`doesn't create invalid side-effect words`, () => {
+
+            const computerTiles = [
+                { letter: 'A', points: 1 },
+                { letter: 'T', points: 1 },
+                { letter: 'T', points: 1 },
+            ];
+
+            const { computer, coordinate } = fillHand(computerTiles);
+
+            const firstPlacement = placeWord('PEN', coordinate, false);
+            const secondPlacement = placeWord('RAM', [8, 7], true, firstPlacement.board, 2);
+            const thirdPlacement = placeWord('OST', [10, 8], false, secondPlacement.board, 3);
+
+            const highestWord = computer.getHighestWord(
+                 computer.getPossibleWords(thirdPlacement.board, 4), thirdPlacement.board, 4
+             );
+
+            expect(highestWord.word).toBe('NAT'); // it was picking "ATT" before I fixed it
+        });
+
         it(`does not use same letters in hand over`, () => {
 
             const computerTiles = [

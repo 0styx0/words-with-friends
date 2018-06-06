@@ -43,7 +43,7 @@ export class TurnContainer extends React.Component<Props, {}> {
      * If tiles were placed, checks their validity (@see Validate),
      *  gives player points (@see Word#tallyPoints) and changes turn
      */
-    private turn() {
+    private turn(computerJustWent: boolean) {
 
         const recentlyPlacedCoordinates = this.getTilesPlaced();
         // console.log((new Computer(true, 1).getAllTiles(this.props.board)));
@@ -56,6 +56,7 @@ export class TurnContainer extends React.Component<Props, {}> {
 
         } else if (recentlyPlacedCoordinates.length === 0) {
 
+            // TODO: perhaps allow passing
             notifyHelper({ body: 'No tiles have been placed' });
 
         } else if (!validate.validateWords(recentlyPlacedCoordinates)) {
@@ -73,11 +74,13 @@ export class TurnContainer extends React.Component<Props, {}> {
             this.props.incrementTurn(this.props.turn, this.props.Tilebag);
 
             const computer: any = this.props.Players.find(player => 'orderedDictionary' in player)!;
-            console.log(computer);
 
-            if (computer && !computer.turn) {
-                computer.play();
-                this.turn();
+            if (computer && !computer.turn && !computerJustWent) {
+
+                window.setTimeout(() => {
+                    computer.play();
+                    this.turn(true);
+                }, 100);
             }
         }
     }

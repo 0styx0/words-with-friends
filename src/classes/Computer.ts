@@ -52,7 +52,6 @@ class Computer extends Player {
         super(turn, playerIndex);
 
         if (!cloning) {
-            console.log('no order', this.orderedDictionary);
             this.orderedDictionary = this.orderDictionary();
         }
     }
@@ -306,7 +305,6 @@ class Computer extends Player {
      * of words of the desired length that have letter at index of number
      */
     orderDictionary() {
-        console.log('ordering');
 
         // dictionary.get(length).get(letter).get(indexOfLetter) = Set
         type dictionary = Map<number, Map<string, Map<number, Set<string>>>>;
@@ -372,14 +370,17 @@ class Computer extends Player {
         return [...possibleWords].reduce((highestScoringWord: highestWordType, currentWord) => {
 
             const boardCopy = board.clone();
+            const horizontal = this.isCoordinateOnHorizontal(board, currentWord.startCoordinate);
             const wordInfo = placeWord(
-                currentWord.word.toUpperCase(), currentWord.startCoordinate, true, boardCopy, currentTurn
+                currentWord.word.toUpperCase(), currentWord.startCoordinate, !horizontal, boardCopy, currentTurn
             );
 
             const validate = new Validate(wordInfo.board);
+
             if (
                 !validate.checkTilePlacementValidity(wordInfo.coordinates, currentTurn) ||
-                !validate.validateWords(wordInfo.coordinates)
+                !validate.validateWords(wordInfo.coordinates) ||
+                this.newWordOverwritesTiles(boardCopy, wordInfo.coordinates)
                ) {
 
                 return highestScoringWord;
@@ -393,7 +394,7 @@ class Computer extends Player {
                     word: currentWord.word.toUpperCase(),
                     points: currentWordPoints,
                     startCoordinate: currentWord.startCoordinate,
-                    horizontal: this.isCoordinateOnHorizontal(board, currentWord.startCoordinate)
+                    horizontal
                 };
             }
 
@@ -446,7 +447,6 @@ class Computer extends Player {
         ].reduce((allValidWordsInHand, coordinate) => {
 
             const maximumLength = this.getMaximumWordLength(board, coordinate);
-            // console.log('max leng', maximumLength);
 
             // const { leftmostFilledCoordinate, rightmostFilledCoordinate } =
             //   this.getBorderingTileCoordinates(board, coordinate);
@@ -478,12 +478,12 @@ class Computer extends Player {
         const highestWord = this.getHighestWord(
              this.getPossibleWords(state.board, state.turn), state.board, state.turn
         );
+        console.log('highestWord', highestWord);
 
-        console.log('highestowrd', highestWord);
 
         // TODO: neaten this duplication
-        // BUG: adds on to words, making it not a real word
-            // example: LEND --> finds "dim" --> LENDIM, invalid
+        // TODO: if startCoordinate or coordinates is undefined, try next-to-highest word
+        // TODO: if non-computer puts down wildcard, goes back to hand
         if (highestWord.horizontal) {
 
             for (
@@ -537,6 +537,14 @@ class Computer extends Player {
 
             store.dispatch(actions.removeTileFromHand(state.Players, tile));
         }
+    }
+
+    private newWordOverwritesTiles(oldBoard: Board, newWordCoordinates: number[][]) {
+
+        return newWordCoordinates
+          .slice(1)
+          .some(coordinate =>
+            !!oldBoard.get(coordinate) && oldBoard.get(coordinate)!.filled);
     }
 }
 

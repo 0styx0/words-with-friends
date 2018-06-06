@@ -29,10 +29,8 @@ export default function Players(
         // tslint:disable-next-line:no-switch-case-fall-through
         case types.INIT_PLAYERS:
 
-            console.log(action);
             if (PlayersCopy[0].score < 1 && confirm('PvC?')) {
                 PlayersCopy[1] = new Computer(false, 1);
-                console.log(PlayersCopy);
             }
 
             return PlayersCopy.map((player, i) => {
