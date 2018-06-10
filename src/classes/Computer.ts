@@ -367,40 +367,37 @@ class Computer extends Player {
         currentTurn: number
     ) {
 
-        return [...possibleWords].reduce((highestScoringWord: highestWordType, currentWord) => {
+        return [...possibleWords]
+            .reduce((words: highestWordType[], currentWord) => {
 
-            const boardCopy = board.clone();
-            const horizontal = this.isCoordinateOnHorizontal(board, currentWord.startCoordinate);
-            const wordInfo = placeWord(
-                currentWord.word.toUpperCase(), currentWord.startCoordinate, !horizontal, boardCopy, currentTurn
-            );
+                const boardCopy = board.clone();
+                const horizontal = this.isCoordinateOnHorizontal(board, currentWord.startCoordinate);
+                const wordInfo = placeWord(
+                    currentWord.word.toUpperCase(), currentWord.startCoordinate, !horizontal, boardCopy, currentTurn
+                );
 
-            const validate = new Validate(wordInfo.board);
+                const validate = new Validate(wordInfo.board);
 
-            if (
-                !validate.checkTilePlacementValidity(wordInfo.coordinates, currentTurn) ||
-                !validate.validateWords(wordInfo.coordinates) ||
-                this.newWordOverwritesTiles(boardCopy, wordInfo.coordinates)
-               ) {
+                if (
+                    !validate.checkTilePlacementValidity(wordInfo.coordinates, currentTurn) ||
+                    !validate.validateWords(wordInfo.coordinates) ||
+                    this.newWordOverwritesTiles(boardCopy, wordInfo.coordinates)
+                ) {
 
-                return highestScoringWord;
-            }
+                    return words;
+                }
 
-            const currentWordPoints = Word.tallyPoints(wordInfo.board, wordInfo.coordinates);
+                const currentWordPoints = Word.tallyPoints(wordInfo.board, wordInfo.coordinates);
 
-            if (currentWordPoints > highestScoringWord.points) {
-
-                return {
+                return words.concat([{
                     word: currentWord.word.toUpperCase(),
                     points: currentWordPoints,
                     startCoordinate: currentWord.startCoordinate,
-                    horizontal
-                };
-            }
+                    horizontal: !!horizontal
+                }]);
 
-            return highestScoringWord;
-
-        }, { points: 0 } as highestWordType) as highestWordType;
+            }, [] as highestWordType[])
+            .sort((wordOne, wordTwo) => wordTwo.points - wordOne.points);
     }
 /*
 
@@ -471,65 +468,54 @@ class Computer extends Player {
         }, new Set<{startCoordinate: number[], word: string}>());
     }
 
-    public play() {
+    /**
+     * @param highestWordsIndex - index of word to use (0 is highest possible, 1 is second-highest etc)
+     */
+    public play(board: Board, highestWordsIndex: number = 0): highestWordType | undefined {
 
         const state = getState();
 
-        const highestWord = this.getHighestWord(
-             this.getPossibleWords(state.board, state.turn), state.board, state.turn
+        const highestWords = this.getHighestWord(
+             this.getPossibleWords(board, state.turn), board, state.turn
         );
-        console.log('highestWord', highestWord);
 
-
-        // TODO: neaten this duplication
-        // TODO: if startCoordinate or coordinates is undefined, try next-to-highest word
-        // TODO: if non-computer puts down wildcard, goes back to hand
-        if (highestWord.horizontal) {
-
-            for (
-                let i = highestWord.startCoordinate[1] + 1;
-                i < highestWord.startCoordinate[1] + highestWord.word.length;
-                i++
-            ) {
-
-                const currentCoordinate =
-                    [highestWord.startCoordinate[0], i];
-                const tile = this.tiles.find(currentTile =>
-                    currentTile.letter === highestWord.word[i - highestWord.startCoordinate[1]]);
-
-                if (!tile) {
-                    break;
-                }
-
-                console.log(494, i, tile, currentCoordinate, highestWord.word[i]);
-
-                store.dispatch(
-                    actions.putTileOnBoard(tile, currentCoordinate, state.Players, state.turn)
-                );
-
-                store.dispatch(actions.removeTileFromHand(state.Players, tile));
-            }
-
+        if (highestWordsIndex >= highestWords.length) {
             return;
         }
 
-        // the highestWord.startCoordinate + 1 is b/c first letter is already on board
+        // console.log('highestWord', highestWords);
+
+        const highestWord = highestWords[highestWordsIndex];
+        const horizontal = highestWord.horizontal;
+
+        if (this.wordGoesPastBoardEnd(highestWord)) {
+
+            return this.play(board, highestWordsIndex + 1);
+        }
+
+
+        // TODO: if startCoordinate or coordinates is undefined, try next-to-highest word
+        // TODO: if no word is left, pass
+        // TODO: if non-computer puts down wildcard, goes back to hand
+        // TODO: if word goes out of bounds, don't use it
+        // if (highestWord.horizontal) {
+
         for (
-            let i = highestWord.startCoordinate[0] + 1;
-            i < highestWord.startCoordinate[0] + highestWord.word.length;
+            let i = highestWord.startCoordinate[ (horizontal) ? 1 : 0 ] + 1;
+            i < highestWord.startCoordinate[ (horizontal) ? 1 : 0 ] + highestWord.word.length;
             i++
         ) {
 
-            const currentCoordinate =
-                [i, highestWord.startCoordinate[1]];
+            const currentCoordinate = (horizontal) ? [highestWord.startCoordinate[0], i] :
+              [i, highestWord.startCoordinate[1]];
             const tile = this.tiles.find(currentTile =>
-              currentTile.letter === highestWord.word[i - highestWord.startCoordinate[0]]);
+                currentTile.letter === highestWord.word[i - highestWord.startCoordinate[ (horizontal) ? 1 : 0 ]]);
 
             if (!tile) {
                 break;
             }
 
-            console.log(494, i, tile, currentCoordinate, highestWord.word[i]);
+            // console.log(494, i, tile, currentCoordinate, highestWord.word[i]);
 
             store.dispatch(
                 actions.putTileOnBoard(tile, currentCoordinate, state.Players, state.turn)
@@ -537,6 +523,8 @@ class Computer extends Player {
 
             store.dispatch(actions.removeTileFromHand(state.Players, tile));
         }
+
+        return highestWord;
     }
 
     private newWordOverwritesTiles(oldBoard: Board, newWordCoordinates: number[][]) {
@@ -545,6 +533,14 @@ class Computer extends Player {
           .slice(1)
           .some(coordinate =>
             !!oldBoard.get(coordinate) && oldBoard.get(coordinate)!.filled);
+    }
+
+    private wordGoesPastBoardEnd(word: highestWordType) {
+
+        const endX = word.startCoordinate[0] + word.word.length;
+        const endY = word.startCoordinate[1] + word.word.length;
+
+        return Math.max(endX, endY) > +process.env.REACT_APP_BOARD_DIMENSIONS!;
     }
 }
 

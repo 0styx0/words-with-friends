@@ -259,7 +259,7 @@ describe(`Computer`, () => {
             const highestWord = (new Computer(true, 1))
                 .getHighestWord(capitalizedWords, board, casual.integer());
 
-            expect(highestWord).toEqual(expectedHighestWord);
+            expect(highestWord[0]).toEqual(expectedHighestWord);
         });
 
         it(`gets highest scoring when there is powerups`, () => {
@@ -277,7 +277,7 @@ describe(`Computer`, () => {
 
             const highestWord = (new Computer(true, 1)).getHighestWord(capitalizedWords, board, 1);
 
-            expect(highestWord.word).toBe('HO');
+            expect(highestWord[0].word).toBe('HO');
         });
     });
 
@@ -306,27 +306,26 @@ describe(`Computer`, () => {
         });
     });
 
+    function fillHand(
+        tiles: {letter: string, points: number}[] = [
+            {letter: 'V', points: 10},
+            {letter: 'T', points: 2},
+            {letter: 'E', points: 2},
+            {letter: 'X', points: 3}
+        ]
+    ) {
+
+        const computer = giveHandToComputer(tiles);
+
+        const coordinate = [7, 7];
+
+        return {
+            computer,
+            coordinate
+        };
+    }
 
     describe(`#getHighestPossibleWord`, () => {
-
-        function fillHand(
-            tiles: {letter: string, points: number}[] = [
-                {letter: 'V', points: 10},
-                {letter: 'T', points: 2},
-                {letter: 'E', points: 2},
-                {letter: 'X', points: 3}
-            ]
-        ) {
-
-             const computer = giveHandToComputer(tiles);
-
-             const coordinate = [7, 7];
-
-             return {
-                 computer,
-                 coordinate
-             };
-        }
 
         function placeWordOnBoard(horizontally: boolean) {
 
@@ -362,8 +361,9 @@ describe(`Computer`, () => {
              );
 
             // it was picking "MOD" and overwriting "MONISH" with "MODISH" before fixed
-            expect(highestWord.word).toBe('HOD');
+            expect(highestWord[0].word).toBe('HOD');
         });
+
 
         it(`doesn't create invalid side-effect words`, () => {
 
@@ -383,7 +383,7 @@ describe(`Computer`, () => {
                  computer.getPossibleWords(thirdPlacement.board, 4), thirdPlacement.board, 4
              );
 
-            expect(highestWord.word).toBe('NAT'); // it was picking "ATT" before I fixed it
+            expect(highestWord[0].word).toBe('NAT'); // it was picking "ATT" before I fixed it
         });
 
         it(`does not use same letters in hand over`, () => {
@@ -402,7 +402,7 @@ describe(`Computer`, () => {
                  computer.getPossibleWords(firstPlacement.board, 1), firstPlacement.board, 1
              );
 
-            expect(highestWord.word).toBe('EMIT'); // it was picking "EMMET" before I fixed it
+            expect(highestWord[0].word).toBe('EMIT'); // it was picking "EMMET" before I fixed it
         });
 
         it(`gets best word vertically`, () => {
@@ -411,14 +411,14 @@ describe(`Computer`, () => {
 
             // if word is horizontal, computer must put vertical word
             // must change borderingCoordinates, then can tell in other functions whether x or y is changed
-            expect(highestWord.word).toEqual(expectedHighestWord);
+            expect(highestWord[0].word).toEqual(expectedHighestWord);
         });
 
         it(`finds highest word horizontally`, () => {
 
             const { highestWord, expectedHighestWord } = placeWordOnBoard(false);
 
-            expect(highestWord.word).toEqual(expectedHighestWord);
+            expect(highestWord[0].word).toEqual(expectedHighestWord);
         });
 
         it(`finds highest word when horizontal and vertical options`, () => {
@@ -431,7 +431,50 @@ describe(`Computer`, () => {
                 computer.getPossibleWords(secondPlacement.board, 1), secondPlacement.board, 1
             );
 
-            expect(highestWord.word).toEqual('VEX');
+            expect(highestWord[0].word).toEqual('VEX');
+        });
+    });
+
+    describe(`#play`, () => {
+
+        it(`picks second highest word if first doesn't fit on board`, () => {
+
+            const computerTiles = [
+                { letter: 'M', points: 1 },
+                { letter: 'E', points: 1 },
+                { letter: 'V', points: 1 },
+                { letter: 'E', points: 1 },
+                { letter: 'S', points: 1 },
+            ];
+
+            const { computer } = fillHand(computerTiles);
+
+            const firstPlacement = placeWord('FLAPS', [7, 6]);
+            const secondPlacement = placeWord('HT', [10, 7], false, firstPlacement.board, 2);
+            const thirdPlacement = placeWord('EEP', [11, 7], false, secondPlacement.board, 3);
+            const fourthPlacement = placeWord('UB', [12, 9], true, thirdPlacement.board, 4);
+            const fifthPlacement = placeWord('MUS', [12, 10], false, fourthPlacement.board, 5);
+            const sixthPlacement = placeWord('RIBS', [9, 12], true, fifthPlacement.board, 5);
+            const seventhPlacement = placeWord('ELT', [7, 7], false, sixthPlacement.board, 5);
+
+
+            const highestWord = computer.getHighestWord(
+                computer.getPossibleWords(seventhPlacement.board, 6), seventhPlacement.board, 6
+            );
+
+            const chosenWord = computer.play(seventhPlacement.board);
+
+            expect(highestWord[0].word).toBe('MEVES');
+            expect(chosenWord!.word).toBe('MEM');
+        });
+
+        it (`passes when no word is found`, () => {
+            expect(true).toBeFalsy();
+        });
+
+        it(`starts from middle if goes first turn`, () => {
+
+            expect(true).toBeFalsy();
         });
     });
 });

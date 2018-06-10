@@ -50,38 +50,40 @@ export class TurnContainer extends React.Component<Props, {}> {
 
         const validate = new Validate(this.props.board);
 
-        if (!validate.checkTilePlacementValidity(recentlyPlacedCoordinates, this.props.turn)) {
+        if (recentlyPlacedCoordinates.length === 0) {
 
-            notifyHelper({ body: 'Tiles must be in a straight line and connected to the center' });
+            if (!computerJustWent && !confirm('Are you sure you want to pass?')) {
+                return;
+            }
 
-        } else if (recentlyPlacedCoordinates.length === 0) {
+            notifyHelper({ body: 'Passed' });
 
-            // TODO: perhaps allow passing
-            notifyHelper({ body: 'No tiles have been placed' });
+        } else if (!validate.checkTilePlacementValidity(recentlyPlacedCoordinates, this.props.turn)) {
+
+            return notifyHelper({ body: 'Tiles must be in a straight line and connected to the center' });
 
         } else if (!validate.validateWords(recentlyPlacedCoordinates)) {
 
-            notifyHelper({ body: 'Invalid word(s)' });
+            return notifyHelper({ body: 'Invalid word(s)' });
 
-        } else {
+        }
 
-            this.props.clearRecentStatusFromBoard(recentlyPlacedCoordinates);
+        this.props.clearRecentStatusFromBoard(recentlyPlacedCoordinates);
 
-            this.props.setScore(
-                Word.tallyPoints(this.props.board, recentlyPlacedCoordinates)
-            );
+        this.props.setScore(
+            Word.tallyPoints(this.props.board, recentlyPlacedCoordinates)
+        );
 
-            this.props.incrementTurn(this.props.turn, this.props.Tilebag);
+        this.props.incrementTurn(this.props.turn, this.props.Tilebag);
 
-            const computer: any = this.props.Players.find(player => 'orderedDictionary' in player)!;
+        const computer: any = this.props.Players.find(player => 'orderedDictionary' in player)!;
 
-            if (computer && !computer.turn && !computerJustWent) {
+        if (computer && !computer.turn && !computerJustWent) {
 
-                window.setTimeout(() => {
-                    computer.play();
-                    this.turn(true);
-                }, 100);
-            }
+            window.setTimeout(() => {
+                computer.play(this.props.board);
+                this.turn(true);
+            }, 100);
         }
     }
 
