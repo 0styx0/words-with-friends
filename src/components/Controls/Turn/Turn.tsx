@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-type Props = typeof actionCreators & typeof defaultState;
+type Props = typeof actionCreators & typeof defaultState & { number: number };
 
 export class TurnContainer extends React.Component<Props, {}> {
 
@@ -36,7 +36,7 @@ export class TurnContainer extends React.Component<Props, {}> {
 
     render() {
 
-        return <Turn turn={this.turn} />;
+        return <Turn number={this.props.turn} turn={this.turn} />;
     }
 
     /**

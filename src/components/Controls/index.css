@@ -3,5 +3,10 @@
     width: 10vw;
     height: 10vh;
     margin: 20px auto;
+    padding: 5px;
     display: block;
+}
+
+.white {
+    color: tan;
 }
