@@ -4,7 +4,6 @@ import Tilebag from './Tilebag';
 
 export default class Player {
 
-    name = '';
     turn = false;
     readonly playerIndex: number;
     protected _score = 0;
@@ -22,10 +21,14 @@ export default class Player {
     set score(score: number) {
 
         if (score !== this._score) {
-            notify({body: `Earned ${score - this._score} points`});
+            notify({body: `${this.name}: Earned ${score - this._score} points`});
         }
 
         this._score = score;
+    }
+
+    get name() {
+        return `Player ${this.playerIndex + 1}`;
     }
 
     clone() {
@@ -33,7 +36,6 @@ export default class Player {
         const playerClone = new Player(this.turn, this.playerIndex);
 
         return Object.assign(playerClone, {
-            name: this.name,
             _score: this._score,
             _tiles: JSON.parse(JSON.stringify(this._tiles))
         });

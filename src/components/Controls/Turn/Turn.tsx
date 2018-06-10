@@ -49,28 +49,31 @@ export class TurnContainer extends React.Component<Props, {}> {
         // console.log((new Computer(true, 1).getAllTiles(this.props.board)));
 
         const validate = new Validate(this.props.board);
+        const currentPlayer = this.props.Players.find(player => player.turn)!;
 
         if (recentlyPlacedCoordinates.length === 0) {
 
             if (this.props.turn === 1) {
 
                 // too much work to implement in Computer, I'm lazy
-                return notifyHelper({ body: 'Cannot pass the first turn!' });
+                return notifyHelper({ body: `${currentPlayer.name}: Cannot pass the first turn! `});
             }
 
-            if (!computerJustWent && !confirm('Are you sure you want to pass?')) {
+            if (!computerJustWent && !confirm(`${currentPlayer.name}: Are you sure you want to pass?`)) {
                 return;
             }
 
-            notifyHelper({ body: 'Passed' });
+            notifyHelper({ body: `${currentPlayer.name}: Passed` });
 
         } else if (!validate.checkTilePlacementValidity(recentlyPlacedCoordinates, this.props.turn)) {
 
-            return notifyHelper({ body: 'Tiles must be in a straight line and connected to the center' });
+            return notifyHelper({
+                body: `${currentPlayer.name}: Tiles must be in a straight line and connected to the center`
+            });
 
         } else if (!validate.validateWords(recentlyPlacedCoordinates)) {
 
-            return notifyHelper({ body: 'Invalid word(s)' });
+            return notifyHelper({ body: `${currentPlayer.name}: Invalid word(s)` });
 
         }
 

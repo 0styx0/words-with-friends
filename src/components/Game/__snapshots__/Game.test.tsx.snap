@@ -2428,6 +2428,12 @@ exports[`<Game /> renders properly 1`] = `
   <section
     id="controls"
   >
+    <span
+      className="white"
+    >
+      Current Turn: 
+      1
+    </span>
     <button
       onClick={[Function]}
       type="button"

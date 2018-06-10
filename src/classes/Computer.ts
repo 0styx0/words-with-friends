@@ -56,12 +56,15 @@ class Computer extends Player {
         }
     }
 
+    get name() {
+        return 'Computer';
+    }
+
     clone() {
 
         const playerClone = new Computer(this.turn, this.playerIndex, true);
 
         return Object.assign(playerClone, {
-            name: this.name,
             _score: this._score,
             _tiles: JSON.parse(JSON.stringify(this._tiles)),
             orderedDictionary: this.orderedDictionary

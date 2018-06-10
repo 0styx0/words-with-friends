@@ -11,6 +11,12 @@ Array [
   <section
     id="controls"
   >
+    <span
+      className="white"
+    >
+      Current Turn: 
+      0
+    </span>
     <button
       onClick={[Function]}
       type="button"
