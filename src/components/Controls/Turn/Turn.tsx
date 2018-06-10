@@ -52,6 +52,12 @@ export class TurnContainer extends React.Component<Props, {}> {
 
         if (recentlyPlacedCoordinates.length === 0) {
 
+            if (this.props.turn === 1) {
+
+                // too much work to implement in Computer, I'm lazy
+                return notifyHelper({ body: 'Cannot pass the first turn!' });
+            }
+
             if (!computerJustWent && !confirm('Are you sure you want to pass?')) {
                 return;
             }

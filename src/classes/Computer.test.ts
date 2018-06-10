@@ -469,12 +469,14 @@ describe(`Computer`, () => {
         });
 
         it (`passes when no word is found`, () => {
-            expect(true).toBeFalsy();
-        });
 
-        it(`starts from middle if goes first turn`, () => {
+            const { computer, coordinate } = fillHand();
 
-            expect(true).toBeFalsy();
+            const firstPlacement = placeWord('Q', coordinate);
+
+            const chosenWord = computer.play(firstPlacement.board);
+
+            expect(chosenWord).toBeUndefined();
         });
     });
 });

@@ -494,12 +494,6 @@ class Computer extends Player {
         }
 
 
-        // TODO: if startCoordinate or coordinates is undefined, try next-to-highest word
-        // TODO: if no word is left, pass
-        // TODO: if non-computer puts down wildcard, goes back to hand
-        // TODO: if word goes out of bounds, don't use it
-        // if (highestWord.horizontal) {
-
         for (
             let i = highestWord.startCoordinate[ (horizontal) ? 1 : 0 ] + 1;
             i < highestWord.startCoordinate[ (horizontal) ? 1 : 0 ] + highestWord.word.length;
