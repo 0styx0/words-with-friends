@@ -1,15 +1,14 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 import ConnectedTurn from './Turn';
-import store, { defaultState, getState } from '../../../store';
+import store, { defaultState } from '../../../store';
 import { Provider } from 'react-redux';
 import mockMath from '../../../test/mocks/Math';
-import putTileOnBoard from '../../../actions/putTileOnBoard';
 import placeWord from '../../../test/helpers/placeWord';
 import { mount, ReactWrapper } from 'enzyme';
 import Board from '../../../classes/Board';
 import getWord from '../../../test/helpers/getWord';
-import TileInfo from '../../../classes/TileInfo';
+import addCoordinatesToStore from '../../../test/helpers/addCoordinatesToStore';
 
 mockMath();
 
@@ -35,20 +34,6 @@ describe('<Turn />', () => {
             <ConnectedTurn />
             </Provider>
         );
-    }
-
-    function addCoordinatesToStore(tileInfos: ReadonlyArray<TileInfo>, coordinates: number[][]) {
-
-        for (let i = 0; i < tileInfos.length; i++) {
-
-            const state = getState();
-
-            store.dispatch(
-                putTileOnBoard(
-                    tileInfos[i].tile!, coordinates[i], state.Players, state.turn
-                )
-            );
-        }
     }
 
     describe('#turn', () => {

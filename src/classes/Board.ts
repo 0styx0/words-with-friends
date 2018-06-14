@@ -2,6 +2,24 @@ import TileInfo from './TileInfo';
 
 export default class Board extends Map {
 
+    /**
+     * @return tiles placed during most recent turn
+     */
+    public static getTilesPlaced(board: Board, currentTurn: number) {
+
+        const recentlyPlacedCoordinates: number[][] = [];
+
+        board.forEach((value, key: string) => {
+
+            if (value.recent(currentTurn)) {
+                const numbers = key.match(/\d+/g)!;
+                recentlyPlacedCoordinates.push([+numbers[0], +numbers[1]]);
+            }
+        });
+
+        return recentlyPlacedCoordinates;
+    }
+
     constructor() {
         super();
     }
@@ -53,5 +71,6 @@ export default class Board extends Map {
 
         return keys.map(key => +key);
     }
+
 }
 

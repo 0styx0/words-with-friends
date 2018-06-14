@@ -9,6 +9,7 @@ import Validate from '../../../classes/Validate';
 import Word from '../../../classes/Word';
 import { defaultState } from '../../../store';
 import Turn from './';
+import Board from '../../../classes/Board';
 
 
 function mapStateToProps(state: typeof defaultState) {
@@ -45,7 +46,7 @@ export class TurnContainer extends React.Component<Props, {}> {
      */
     private turn(computerJustWent: boolean) {
 
-        const recentlyPlacedCoordinates = this.getTilesPlaced();
+        const recentlyPlacedCoordinates = Board.getTilesPlaced(this.props.board, this.props.turn);
         // console.log((new Computer(true, 1).getAllTiles(this.props.board)));
 
         const validate = new Validate(this.props.board);
@@ -96,25 +97,6 @@ export class TurnContainer extends React.Component<Props, {}> {
             }, 100);
         }
     }
-
-    /**
-     * @return tiles placed during most recent turn
-     */
-    private getTilesPlaced() {
-
-        const recentlyPlacedCoordinates: number[][] = [];
-
-        this.props.board.forEach((value, key: string) => {
-
-            if (value.recent(this.props.turn)) {
-                const numbers = key.match(/\d+/g)!;
-                recentlyPlacedCoordinates.push([+numbers[0], +numbers[1]]);
-            }
-        });
-
-        return recentlyPlacedCoordinates;
-    }
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TurnContainer as any);
