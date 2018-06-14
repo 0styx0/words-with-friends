@@ -2,4 +2,8 @@ window.confirm = function () {
     return false;
 };
 
-export default window.confirm;
+window.alert = function() {
+    return;
+};
+
+export default window;

@@ -9,6 +9,7 @@ Array [
     0
   </span>,
   <button
+    disabled={false}
     onClick={[Function]}
     type="button"
   >

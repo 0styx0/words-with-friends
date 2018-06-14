@@ -2420,9 +2420,12 @@ exports[`<Game /> renders properly 1`] = `
     </div>
   </div>
   <section>
+    Player 1
+    <br />
     Turn: 
     Yes
-    , Points: 
+    <br />
+    Points: 
     0
   </section>
   <section
@@ -2435,16 +2438,25 @@ exports[`<Game /> renders properly 1`] = `
       1
     </span>
     <button
+      disabled={false}
       onClick={[Function]}
       type="button"
     >
       Play
     </button>
+    <button
+      onClick={[Function]}
+    >
+      Return Tiles
+    </button>
   </section>
   <section>
+    Player 2
+    <br />
     Turn: 
     No
-    , Points: 
+    <br />
+    Points: 
     0
   </section>
 </div>

@@ -3,9 +3,12 @@
 exports[`<Controls /> renders correctly 1`] = `
 Array [
   <section>
+    Player 1
+    <br />
     Turn: 
     Yes
-    , Points: 
+    <br />
+    Points: 
     0
   </section>,
   <section
@@ -18,16 +21,25 @@ Array [
       0
     </span>
     <button
+      disabled={false}
       onClick={[Function]}
       type="button"
     >
       Play
     </button>
+    <button
+      onClick={[Function]}
+    >
+      Return Tiles
+    </button>
   </section>,
   <section>
+    Player 2
+    <br />
     Turn: 
     No
-    , Points: 
+    <br />
+    Points: 
     0
   </section>,
 ]
