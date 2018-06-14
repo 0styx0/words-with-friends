@@ -1013,7 +1013,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder "
+    className="tileHolder stand-out"
     onDragOver={[Function]}
     onDrop={[Function]}
   >

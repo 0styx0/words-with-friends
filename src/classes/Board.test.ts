@@ -2,8 +2,25 @@ import * as casual from 'casual';
 import TileInfo from './TileInfo';
 import Board from './Board';
 import Player from './Player';
+import Powerup from './Powerup';
 
 describe('Board', () => {
+
+    function getTileInfo() {
+
+        const value = new TileInfo();
+
+        value.place(
+            {
+                points: casual.integer(),
+                letter: casual.letter
+            },
+            new Player(true, 1),
+            casual.integer()
+        );
+
+        return value;
+    }
 
     describe('#set and #get', () => {
 
@@ -11,16 +28,7 @@ describe('Board', () => {
 
             const board = new Board();
             const coordinates = [casual.integer(), casual.integer()];
-            const value = new TileInfo();
-
-            value.place( // just to make it not generic
-                {
-                    points: casual.integer(),
-                    letter: casual.letter
-                },
-                new Player(true, 1),
-                casual.integer()
-            );
+            const value = getTileInfo();
 
             board.set(coordinates, value);
 
@@ -62,6 +70,20 @@ describe('Board', () => {
             clone.set(extraCoordinate, new TileInfo());
 
             expect(original.get(extraCoordinate)).toBeUndefined();
+        });
+
+        it(`preserves tile powerups`, () => {
+
+            const { original } = cloneBoard();
+            const randomCoordinate = [0, 0];
+            const tileInfoWithPowerup = getTileInfo();
+            tileInfoWithPowerup.powerup = new Powerup('letter', 3);
+
+            original.set(randomCoordinate, tileInfoWithPowerup);
+
+            const clone = original.clone();
+
+            expect(clone.get(randomCoordinate)).toEqual(tileInfoWithPowerup);
         });
     });
 });

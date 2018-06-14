@@ -26,6 +26,7 @@ export default class Board extends Map {
                 const tileClone = JSON.parse(JSON.stringify(value.tile));
 
                 tileInfoClone.place(tileClone, value.Player.clone(), value.turnTileWasPlaced);
+                tileInfoClone.powerup = value.powerup;
 
                 copy.set(this.convertIntStringIntoArray(key), tileInfoClone);
 

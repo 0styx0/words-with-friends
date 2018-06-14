@@ -1209,7 +1209,7 @@ exports[`<Game /> renders properly 1`] = `
       </span>
     </div>
     <div
-      className="tileHolder "
+      className="tileHolder stand-out"
       onDragOver={[Function]}
       onDrop={[Function]}
     >

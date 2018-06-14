@@ -555,7 +555,6 @@ class Computer extends Player {
 
         actionInfo.forEach(info => {
 
-            console.log(info.coordinate);
             store.dispatch(
                 actions.putTileOnBoard(info.tile, info.coordinate, state.Players, state.turn)
             );
