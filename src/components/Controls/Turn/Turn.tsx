@@ -29,6 +29,8 @@ type Props = typeof actionCreators & typeof defaultState & { number: number };
 
 export class TurnContainer extends React.Component<Props, {}> {
 
+    private static disallowTurning = false;
+
     constructor(props: Props) {
         super(props);
 
@@ -37,7 +39,7 @@ export class TurnContainer extends React.Component<Props, {}> {
 
     render() {
 
-        return <Turn number={this.props.turn} turn={this.turn} />;
+        return <Turn disabled={TurnContainer.disallowTurning} number={this.props.turn} turn={this.turn} />;
     }
 
     /**
@@ -75,7 +77,6 @@ export class TurnContainer extends React.Component<Props, {}> {
         } else if (!validate.validateWords(recentlyPlacedCoordinates)) {
 
             return notifyHelper({ body: `${currentPlayer.name}: Invalid word(s)` });
-
         }
 
         this.props.clearRecentStatusFromBoard(recentlyPlacedCoordinates);
@@ -88,12 +89,23 @@ export class TurnContainer extends React.Component<Props, {}> {
 
         const computer: any = this.props.Players.find(player => 'orderedDictionary' in player)!;
 
+        if (currentPlayer.tiles.length === 0) {
+            TurnContainer.disallowTurning = true;
+            alert(`${currentPlayer.name} has won the game!`);
+            return;
+        }
+
         if (computer && !computer.turn && !computerJustWent) {
 
+            TurnContainer.disallowTurning = true;
+
             window.setTimeout(() => {
+
                 computer.tilesCoordinatesPlacedLastTurn = recentlyPlacedCoordinates;
                 computer.play(this.props.board);
+                TurnContainer.disallowTurning = false;
                 this.turn(true);
+
             }, 100);
         }
     }
