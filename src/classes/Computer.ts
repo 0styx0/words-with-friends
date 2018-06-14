@@ -396,53 +396,12 @@ class Computer extends Player {
         // switch back when get it working to allFilledCoordinates
         return [
             ...allFilledCoordinates
-        ].reduce((allValidWordsInHand, coordinate) => {
-
-            // console.log(new Set([...allValidWordsInHand].concat(...this.shiftWord(board, coordinate))));
-            return new Set([...allValidWordsInHand].concat(...this.shiftWord(board, coordinate)));
-/*
-            const maximumLength = this.getMaximumWordLength(board, coordinate);
-
-            // const { leftmostFilledCoordinate, rightmostFilledCoordinate } =
-            //   this.getBorderingTileCoordinates(board, coordinate);
-            // const originalIndex =
-              // this.getIndexOfCoordinate(coordinate[0], leftmostFilledCoordinate[0]);
-            const word = board.get(coordinate)!.tile!.letter;
-
-            for (let length = 2; length < maximumLength; length++) {
-
-                const wordsFound = this.getAllValidWords(word, 0, length);
-
-                // console.log(coordinate);
-                const wordInfo = [...wordsFound].map(currentWord => ({
-                    startCoordinate: coordinate,
-                    word: currentWord
-                }));
-
-                validWords.push(...wordInfo);
-            }
-
-            return new Set([...allValidWordsInHand].concat(...validWords));
-*/
-        }, new Set<{startCoordinate: number[], word: string}>());
+        ].reduce((allValidWordsInHand, coordinate) =>
+            new Set([...allValidWordsInHand].concat(...this.shiftWord(board, coordinate)))
+        , new Set<{startCoordinate: number[], word: string}>());
     }
 
     shiftWord(board: Board, coordinate: number[]) {
-
-        // const checkedByShiftKey = `${coordinate[0]}, ${coordinate[1]}`;
-        // const resultCached = this.checkedByShift.has(checkedByShiftKey);
-        // const newlyPlaced = this.tilesCoordinatesPlacedLastTurn.find(coor =>
-          // coor[0] === coordinate[0] && coor[1] === coordinate[1]);
-
-        // if (!newlyPlaced && resultCached) {
-
-        //     return this.checkedByShift.get(checkedByShiftKey)!.reduce((stillValidWords, currentInfo) =>
-        //         // make sure words are still valid while trying to cut down on lag
-        //         this.wordIsInHand(currentInfo.word, board.get(coordinate)!.tile!.letter!) ?
-        //           stillValidWords.concat(currentInfo)
-        //           : stillValidWords
-        //     , [] as {startCoordinate: number[], word: string}[]);
-        // }
 
         function nearTile(offset: number, horizontal: boolean = true) {
 
@@ -496,7 +455,6 @@ class Computer extends Player {
         };
 
         const info = shift(true).concat(shift(false));
-        // this.checkedByShift.set(checkedByShiftKey, info);
 
         return info;
     }
