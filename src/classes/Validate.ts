@@ -259,7 +259,8 @@ export default class Validate {
      */
     checkForCenterTile(currentCoordinates: number[]) {
 
-        const centerCoordinates = [7, 7];
+        const centerCoordinates =
+          [+process.env.REACT_APP_CENTER_COORDINATE!, +process.env.REACT_APP_CENTER_COORDINATE!];
 
         const centerIsFilled = this.board.get(centerCoordinates)!.filled;
 

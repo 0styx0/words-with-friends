@@ -56,9 +56,13 @@ export class BoardTileHolderContainer extends AbstractTileHolder<Props> {
 
     render() {
 
+        const centerTile = this.props.coordinates &&
+          this.props.coordinates[0] === +process.env.REACT_APP_CENTER_COORDINATE! &&
+          this.props.coordinates[1] === +process.env.REACT_APP_CENTER_COORDINATE!;
+
         return (
             <div
-              className="tileHolder"
+              className={`tileHolder ${centerTile ? 'stand-out' : ''}`}
               onDrop={this.onDrop}
               onDragOver={this.onDragOver}
             >

@@ -5,7 +5,7 @@ exports[`Board renders correctly 1`] = `
   className="wrapper"
 >
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -14,7 +14,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -23,7 +23,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -32,7 +32,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -41,7 +41,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -50,7 +50,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -59,7 +59,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -68,7 +68,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -77,7 +77,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -86,7 +86,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -95,7 +95,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -104,7 +104,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -113,7 +113,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -122,7 +122,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -131,7 +131,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -140,7 +140,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -149,7 +149,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -158,7 +158,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -167,7 +167,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -176,7 +176,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -185,7 +185,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -194,7 +194,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -203,7 +203,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -212,7 +212,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -221,7 +221,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -230,7 +230,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -239,7 +239,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -248,7 +248,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -257,7 +257,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -266,7 +266,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -275,7 +275,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -284,7 +284,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -293,7 +293,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -302,7 +302,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -311,7 +311,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -320,7 +320,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -329,7 +329,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -338,7 +338,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -347,7 +347,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -356,7 +356,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -365,7 +365,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -374,7 +374,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -383,7 +383,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -392,7 +392,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -401,7 +401,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -410,7 +410,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -419,7 +419,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -428,7 +428,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -437,7 +437,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -446,7 +446,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -455,7 +455,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -464,7 +464,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -473,7 +473,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -482,7 +482,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -491,7 +491,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -500,7 +500,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -509,7 +509,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -518,7 +518,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -527,7 +527,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -536,7 +536,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -545,7 +545,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -554,7 +554,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -563,7 +563,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -572,7 +572,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -581,7 +581,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -590,7 +590,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -599,7 +599,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -608,7 +608,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -617,7 +617,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -626,7 +626,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -635,7 +635,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -644,7 +644,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -653,7 +653,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -662,7 +662,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -671,7 +671,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -680,7 +680,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -689,7 +689,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -698,7 +698,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -707,7 +707,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -716,7 +716,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -725,7 +725,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -734,7 +734,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -743,7 +743,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -752,7 +752,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -761,7 +761,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -770,7 +770,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -779,7 +779,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -788,7 +788,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -797,7 +797,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -806,7 +806,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -815,7 +815,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -824,7 +824,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -833,7 +833,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -842,7 +842,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -851,7 +851,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -860,7 +860,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -869,7 +869,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -878,7 +878,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -887,7 +887,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -896,7 +896,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -905,7 +905,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -914,7 +914,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -923,7 +923,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -932,7 +932,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -941,7 +941,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -950,7 +950,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -959,7 +959,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -968,7 +968,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -977,7 +977,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -986,7 +986,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -995,7 +995,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1004,7 +1004,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1013,7 +1013,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1022,7 +1022,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1031,7 +1031,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1040,7 +1040,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1049,7 +1049,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1058,7 +1058,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1067,7 +1067,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1076,7 +1076,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1085,7 +1085,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1094,7 +1094,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1103,7 +1103,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1112,7 +1112,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1121,7 +1121,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1130,7 +1130,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1139,7 +1139,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1148,7 +1148,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1157,7 +1157,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1166,7 +1166,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1175,7 +1175,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1184,7 +1184,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1193,7 +1193,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1202,7 +1202,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1211,7 +1211,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1220,7 +1220,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1229,7 +1229,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1238,7 +1238,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1247,7 +1247,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1256,7 +1256,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1265,7 +1265,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1274,7 +1274,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1283,7 +1283,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1292,7 +1292,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1301,7 +1301,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1310,7 +1310,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1319,7 +1319,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1328,7 +1328,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1337,7 +1337,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1346,7 +1346,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1355,7 +1355,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1364,7 +1364,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1373,7 +1373,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1382,7 +1382,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1391,7 +1391,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1400,7 +1400,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1409,7 +1409,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1418,7 +1418,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1427,7 +1427,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1436,7 +1436,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1445,7 +1445,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1454,7 +1454,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1463,7 +1463,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1472,7 +1472,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1481,7 +1481,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1490,7 +1490,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1499,7 +1499,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1508,7 +1508,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1517,7 +1517,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1526,7 +1526,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1535,7 +1535,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1544,7 +1544,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1553,7 +1553,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1562,7 +1562,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1571,7 +1571,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1580,7 +1580,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1589,7 +1589,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1598,7 +1598,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1607,7 +1607,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1616,7 +1616,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1625,7 +1625,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1634,7 +1634,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1643,7 +1643,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1652,7 +1652,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1661,7 +1661,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1670,7 +1670,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1679,7 +1679,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1688,7 +1688,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1697,7 +1697,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1706,7 +1706,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1715,7 +1715,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1724,7 +1724,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1733,7 +1733,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1742,7 +1742,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1751,7 +1751,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1760,7 +1760,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1769,7 +1769,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1778,7 +1778,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1787,7 +1787,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1796,7 +1796,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1805,7 +1805,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1814,7 +1814,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1823,7 +1823,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1832,7 +1832,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1841,7 +1841,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1850,7 +1850,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1859,7 +1859,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1868,7 +1868,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1877,7 +1877,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1886,7 +1886,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1895,7 +1895,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1904,7 +1904,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1913,7 +1913,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1922,7 +1922,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1931,7 +1931,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1940,7 +1940,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1949,7 +1949,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1958,7 +1958,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1967,7 +1967,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1976,7 +1976,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1985,7 +1985,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -1994,7 +1994,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -2003,7 +2003,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -2012,7 +2012,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >
@@ -2021,7 +2021,7 @@ exports[`Board renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="tileHolder"
+    className="tileHolder "
     onDragOver={[Function]}
     onDrop={[Function]}
   >

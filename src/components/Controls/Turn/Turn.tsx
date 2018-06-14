@@ -90,6 +90,7 @@ export class TurnContainer extends React.Component<Props, {}> {
         if (computer && !computer.turn && !computerJustWent) {
 
             window.setTimeout(() => {
+                computer.tilesCoordinatesPlacedLastTurn = recentlyPlacedCoordinates;
                 computer.play(this.props.board);
                 this.turn(true);
             }, 100);

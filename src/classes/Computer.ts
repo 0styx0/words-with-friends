@@ -7,6 +7,7 @@ import Word from './Word';
 
 import store, { getState } from '../store';
 import actions from '../actions/';
+import Tile from '../interfaces/Tile';
 
 
 type highestWordType = {
@@ -46,7 +47,11 @@ type highestWordType = {
 
 class Computer extends Player {
 
+    private static highestWordsCache: Map<number, highestWordType[]> = new Map(); // key is turn
+    public tilesCoordinatesPlacedLastTurn = [] as number[][];
     private orderedDictionary: Map<number, Map<string, Map<number, Set<string>>>>;
+    private checkedByShift = new Map<string, {startCoordinate: number[], word: string}[]>();
+
 
     constructor(turn: boolean, playerIndex: number, cloning?: boolean) {
         super(turn, playerIndex);
@@ -67,7 +72,8 @@ class Computer extends Player {
         return Object.assign(playerClone, {
             _score: this._score,
             _tiles: JSON.parse(JSON.stringify(this._tiles)),
-            orderedDictionary: this.orderedDictionary
+            orderedDictionary: this.orderedDictionary,
+            checkedByShift: this.checkedByShift,
         });
     }
 
@@ -102,7 +108,8 @@ class Computer extends Player {
             return false;
         };
 
-        const centerCoordinates = [7, 7];
+        const centerCoordinates =
+          [+process.env.REACT_APP_CENTER_COORDINATE!, +process.env.REACT_APP_CENTER_COORDINATE!];
         checkTileTree(centerCoordinates);
 
         return new Set<number[]>([...coordinatesTried].map(coordinate => JSON.parse(coordinate)));
@@ -259,38 +266,11 @@ class Computer extends Player {
             }
         }
 
-        const lettersInHand = this.tiles
-          .map(tile => tile.letter)
-          .concat([letter])
-          .sort()
-          .join('')
-          .toLowerCase();
-
-        function checkIfWordIsInHand(word: string) {
-
-            let unusedLettersOfWord = [...word.split('')];
-
-            let lettersInHandAndInWord = '';
-            [...lettersInHand].forEach(letterInHand => {
-
-                if (unusedLettersOfWord.includes(letterInHand)) {
-
-                     lettersInHandAndInWord += letterInHand;
-                     unusedLettersOfWord.splice(unusedLettersOfWord.indexOf(letterInHand), 1);
-                }
-            });
-
-            const wordIsInHand = lettersInHandAndInWord.split('').sort().join('') === word;
-
-            return wordIsInHand;
-        }
-
-
         const allValidWords = [...possibleWords].reduce((validWords: string[], word, i) => {
 
             const sortedWord = word.split('').sort().join('');
 
-            if (checkIfWordIsInHand(sortedWord)) {
+            if (this.wordIsInHand(sortedWord, letter)) {
                 return validWords.concat([word.toUpperCase()]);
             }
 
@@ -300,6 +280,7 @@ class Computer extends Player {
 
         return new Set<string>(allValidWords);
     }
+
 
     /**
      * @private
@@ -384,7 +365,8 @@ class Computer extends Player {
                 if (
                     !validate.checkTilePlacementValidity(wordInfo.coordinates, currentTurn) ||
                     !validate.validateWords(wordInfo.coordinates) ||
-                    this.newWordOverwritesTiles(boardCopy, wordInfo.coordinates)
+                    this.newWordOverwritesTiles(boardCopy, wordInfo) ||
+                    !this.atLeastOneTileWasPlaced(boardCopy, wordInfo)
                 ) {
 
                     return words;
@@ -402,36 +384,6 @@ class Computer extends Player {
             }, [] as highestWordType[])
             .sort((wordOne, wordTwo) => wordTwo.points - wordOne.points);
     }
-/*
-
-            // index is where in the possible word will coordinate be
-            // maximumLength uses only originalIndex
-            // maximumLength-1 starts 1 position less than originalIndex and goes 1 position more
-            // maximumLength-2 starts 2 position less than originalIndex and goes 2 position more
-            // maximumLength-3 starts 3 position less than originalIndex and goes 3 position more
-
-            /*
-             * Word: table, coordinate: [7, 7], left border is [2, 7], right border is [10, 7]
-             * First time around it starts at [4, 7], with length of 5 (since 10-1=9, so 9-4=5)
-             *  Index will then be 3, since 7-4=3
-             *  Extra space will be 5-5=0 (5 is maximumLength, other 5 is current length)
-             *  Start at 4-(2+2)=0
-               (2 is left border,
-                other 2 is accounting for the space that must be between words, and the 4 is where it starts at.
-                The 0 is how much "wiggle room there is)
-             * Second time around it starts at [5, 7], with length of 4 (since 10-1=9, so 9-5=4)
-               * Index will then be 2, since 7-5=2
-               * Extra space will be 5-4=1 (5 is maximumLength, other 4 is current length)
-               * Start at 5-(2+2)=1, so [4, 7] and has 1 wiggle room
-                 so with the same length it can also use [5, 7]
-             * Fourth time around it starts at [7, 7], with a length of 2 (since 10-1=9, so 9-7=2)
-               * Index will then be 0, since 7-7=0
-               * Extra space will be 5-2=3 (5 is maximumLength, other 2 is current length)
-               * Start at 7-(2+2)=3, so [6, 7] has 3 wiggle room
-             * Fifth time around it starts at [8, 7], with a length of 1 (since 10-1=9, so 9-8=1)
-               * Index will then be -1 since 7-8=-1
-               * Error: Undefined index. Must stop before coordinate=originalCoordinate
-             */
 
     /**
      * Finds the best word that can made from tiles in hand
@@ -439,13 +391,16 @@ class Computer extends Player {
     public getPossibleWords(board: Board, currentTurn: number) {
 
         const allFilledCoordinates = this.getAllFilledCoordinates(board);
-        const validWords: {startCoordinate: number[], word: string}[] = [];
+//        const validWords: {startCoordinate: number[], word: string}[] = [];
 
         // switch back when get it working to allFilledCoordinates
         return [
             ...allFilledCoordinates
         ].reduce((allValidWordsInHand, coordinate) => {
 
+            // console.log(new Set([...allValidWordsInHand].concat(...this.shiftWord(board, coordinate))));
+            return new Set([...allValidWordsInHand].concat(...this.shiftWord(board, coordinate)));
+/*
             const maximumLength = this.getMaximumWordLength(board, coordinate);
 
             // const { leftmostFilledCoordinate, rightmostFilledCoordinate } =
@@ -468,7 +423,82 @@ class Computer extends Player {
             }
 
             return new Set([...allValidWordsInHand].concat(...validWords));
+*/
         }, new Set<{startCoordinate: number[], word: string}>());
+    }
+
+    shiftWord(board: Board, coordinate: number[]) {
+
+        // const checkedByShiftKey = `${coordinate[0]}, ${coordinate[1]}`;
+        // const resultCached = this.checkedByShift.has(checkedByShiftKey);
+        // const newlyPlaced = this.tilesCoordinatesPlacedLastTurn.find(coor =>
+          // coor[0] === coordinate[0] && coor[1] === coordinate[1]);
+
+        // if (!newlyPlaced && resultCached) {
+
+        //     return this.checkedByShift.get(checkedByShiftKey)!.reduce((stillValidWords, currentInfo) =>
+        //         // make sure words are still valid while trying to cut down on lag
+        //         this.wordIsInHand(currentInfo.word, board.get(coordinate)!.tile!.letter!) ?
+        //           stillValidWords.concat(currentInfo)
+        //           : stillValidWords
+        //     , [] as {startCoordinate: number[], word: string}[]);
+        // }
+
+        function nearTile(offset: number, horizontal: boolean = true) {
+
+            const coordinateToCheck = (horizontal) ? [coordinate[0] + offset - 1, coordinate[1]]
+              : [coordinate[0], coordinate[1] + offset - 1];
+
+            return board.get(coordinateToCheck) &&
+                !board.get(coordinate)!.filled;
+        }
+
+        function getCoordinate(offset: number, horizontal: boolean = true) {
+            return (horizontal) ? [coordinate[0] + offset, coordinate[1]]
+              : [coordinate[0], coordinate[1] + offset];
+        }
+
+        const shift = (horizontal: boolean) => {
+
+            // although these can go outside function, neater inside
+            const maximumLength = this.getMaximumWordLength(board, coordinate);
+            const letter = board.get(coordinate)!.tile!.letter;
+
+            let found: {startCoordinate: number[], word: string}[] = [];
+            let offset = 0;
+
+            // goes as far back as possible (until would hit occupied tile)
+            while (
+                !this.pastBoardEdge(getCoordinate(offset, horizontal)) &&
+                !nearTile(offset, horizontal)
+            ) {
+
+                for (let length = 2; length < maximumLength; length++) {
+
+                    if (this.pastBoardEdge(getCoordinate(length))) {
+                        break;
+                    }
+
+                    const wordsFound = this.getAllValidWords(letter, Math.abs(offset), length);
+
+                    const wordInfo = [...wordsFound].map(currentWord => ({
+                        startCoordinate: getCoordinate(offset, horizontal),
+                        word: currentWord
+                    }));
+
+                    found = found.concat(wordInfo);
+                }
+
+                offset--;
+            }
+
+            return found;
+        };
+
+        const info = shift(true).concat(shift(false));
+        // this.checkedByShift.set(checkedByShiftKey, info);
+
+        return info;
     }
 
     /**
@@ -478,58 +508,102 @@ class Computer extends Player {
 
         const state = getState();
 
-        const highestWords = this.getHighestWord(
-             this.getPossibleWords(board, state.turn), board, state.turn
-        );
+        const highestWords = Computer.highestWordsCache.get(state.turn) ||
+            this.getHighestWord(
+                this.getPossibleWords(board, state.turn), board, state.turn
+            );
+        Computer.highestWordsCache.set(state.turn, highestWords);
 
         if (highestWordsIndex >= highestWords.length) {
+            console.log('PAST INDEX', highestWordsIndex, highestWords.length);
             return;
         }
 
-        // console.log('highestWord', highestWords);
-
         const highestWord = highestWords[highestWordsIndex];
         const horizontal = highestWord.horizontal;
+        console.log('highest', highestWord, this.tiles);
 
         if (this.wordGoesPastBoardEnd(highestWord)) {
-
+            console.log('PAST END');
             return this.play(board, highestWordsIndex + 1);
         }
 
+        const actionInfo: {tile: Tile, coordinate: ReadonlyArray<number>}[] = [];
 
         for (
-            let i = highestWord.startCoordinate[ (horizontal) ? 1 : 0 ] + 1;
+            let i = highestWord.startCoordinate[ (horizontal) ? 1 : 0 ];
             i < highestWord.startCoordinate[ (horizontal) ? 1 : 0 ] + highestWord.word.length;
             i++
         ) {
 
             const currentCoordinate = (horizontal) ? [highestWord.startCoordinate[0], i] :
               [i, highestWord.startCoordinate[1]];
-            const tile = this.tiles.find(currentTile =>
+
+            const tile = (board.get(currentCoordinate)!.filled && board.get(currentCoordinate)!.tile) ||
+              this.tiles.find(currentTile =>
                 currentTile.letter === highestWord.word[i - highestWord.startCoordinate[ (horizontal) ? 1 : 0 ]]);
 
+            console.log(494, i, tile, currentCoordinate, highestWord.word[i]);
+
             if (!tile) {
-                break;
+                console.log('No tile', tile);
+                return this.play(board, highestWordsIndex + 1);
             }
 
-            // console.log(494, i, tile, currentCoordinate, highestWord.word[i]);
+            actionInfo.push({tile, coordinate: currentCoordinate});
+        }
 
+        actionInfo.forEach(info => {
+
+            console.log(info.coordinate);
             store.dispatch(
-                actions.putTileOnBoard(tile, currentCoordinate, state.Players, state.turn)
+                actions.putTileOnBoard(info.tile, info.coordinate, state.Players, state.turn)
             );
 
-            store.dispatch(actions.removeTileFromHand(state.Players, tile));
-        }
+            store.dispatch(actions.removeTileFromHand(state.Players, info.tile));
+        });
 
         return highestWord;
     }
 
-    private newWordOverwritesTiles(oldBoard: Board, newWordCoordinates: number[][]) {
+    private wordIsInHand(word: string, pretendLetterInHand: string) {
 
-        return newWordCoordinates
-          .slice(1)
-          .some(coordinate =>
-            !!oldBoard.get(coordinate) && oldBoard.get(coordinate)!.filled);
+        const lettersInHand = this.tiles
+            .map(tile => tile.letter)
+            .concat([pretendLetterInHand])
+            .sort()
+            .join('')
+            .toLowerCase();
+
+        let unusedLettersOfWord = [...word.split('')];
+
+        let lettersInHandAndInWord = '';
+        [...lettersInHand].forEach(letterInHand => {
+
+            if (unusedLettersOfWord.includes(letterInHand)) {
+
+                lettersInHandAndInWord += letterInHand;
+                unusedLettersOfWord.splice(unusedLettersOfWord.indexOf(letterInHand), 1);
+            }
+        });
+
+        const wordIsInHand = lettersInHandAndInWord.split('').sort().join('') === word;
+
+        return wordIsInHand;
+    }
+
+    /**
+     * @param wordInfo: typeof result of placeWord
+     */
+    private newWordOverwritesTiles(oldBoard: Board, wordInfo: any) {
+
+        return wordInfo.coordinates
+          .some((coordinate: ReadonlyArray<number>, i: number) => {
+
+              return !!oldBoard.get(coordinate) &&
+                oldBoard.get(coordinate)!.filled &&
+                oldBoard.get(coordinate)!.tile!.letter !== wordInfo.tileInfos[i].tile.letter;
+          });
     }
 
     private wordGoesPastBoardEnd(word: highestWordType) {
@@ -537,7 +611,23 @@ class Computer extends Player {
         const endX = word.startCoordinate[0] + word.word.length;
         const endY = word.startCoordinate[1] + word.word.length;
 
-        return Math.max(endX, endY) > +process.env.REACT_APP_BOARD_DIMENSIONS!;
+        return this.pastBoardEdge([endX, endY]);
+    }
+
+    private pastBoardEdge(coordinate: number[]) {
+
+        return Math.min(coordinate[0], coordinate[1]) < 0 ||
+          Math.max(coordinate[0], coordinate[1]) > +process.env.REACT_APP_BOARD_DIMENSIONS!;
+    }
+
+    private atLeastOneTileWasPlaced(oldBoard: Board, wordInfo: any) {
+
+        return wordInfo.coordinates
+          .some((coordinate: ReadonlyArray<number>, i: number) => {
+
+              return !!oldBoard.get(coordinate) &&
+                !oldBoard.get(coordinate)!.filled;
+          });
     }
 }
 

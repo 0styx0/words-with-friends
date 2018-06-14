@@ -6,6 +6,10 @@
     height: var(--tileholder-dimensions);*/
 }
 
+.stand-out {
+    border: 6px outset black;
+}
+
 .tileHolder > div {
     /*height: 100%;*/
 }

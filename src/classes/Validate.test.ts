@@ -51,6 +51,9 @@ describe('Validate', () => {
         };
     }
 
+    const centerCoordinates =
+      [+process.env.REACT_APP_CENTER_COORDINATE!, +process.env.REACT_APP_CENTER_COORDINATE!] as [number, number];
+
     describe('#travel', () => {
 
         /**
@@ -239,7 +242,7 @@ describe('Validate', () => {
 
             it(`tile doesn't connect to center`, () => {
 
-                const centerPlacement = setupRandomWord(true, [7, 7]);
+                const centerPlacement = setupRandomWord(true, centerCoordinates);
                 const secondPlacement = setupRandomWord(true, [0, 0], centerPlacement.board);
 
                 expect(secondPlacement.validate.checkForCenterTile(secondPlacement.startCoordinate)).toBeFalsy();
@@ -250,16 +253,16 @@ describe('Validate', () => {
 
             it('center is filled', () => {
 
-                const placement = setupRandomWord(true, [7, 7]);
+                const placement = setupRandomWord(true, centerCoordinates);
 
                 expect(placement.validate.checkForCenterTile(placement.startCoordinate)).toBeTruthy();
             });
 
             it('word connects to a word that is in center', () => {
 
-                const centerPlacement = setupRandomWord(true, [7, 7]);
+                const centerPlacement = setupRandomWord(true, centerCoordinates);
                 const secondPlacement = setupRandomWord(
-                    false, [7, 7], centerPlacement.board
+                    false, centerCoordinates, centerPlacement.board
                 );
 
                 expect(secondPlacement.validate.checkForCenterTile(secondPlacement.startCoordinate)).toBeTruthy();
@@ -273,7 +276,7 @@ describe('Validate', () => {
 
             it('tiles are diagonal', () => {
 
-                const wordCoordinates: [number, number][] = [[7, 7], [8, 8]];
+                const wordCoordinates: [number, number][] = [centerCoordinates, [8, 8]];
 
                 const firstLetter = placeWord(customCasual.upperLetter, wordCoordinates[0]);
                 const secondLetter = placeWord(customCasual.upperLetter, wordCoordinates[1], true, firstLetter.board);
@@ -288,7 +291,7 @@ describe('Validate', () => {
             it('tiles are attached to to other (valid) words (in a valid manner)', () => {
 
                 const coordinatesToTest: [number, number][] = [[7, 8], [8, 6]];
-                const firstPlacement = setupRandomWord(true, [7, 7]);
+                const firstPlacement = setupRandomWord(true, centerCoordinates);
                 const secondPlacement = placeWord(
                     customCasual.upperLetter, coordinatesToTest[0], true, firstPlacement.board, 2
                 );

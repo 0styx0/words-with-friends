@@ -73,8 +73,10 @@ describe('<Turn />', () => {
         test('turn is incremented after click and valid tile placement', () => {
 
             const wrapper = setup();
+            const centerCoordinates =
+              [+process.env.REACT_APP_CENTER_COORDINATE!, +process.env.REACT_APP_CENTER_COORDINATE!];
 
-            const { tileInfos, coordinates } = placeWord(getWord(), [7, 7], true, new Board(), 1);
+            const { tileInfos, coordinates } = placeWord(getWord(), centerCoordinates, true, new Board(), 1);
 
             addCoordinatesToStore(tileInfos, coordinates);
 

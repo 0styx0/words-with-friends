@@ -2,7 +2,7 @@
 
 exports[`<BoardTileHolder /> renders correctly for current player's tile 1`] = `
 <div
-  className="tileHolder"
+  className="tileHolder "
   onDragOver={[Function]}
   onDrop={[Function]}
 >
@@ -14,7 +14,7 @@ exports[`<BoardTileHolder /> renders correctly for current player's tile 1`] = `
 
 exports[`<BoardTileHolder /> renders correctly for other player's tile 1`] = `
 <div
-  className="tileHolder"
+  className="tileHolder "
   onDragOver={[Function]}
   onDrop={[Function]}
 >
