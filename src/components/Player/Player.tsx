@@ -27,7 +27,11 @@ export class PlayerContainer extends React.Component<Props, {}> {
 
         return (
             <section>
-                Turn: {this.props.Player.turn ? 'Yes' : 'No'}, Points: {this.props.Player.score}
+                {this.props.Player.name}
+                <br />
+                Turn: {this.props.Player.turn ? 'Yes' : 'No'}
+                <br />
+                Points: {this.props.Player.score}
             </section>
         );
     }
