@@ -29,7 +29,7 @@ export default function Players(
         // tslint:disable-next-line:no-switch-case-fall-through
         case types.INIT_PLAYERS:
 
-            if (PlayersCopy[0].score < 1 && confirm('PvC?')) {
+            if (PlayersCopy[0].score < 1 && confirm('Player vs Computer?')) {
                 PlayersCopy[1] = new Computer(false, 1);
             }
 
