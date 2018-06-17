@@ -76,8 +76,9 @@ export class HandTileHolderContainer extends AbstractTileHolder<Props> {
         return (
             <div
               className="tileHolder"
-              onDrop={this.onDrop}
+              onDragEnter={this.onDragEnter}
               onDragOver={this.onDragOver}
+              onDrop={this.onDrop}
             >
                 <TileHolder
                     tile={this.props.tile}

@@ -32,6 +32,10 @@ abstract class AbstractTileHolder<Props> extends React.Component<Props & PropBas
         return !this.props.tile;
     }
 
+    onDragEnter(e: DragEvent<HTMLDivElement>) {
+        e.preventDefault();
+    }
+
     onDragOver(e: DragEvent<HTMLDivElement>) {
 
         e.preventDefault();
@@ -40,7 +44,6 @@ abstract class AbstractTileHolder<Props> extends React.Component<Props & PropBas
             e.dataTransfer.dropEffect = 'none';
         }
     }
-
 }
 
 export default AbstractTileHolder;

@@ -63,8 +63,9 @@ export class BoardTileHolderContainer extends AbstractTileHolder<Props> {
         return (
             <div
               className={`tileHolder ${centerTile ? 'stand-out' : ''}`}
-              onDrop={this.onDrop}
+              onDragEnter={this.onDragEnter}
               onDragOver={this.onDragOver}
+              onDrop={this.onDrop}
             >
                 <TileHolder
                     coordinates={this.props.coordinates!}
