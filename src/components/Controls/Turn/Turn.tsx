@@ -29,8 +29,6 @@ type Props = typeof actionCreators & typeof defaultState & { number: number };
 
 export class TurnContainer extends React.Component<Props, {}> {
 
-    private static disallowTurning = false;
-
     constructor(props: Props) {
         super(props);
 
@@ -39,7 +37,7 @@ export class TurnContainer extends React.Component<Props, {}> {
 
     render() {
 
-        return <Turn disabled={TurnContainer.disallowTurning} number={this.props.turn} turn={this.turn} />;
+        return <Turn number={this.props.turn} turn={this.turn} />;
     }
 
     /**
@@ -48,8 +46,11 @@ export class TurnContainer extends React.Component<Props, {}> {
      */
     private turn(computerJustWent: boolean) {
 
+        // changing react state doesn't rerender fast enough so need to change DOM manually
+        const playButton = document.getElementById('playButton') as HTMLButtonElement;
+        playButton.disabled = true;
+
         const recentlyPlacedCoordinates = Board.getTilesPlaced(this.props.board, this.props.turn);
-        // console.log((new Computer(true, 1).getAllTiles(this.props.board)));
 
         const validate = new Validate(this.props.board);
         const currentPlayer = this.props.Players.find(player => player.turn)!;
@@ -58,11 +59,13 @@ export class TurnContainer extends React.Component<Props, {}> {
 
             if (this.props.turn === 1) {
 
+                playButton.disabled = false;
                 // too much work to implement in Computer, I'm lazy
                 return notifyHelper({ body: `${currentPlayer.name}: Cannot pass the first turn! `});
             }
 
             if (!computerJustWent && !confirm(`${currentPlayer.name}: Are you sure you want to pass?`)) {
+                playButton.disabled = false;
                 return;
             }
 
@@ -70,12 +73,15 @@ export class TurnContainer extends React.Component<Props, {}> {
 
         } else if (!validate.checkTilePlacementValidity(recentlyPlacedCoordinates, this.props.turn)) {
 
+            playButton.disabled = false;
+
             return notifyHelper({
                 body: `${currentPlayer.name}: Tiles must be in a straight line and connected to the center`
             });
 
         } else if (!validate.validateWords(recentlyPlacedCoordinates)) {
 
+            playButton.disabled = false;
             return notifyHelper({ body: `${currentPlayer.name}: Invalid word(s)` });
         }
 
@@ -90,23 +96,25 @@ export class TurnContainer extends React.Component<Props, {}> {
         const computer: any = this.props.Players.find(player => 'orderedDictionary' in player)!;
 
         if (currentPlayer.tiles.length === 0) {
-            TurnContainer.disallowTurning = true;
+
+            playButton.disabled = true;
+
             alert(`${currentPlayer.name} has won the game!`);
             return;
         }
 
         if (computer && !computer.turn && !computerJustWent) {
 
-            TurnContainer.disallowTurning = true;
-
             window.setTimeout(() => {
 
                 computer.tilesCoordinatesPlacedLastTurn = recentlyPlacedCoordinates;
                 computer.play(this.props.board);
-                TurnContainer.disallowTurning = false;
+                playButton.disabled = false;
                 this.turn(true);
 
             }, 100);
+        } else {
+            playButton.disabled = false;
         }
     }
 }
