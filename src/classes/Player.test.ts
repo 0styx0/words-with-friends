@@ -79,6 +79,24 @@ describe('Player', () => {
             expect(player.tiles).toEqual(tileCopy);
         });
 
+
+        it(`doesn't mix up other tiles with wildcards`, () => {
+
+            const tilebag = getState().Tilebag;
+            const player = state().Players[0];
+
+            const wildcard = tilebag.tiles.find(tile => tile.points === 0)!;
+            // since wildcard is by default 'A'
+            const tileLetterA = tilebag.tiles.find(tile => tile.letter === 'A' && tile.points === 1)!;
+
+            player.tiles[0] = wildcard;
+            player.tiles[1] = tileLetterA;
+
+            player.removeTile(tileLetterA);
+
+            expect(player.tiles[0]).toEqual(wildcard);
+        });
+
         it('does nothing if tile not in hand', () => {
 
             const player = state().Players[0];

@@ -60,7 +60,8 @@ export default class Player {
 
     removeTile(tile: Tile) {
 
-        const positionOfTile = this._tiles.findIndex(currentTile => currentTile.letter === tile.letter);
+        const positionOfTile = this._tiles.findIndex(currentTile =>
+          currentTile.letter === tile.letter && currentTile.points === tile.points);
 
         if (positionOfTile !== -1) {
             this._tiles.splice(positionOfTile, 1);
