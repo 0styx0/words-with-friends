@@ -46,6 +46,9 @@ function giveHandToComputer(tiles: {letter: string, points: number}[]) {
 const centerCoordinates =
   [+process.env.REACT_APP_CENTER_COORDINATE!, +process.env.REACT_APP_CENTER_COORDINATE!];
 
+afterEach(() => {
+    Computer.checkedByShift.clear();
+});
 
 describe(`Computer`, () => {
 
@@ -335,7 +338,7 @@ describe(`Computer`, () => {
             const firstPlacement = placeWord('VOR', coordinate, horizontally);
 
             const highestWord = computer.getHighestWord(
-                 computer.getPossibleWords(firstPlacement.board, 1), firstPlacement.board, 1
+                 computer.getPossibleWords(firstPlacement.board), firstPlacement.board, 1
              );
 
             return {
@@ -358,7 +361,7 @@ describe(`Computer`, () => {
             const thirdPlacement = placeWord('ONISH', [8, 9], false, secondPlacement.board, 3);
 
             const highestWord = computer.getHighestWord(
-                 computer.getPossibleWords(thirdPlacement.board, 2), thirdPlacement.board, 2
+                 computer.getPossibleWords(thirdPlacement.board), thirdPlacement.board, 2
              );
 
             // it was picking "MOD" and overwriting "MONISH" with "MODISH" before fixed
@@ -401,10 +404,10 @@ describe(`Computer`, () => {
             const firstPlacement = placeWord('LEND', coordinate, false);
 
             const highestWord = computer.getHighestWord(
-                 computer.getPossibleWords(firstPlacement.board, 1), firstPlacement.board, 1
+                 computer.getPossibleWords(firstPlacement.board), firstPlacement.board, 1
              );
-            
-            // it was picking "EMMET" before I fixed it. 
+
+            // it was picking "EMMET" before I fixed it.
             // This test might be broken since update allowing placing of tile sanywhere
             expect(highestWord[0].word).toBe('MILT');
         });
@@ -432,7 +435,7 @@ describe(`Computer`, () => {
             const secondPlacement = placeWord('VY', [coordinate[0], coordinate[1] + 1], false, firstPlacement.board);
 
             const highestWord = computer.getHighestWord(
-                computer.getPossibleWords(secondPlacement.board, 1), secondPlacement.board, 1
+                computer.getPossibleWords(secondPlacement.board), secondPlacement.board, 1
             );
 
             expect(highestWord[0].word).toEqual('VEX');
@@ -485,9 +488,9 @@ describe(`Computer`, () => {
             expect(chosenWord).toBeUndefined();
         });
 
-        
+
         // fit(`must place at least one tile`, () => {
-        
+
         //     const computerTiles = [
         //         { letter: 'X', points: 1 },
         //         { letter: 'E', points: 1 },

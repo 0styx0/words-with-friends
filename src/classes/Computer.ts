@@ -8,6 +8,7 @@ import Word from './Word';
 import store, { getState } from '../store';
 import actions from '../actions/';
 import Tile from '../interfaces/Tile';
+import Tilebag from './Tilebag';
 
 
 type highestWordType = {
@@ -17,40 +18,14 @@ type highestWordType = {
     horizontal: boolean;
 };
 
-
-/**
- *
- * For each tile on board
- *   Check how much empty space there is (plus 1 since must be space after word, just call validateWord)
- *   Use dictionary to figure out highest point word that can go there (probably O^n)
- *   In case smaller words might be worth more points, repeat for every length until 0
- *     if find word worth more than previous highest word, save current word coordinates
- * Place highest word found
- *
- * For every word in the dictionary equal or less than maximumLength
- *  Check if (letters in word) are also in (this.tiles)
- *    if yes, the word is in Computer's hand
- */
-
-/**
- * 1) I have a coordinate
- * 2) Plug it in to see how many open spaces are on either side
- * 3) Now that I know the length and index of the letter by adding borders and stuff
- * 4) Do dictionary.get(length).get(letter).get(index)
- * 5) Now I have all possible words that can be placed there
- * 6) Iterate through those words, sorting them and comparing them against sorted Computer.tiles
- * 7) Find the most valuable of those words that Computer has in his hand
- * 8) Repeat from step 4, substituting length for length--
- * 9) Now I have the real most valuable word (even if it's smaller than the lengthiest word)
- * 10) Repeat again for every coordinate on the board
- */
-
 class Computer extends Player {
+
+    // only public so can clear it in Computer.test.ts
+    static checkedByShift = new Map<string, {startCoordinate: number[], word: string}[]>();
 
     private static highestWordsCache: Map<number, highestWordType[]> = new Map(); // key is turn
     public tilesCoordinatesPlacedLastTurn = [] as number[][];
     private orderedDictionary: Map<number, Map<string, Map<number, Set<string>>>>;
-    private checkedByShift = new Map<string, {startCoordinate: number[], word: string}[]>();
 
 
     constructor(turn: boolean, playerIndex: number, cloning?: boolean) {
@@ -73,7 +48,7 @@ class Computer extends Player {
             _score: this._score,
             _tiles: JSON.parse(JSON.stringify(this._tiles)),
             orderedDictionary: this.orderedDictionary,
-            checkedByShift: this.checkedByShift,
+            checkedByShift: Computer.checkedByShift,
         });
     }
 
@@ -388,12 +363,10 @@ class Computer extends Player {
     /**
      * Finds the best word that can made from tiles in hand
      */
-    public getPossibleWords(board: Board, currentTurn: number) {
+    public getPossibleWords(board: Board) {
 
         const allFilledCoordinates = this.getAllFilledCoordinates(board);
-//        const validWords: {startCoordinate: number[], word: string}[] = [];
 
-        // switch back when get it working to allFilledCoordinates
         return [
             ...allFilledCoordinates
         ].reduce((allValidWordsInHand, coordinate) =>
@@ -402,6 +375,22 @@ class Computer extends Player {
     }
 
     shiftWord(board: Board, coordinate: number[]) {
+
+        if (
+            Computer.checkedByShift.get(JSON.stringify(coordinate))/* && (
+                this.tilesCoordinatesPlacedLastTurn.every(coor => {
+
+                    const withinThreeTilesHorizontally = coordinate[0] >= coor[0] - 1 && coor[0] <= coordinate[0] + 1;
+                    const withinThreeTilesVertically = coordinate[1] >= coor[1] - 1 && coor[1] <= coordinate[1] + 1;
+
+                    return !withinThreeTilesHorizontally && !withinThreeTilesVertically;
+                })
+            )*/
+        ) {
+            // console.log('skipped for ', coordinate);
+
+            return Computer.checkedByShift.get(JSON.stringify(coordinate))!;
+        }
 
         function nearTile(offset: number, horizontal: boolean = true) {
 
@@ -456,7 +445,48 @@ class Computer extends Player {
 
         const info = shift(true).concat(shift(false));
 
+        Computer.checkedByShift.set(JSON.stringify(coordinate), info);
+
         return info;
+    }
+
+    public generateHand(tileBag: Tilebag) {
+
+        super.generateHand(tileBag);
+
+        this.gatherPossibleWordsInBackground(getState().board);
+    }
+
+    /**
+     * To be called right after computer has play()ed and has refilled its hand
+     *
+     * Calls #this.shiftWord on chunks of coordinates at intervals so browser doesn't complain about slow js
+     */
+    public gatherPossibleWordsInBackground(board: Board) {
+
+        const allFilledCoordinates = [...this.getAllFilledCoordinates(board)];
+        const lengthOfEachSection = 30;
+        let timesRun = 0;
+
+        const intervalId = window.setInterval(() => {
+
+            const startIdx = timesRun * lengthOfEachSection;
+            const endIdx = Math.min(startIdx + lengthOfEachSection, allFilledCoordinates.length);
+
+            const filledCoordinateChunk = allFilledCoordinates.slice(startIdx, endIdx);
+
+            filledCoordinateChunk.map((coordinate) =>
+                this.shiftWord(board, coordinate));
+
+            if (endIdx === allFilledCoordinates.length) {
+                console.log('stopped', endIdx);
+                clearInterval(intervalId);
+            }
+            console.log('interval', startIdx, startIdx);
+
+            timesRun++;
+
+        }, 100);
     }
 
     /**
@@ -468,7 +498,7 @@ class Computer extends Player {
 
         const highestWords = Computer.highestWordsCache.get(state.turn) ||
             this.getHighestWord(
-                this.getPossibleWords(board, state.turn), board, state.turn
+                this.getPossibleWords(board), board, state.turn
             );
         Computer.highestWordsCache.set(state.turn, highestWords);
 
@@ -501,8 +531,6 @@ class Computer extends Player {
               this.tiles.find(currentTile =>
                 currentTile.letter === highestWord.word[i - highestWord.startCoordinate[ (horizontal) ? 1 : 0 ]]);
 
-            console.log(494, i, tile, currentCoordinate, highestWord.word[i]);
-
             if (!tile) {
                 console.log('No tile', tile);
                 return this.play(board, highestWordsIndex + 1);
@@ -519,6 +547,8 @@ class Computer extends Player {
 
             store.dispatch(actions.removeTileFromHand(state.Players, info.tile));
         });
+
+        Computer.checkedByShift.clear();
 
         return highestWord;
     }
