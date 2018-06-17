@@ -1,9 +1,15 @@
 .tileHolder {
     border-radius: 20%;
     border: 3px inset black;
+    min-width: 25px;
+    min-height: 25px;
     /*--tileholder-dimensions: 4vw;
     width: var(--tileholder-dimensions);
     height: var(--tileholder-dimensions);*/
+}
+
+.wrapper + .tileHand {
+    margin-left: 1rem;
 }
 
 .stand-out {
