@@ -21,7 +21,7 @@ Array [
       0
     </span>
     <button
-      disabled={false}
+      id="playButton"
       onClick={[Function]}
       type="button"
     >

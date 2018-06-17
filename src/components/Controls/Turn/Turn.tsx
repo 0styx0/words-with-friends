@@ -47,7 +47,8 @@ export class TurnContainer extends React.Component<Props, {}> {
     private turn(computerJustWent: boolean) {
 
         // changing react state doesn't rerender fast enough so need to change DOM manually
-        const playButton = document.getElementById('playButton') as HTMLButtonElement;
+        // the {} is so tests don't fail
+        const playButton = (document.getElementById('playButton') || {}) as HTMLButtonElement;
         playButton.disabled = true;
 
         const recentlyPlacedCoordinates = Board.getTilesPlaced(this.props.board, this.props.turn);
