@@ -421,7 +421,7 @@ class Computer extends Player {
                 !nearTile(offset, horizontal)
             ) {
 
-                for (let length = 2; length < maximumLength; length++) {
+                for (let length = 1; length < maximumLength; length++) {
 
                     if (this.pastBoardEdge(getCoordinate(length))) {
                         break;

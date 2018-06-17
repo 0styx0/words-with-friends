@@ -10,6 +10,7 @@ import Word from '../../../classes/Word';
 import { defaultState } from '../../../store';
 import Turn from './';
 import Board from '../../../classes/Board';
+import Player from '../../../classes/Player';
 
 
 function mapStateToProps(state: typeof defaultState) {
@@ -28,6 +29,8 @@ function mapDispatchToProps(dispatch: Dispatch<typeof defaultState>) {
 type Props = typeof actionCreators & typeof defaultState & { number: number };
 
 export class TurnContainer extends React.Component<Props, {}> {
+
+    private static passesInARow = 0;
 
     constructor(props: Props) {
         super(props);
@@ -66,7 +69,9 @@ export class TurnContainer extends React.Component<Props, {}> {
             }
 
             if (!computerJustWent && !confirm(`${currentPlayer.name}: Are you sure you want to pass?`)) {
+                TurnContainer.passesInARow++;
                 playButton.disabled = false;
+                this.checkWinState(currentPlayer);
                 return;
             }
 
@@ -92,19 +97,13 @@ export class TurnContainer extends React.Component<Props, {}> {
             Word.tallyPoints(this.props.board, recentlyPlacedCoordinates)
         );
 
+        TurnContainer.passesInARow = 0;
         this.props.incrementTurn(this.props.turn, this.props.Tilebag);
 
         const computer: any = this.props.Players.find(player => 'orderedDictionary' in player)!;
 
-        if (currentPlayer.tiles.length === 0) {
 
-            playButton.disabled = true;
-
-            alert(`${currentPlayer.name} has won the game!`);
-            return;
-        }
-
-        if (computer && !computer.turn && !computerJustWent) {
+        if (!this.checkWinState(currentPlayer) && computer && !computer.turn && !computerJustWent) {
 
             window.setTimeout(() => {
 
@@ -117,6 +116,22 @@ export class TurnContainer extends React.Component<Props, {}> {
         } else {
             playButton.disabled = false;
         }
+    }
+
+    private checkWinState(currentPlayer: Player) {
+
+        if (currentPlayer.tiles.length === 0 || TurnContainer.passesInARow >= 2) {
+
+            ((document.getElementById('playButton') || {}) as HTMLButtonElement).disabled = true;
+
+            const winner = (this.props.Players[0].score > this.props.Players[1].score) ? this.props.Players[0] :
+              this.props.Players[1];
+
+            alert(`${winner.name} has won the game!`);
+            return true;
+        }
+
+        return false;
     }
 }
 
