@@ -9,6 +9,6 @@ Demo: https://davidm.me/projects/words-with-friends/
 It has two modes: Player V Player, and Player V Computer
 
 To run:
-* `git clone https://github.com/DovidM/words-with-friends`
+* `git clone https://gitlab.com/d.a.v.i.d.m/words-with-friends`
 * `cd words-with-friends/`
 * `npm start`
